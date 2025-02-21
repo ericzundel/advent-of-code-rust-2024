@@ -31,14 +31,27 @@ impl Report {
         Report { values, defects }
     }
 
-    pub fn is_safe(&self) -> bool {
-        self.defects <= 1
-    }
     
+    pub fn is_safe(&self) -> bool {
+        if self.defects == 0 {
+            return true;
+        }
+        // TODO: This makes the algorithm n^2. There is probably an iterative way to do it, 
+        // but when I tried that a couple of different ways, I got the wrong answer.
+        for i in 0..self.values.len() {
+            let mut copy = self.values.clone();
+            copy.remove(i);
+            if Self::compute_defects(&copy) == 0 {
+                return true;
+            }
+        }
+        return false;
+    }
+
     pub fn is_strictly_safe(&self) -> bool {
         self.defects == 0
     }
-    
+
     fn compute_direction(difference: i64) -> Direction {
         if difference == 0 {
             Direction::Flat
@@ -55,11 +68,11 @@ impl Report {
             let difference = values[i].saturating_sub(values[i - 1]);
             directions.push(Self::compute_direction(difference));
         }
-        
+
         let mut num_defects: usize = 0;
         let mut num_increasing: usize = 0;
         let mut num_decreasing: usize = 0;
-        
+
         for direction in directions {
             match direction {
                 Direction::Flat => num_defects += 1,
