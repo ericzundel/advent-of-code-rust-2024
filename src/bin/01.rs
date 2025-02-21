@@ -4,10 +4,9 @@ use std::str::FromStr;
 advent_of_code::solution!(1);
 
 fn load_data(input: &str) -> (Vec<u64>, Vec<u64>) {
-    let input_string = String::from_str(input).unwrap();
     let mut column1: Vec<u64> = Vec::new();
     let mut column2: Vec<u64> = Vec::new();
-    for line in input_string.split_terminator("\n") {
+    for line in input.split_terminator("\n") {
         let mut values = line.split_whitespace();
         let first = values.next().unwrap();
         let second = values.next().unwrap();
@@ -34,20 +33,24 @@ pub fn part_one(input: &str) -> Option<u64> {
 
 pub fn part_two(input: &str) -> Option<u64> {
     let (mut column1, mut column2) = load_data(input);
-    
-    let mut frequency_table : HashMap<u64, u64> = HashMap::new();
-    column2.into_iter().for_each(|key| {
-        match frequency_table.get_mut(&key) {
-            Some(entry) => *entry += 1,
-            None => { let _ = frequency_table.insert(key, 1);},
-        } 
-    });
-   
-    let zero : u64 = 0;
-    Some(column1.into_iter()
-        .map(|key| key * frequency_table.get(&key).unwrap_or(&zero))
-        .sum())
 
+    let mut frequency_table: HashMap<u64, u64> = HashMap::new();
+    column2
+        .into_iter()
+        .for_each(|key| match frequency_table.get_mut(&key) {
+            Some(entry) => *entry += 1,
+            None => {
+                let _ = frequency_table.insert(key, 1);
+            }
+        });
+
+    let zero: u64 = 0;
+    Some(
+        column1
+            .into_iter()
+            .map(|key| key * frequency_table.get(&key).unwrap_or(&zero))
+            .sum(),
+    )
 }
 
 #[cfg(test)]
