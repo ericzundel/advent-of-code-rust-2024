@@ -3,12 +3,6 @@ use std::str::FromStr;
 advent_of_code::solution!(2);
 
 #[derive(PartialEq)]
-enum Safety {
-    Safe,
-    Unsafe,
-}
-
-#[derive(PartialEq)]
 enum Direction {
     Increasing(i64),
     Decreasing(i64),
@@ -36,8 +30,10 @@ impl Report {
         if self.defects == 0 {
             return true;
         }
-        // TODO: This makes the algorithm n^2. There is probably an iterative way to do it, 
-        // but when I tried that a couple of different ways, I got the wrong answer.
+        // NB: O(n^2) where n is the number of nodes in a level as written. 
+        // There is an O(n) way to solve it, by having a function that finds the position
+        // of the first defect in the list, then removing that level
+        // and then retesting it.
         for i in 0..self.values.len() {
             let mut copy = self.values.clone();
             copy.remove(i);
@@ -52,6 +48,7 @@ impl Report {
         self.defects == 0
     }
 
+    /* determines if the difference between levels is increasing, decreasing, or flat */
     fn compute_direction(difference: i64) -> Direction {
         if difference == 0 {
             Direction::Flat
@@ -62,6 +59,7 @@ impl Report {
         }
     }
 
+    /* Returns the number of defects found in the list */
     fn compute_defects(values: &Vec<i64>) -> usize {
         let mut directions: Vec<Direction> = Vec::new();
         for i in 1..values.len() {
@@ -100,6 +98,12 @@ impl Report {
         num_defects
     }
 }
+
+/* 
+ Parse the input string where each line represents a Report.
+ 
+ Returns  a vector of reports 
+*/
 fn load_data(input: &str) -> Vec<Report> {
     input
         .split_terminator("\n")
@@ -113,7 +117,7 @@ pub fn part_one(input: &str) -> Option<u64> {
         .iter()
         .filter(|x| x.is_strictly_safe())
         .count()
-        .try_into()
+        .try_into() // Potential failure converting from usize to u64
         .unwrap();
     Some(count)
 }
@@ -124,7 +128,7 @@ pub fn part_two(input: &str) -> Option<u64> {
         .iter()
         .filter(|x| x.is_safe())
         .count()
-        .try_into()
+        .try_into() // Potential failure converting from usize to u64
         .unwrap();
     Some(count)
 }
