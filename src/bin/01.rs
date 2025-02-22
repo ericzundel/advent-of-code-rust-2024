@@ -3,19 +3,23 @@ use std::str::FromStr;
 
 advent_of_code::solution!(1);
 
+/* Parse the two column input into a pair of vectors */
 fn load_data(input: &str) -> (Vec<u64>, Vec<u64>) {
     let mut column1: Vec<u64> = Vec::new();
     let mut column2: Vec<u64> = Vec::new();
     for line in input.split_terminator("\n") {
         let mut values = line.split_whitespace();
-        let first = values.next().unwrap();
-        let second = values.next().unwrap();
-        column1.push(u64::from_str(first).unwrap());
-        column2.push(u64::from_str(second).unwrap());
+        column1.push(u64::from_str(values.next().unwrap()).unwrap());
+        column2.push(u64::from_str(values.next().unwrap()).unwrap());
     }
     (column1, column2)
 }
 
+/*
+ Compute the difference between values in each row.
+
+ Return the sum of differences
+*/
 pub fn part_one(input: &str) -> Option<u64> {
     // print!("Got input one: {}", input);
     let (mut column1, mut column2) = load_data(input);
@@ -31,8 +35,13 @@ pub fn part_one(input: &str) -> Option<u64> {
     Some(total)
 }
 
+/*
+  Compute number of matches in column a found in column b.
+
+  Return a contrived calculation =>  First number times number of matches in second column.
+*/
 pub fn part_two(input: &str) -> Option<u64> {
-    let (mut column1, mut column2) = load_data(input);
+    let (column1, column2) = load_data(input);
 
     let mut frequency_table: HashMap<u64, u64> = HashMap::new();
     column2
