@@ -1,30 +1,29 @@
 advent_of_code::solution!(3);
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Debug)]
 enum Token {
-    M,
-    U,
-    L,
+    MUL,
     LParen,
-    Digit,
+    Number,
     Comma,
     RParen,
     UNKNOWN,
 }
-#[derive(PartialEq)]
+
+/* A state machine to parse MUL(<param1>,<param2>)
+
+ Currently, I just parse into a list of MUL nodes.
+ To do this the "right" way, you'd have the nodes as a tree with MUL as parent and parameters as
+ child nodes.
+ */
+#[derive(PartialEq, Debug)]
 enum State {
     Start,
-    M,
-    U,
-    L,
+    MUL,
     LParen,
-    Param1Digit1,
-    Param1Digit2,
-    Param1Digit3,
+    Param1,
     Comma,
-    Param2Digit1,
-    Param2Digit2,
-    Param2Digit3,
+    Param2,
     Complete,
 }
 
@@ -36,6 +35,10 @@ struct Entry {
     func: fn(&Token, &str, &State, Box<Node>) -> Box<Node>,
 }
 
+/*
+  Stores a list of parsed nodes.
+  NB: In a traditional parser, the output is a tree, not a list.
+ */
 struct Node {
     first_number: u64,
     second_number: u64,
@@ -96,13 +99,23 @@ impl <'a> Tokenizer<'a> {
             '(' => {return (Some(Token::LParen),value)},
             ',' => {return (Some(Token::Comma), value)},
             ')' => {return (Some(Token::RParen), value)},
-            'M' => {return (Some(Token::M), value)},
-            'U' => {return (Some(Token::U), value)},
-            'L' => {return (Some(Token::L), value)},
+            'M' => {
+                let lookahead = self.input.get(self.curr_pos-1..=self.curr_pos+1);
+                // Look to see if there were enough characters
+                if !lookahead.is_none() {
+                    let lookahead = lookahead.unwrap();
+                    if lookahead == "MUL" {
+                        self.curr_pos += 2;
+                        return (Some(Token::MUL), Some(lookahead))
+                    }
+                }
+                (Some(Token::UNKNOWN), value)
+
+            }
             '0'..='9' => {
-                return (Some(Token::Digit), Some(Self::get_digits(self)))
+                return (Some(Token::Number), Some(Self::get_digits(self)))
             },
-            (_) => { return (Some(Token::UNKNOWN), value)},
+            _ => { return (Some(Token::UNKNOWN), value)},
         }
     }
 }
@@ -120,96 +133,37 @@ impl Parser {
                 [
                     Entry {
                         curr: State::Start,
-                        tok: Token::M,
-                        next: State::M,
+                        tok: Token::MUL,
+                        next: State::MUL,
                         func: Self::consume,
                     },
+
                     Entry {
-                        curr: State::M,
-                        tok: Token::U,
-                        next: State::U,
-                        func: Self::consume,
-                    },
-                    Entry {
-                        curr: State::U,
-                        tok: Token::L,
-                        next: State::L,
-                        func: Self::consume,
-                    },
-                    Entry {
-                        curr: State::L,
+                        curr: State::MUL,
                         tok: Token::LParen,
                         next: State::LParen,
                         func: Self::consume,
                     },
                     Entry {
                         curr: State::LParen,
-                        tok: Token::Digit,
-                        next: State::Param1Digit1,
-                        func: Self::process_param1,
+                        tok: Token::Number,
+                        next: State::Param1,
+                        func: Self::process_param,
                     },
                     Entry {
-                        curr: State::Param1Digit1,
-                        tok: Token::Digit,
-                        next: State::Param1Digit2,
-                        func: Self::process_param1,
-                    },
-                    Entry {
-                        curr: State::Param1Digit1,
-                        tok: Token::Comma,
-                        next: State::Comma,
-                        func: Self::consume,
-                    },
-                    Entry {
-                        curr: State::Param1Digit2,
-                        tok: Token::Digit,
-                        next: State::Param1Digit3,
-                        func: Self::process_param1,
-                    },
-                    Entry {
-                        curr: State::Param1Digit2,
-                        tok: Token::Comma,
-                        next: State::Comma,
-                        func: Self::consume,
-                    },
-                    Entry {
-                        curr: State::Param1Digit3,
+                        curr: State::Param1,
                         tok: Token::Comma,
                         next: State::Comma,
                         func: Self::consume,
                     },
                     Entry {
                         curr: State::Comma,
-                        tok: Token::Digit,
-                        next: State::Param2Digit1,
-                        func: Self::process_param2,
+                        tok: Token::Number,
+                        next: State::Param2,
+                        func: Self::process_param,
                     },
                     Entry {
-                        curr: State::Param2Digit1,
-                        tok: Token::Digit,
-                        next: State::Param2Digit2,
-                        func: Self::process_param2,
-                    },
-                    Entry {
-                        curr: State::Param2Digit1,
-                        tok: Token::RParen,
-                        next: State::Complete,
-                        func: Self::complete,
-                    },
-                    Entry {
-                        curr: State::Param2Digit2,
-                        tok: Token::Digit,
-                        next: State::Param2Digit3,
-                        func: Self::process_param2,
-                    },
-                    Entry {
-                        curr: State::Param2Digit2,
-                        tok: Token::RParen,
-                        next: State::Complete,
-                        func: Self::complete,
-                    },
-                    Entry {
-                        curr: State::Param2Digit3,
+                        curr: State::Param2,
                         tok: Token::RParen,
                         next: State::Complete,
                         func: Self::complete,
@@ -227,7 +181,7 @@ impl Parser {
             I consider it to be a lot more complex than the iterative style below.
          */
         for entry in self.transitions.iter() {
-            if entry.curr == state && entry.tok == token {
+            if entry.curr == *state && entry.tok == *token {
                 return Some(&entry)
             }
         }
@@ -237,7 +191,7 @@ impl Parser {
         let mut tokenizer = Tokenizer::new(input);
         let parser = Self::new();
         let mut head = Box::new(Node::new());
-        let mut curr_state = State::Start;
+        let mut curr_state = &State::Start;
        loop {
            let (next_token, next_value) = tokenizer.get();
            if next_token.is_none() {
@@ -246,28 +200,32 @@ impl Parser {
            let next_value = next_value.unwrap();
            let next_token = next_token.unwrap();
            let entry = parser.find_entry(&curr_state, &next_token);
+           // Parser returns None when it reaches the end of input
            if entry.is_none() {
                break
            }
            let entry = entry.unwrap();
-           head = (entry.func(&next_token, next_value, &curr_state, head);
+           // Handle this transition with the function specified in the table
+           // The function will return the new head of the list of nodes.
+           head = (entry.func)(&next_token, next_value, &curr_state, head);
+           curr_state = &entry.next;
         }
         Some(head)
     }
     /* consume - consume the token and proceed to the next state */
     fn consume(
-        token: Token,
-        character: char,
-        state: State,
+        _token: &Token,
+        _value: &str,
+        state: &State,
         node: Box<Node>,
     ) -> Box<Node> {
         node
     }
 
     fn complete<'a>(
-        token: &Token,
+        _token: &Token,
         value: &str,
-        state: &State,
+        _state: &State,
         node: Box<Node>,
     ) -> Box<Node> {
         print!("Got {} * {}", node.first_number, node.second_number);
@@ -276,23 +234,18 @@ impl Parser {
         new_node
     }
 
-    fn process_param1<'a>(
-        token: &Token,
+    fn process_param<'a>(
+        _token: &Token,
         value: &str,
         state: &State,
         mut node: Box<Node>,
     ) -> Box<Node> {
-        node.first_number = value.parse().unwrap();
-        node
-    }
-
-    fn process_param2<'a>(
-        token: &Token,
-        value: &str,
-        state: &State,
-        mut node: Box<Node>,
-    ) -> Box<Node> {
-        node.second_number = value.parse().unwrap();
+        match state {
+            State::Param1 => node.first_number = value.parse().unwrap(),
+            State::Param2 => node.second_number = value.parse().unwrap(),
+            _ => panic!("Unknown state {}", state)
+        }
+        
         node
     }
 }
@@ -303,6 +256,7 @@ pub fn part_one(input: &str) -> Option<u64> {
 }
 
 pub fn part_two(input: &str) -> Option<u64> {
+    let _nodes = Parser::parse(input);
     None
 }
 
@@ -311,8 +265,18 @@ mod tests {
     use super::*;
 
     #[test]
+    fn test_tokenizer() {
+        assert_eq!((Some(Token::LParen), Some("(")), Tokenizer::new("(").get());
+        assert_eq!((Some(Token::Comma), Some(",",)), Tokenizer::new(",").get());
+        assert_eq!((Some(Token::RParen), Some(")")), Tokenizer::new(")").get());
+        assert_eq!((Some(Token::MUL), Some("MUL")), Tokenizer::new("MUL").get(), "MUL valid");
+        assert_eq!((Some(Token::UNKNOWN), Some("M")), Tokenizer::new("MU").get(), "MU invalid");
+        assert_eq!((Some(Token::UNKNOWN), Some("M")), Tokenizer::new("MUD").get(), "MUD invalid");
+
+    }
+    #[test]
     fn validate_transitions() {
-        let p = Parser::new();
+        let _p = Parser::new();
         todo!("go thorugh all transitions and make sure there are no dups")
     }
 

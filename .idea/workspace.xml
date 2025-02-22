@@ -7,8 +7,8 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+    <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="Cleanups for day 2 code">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bin/03.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/03.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,9 +23,9 @@
   <component name="MacroExpansionManager">
     <option name="directoryName" value="TQVTgQYh" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2tOSCyNyTsiqo1HVPu6yw0UMQjq" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -35,6 +35,7 @@
   "keyToString": {
     "Cargo.Run advent_of_code.executor": "Debug",
     "Cargo.Test tests::test_part_one.executor": "Debug",
+    "Cargo.Test tests::test_tokenizer.executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -56,8 +57,8 @@
       <window_info id="Merge Requests" />
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27421874" />
-      <window_info id="Commit" order="1" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.1605339" />
+      <window_info active="true" id="Commit" order="1" visible="true" weight="0.14485678" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="TypeScript" />
@@ -68,9 +69,11 @@
       <window_info anchor="bottom" id="Problems" order="1" />
       <window_info anchor="bottom" id="Problems View" order="2" />
       <window_info anchor="bottom" id="Terminal" order="3" />
-      <window_info anchor="bottom" id="Build" order="4" weight="0.33032492" />
-      <window_info active="true" anchor="bottom" id="Debug" order="4" visible="true" weight="0.26598838" />
-      <window_info anchor="bottom" id="Services" order="4" />
+      <window_info active="true" anchor="bottom" id="Build" order="4" visible="true" weight="0.32966396" />
+      <window_info anchor="bottom" id="Debug" order="5" weight="0.47566628" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.47566628" />
+      <window_info anchor="bottom" id="Services" order="7" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.32966396" />
       <window_info anchor="right" id="Coverage" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Notifications" order="0" weight="0.25" />
       <window_info anchor="right" id="AIAssistant" order="1" weight="0.25" />
@@ -81,7 +84,7 @@
       <window_info anchor="right" id="RustCargo" order="6" weight="0.2" />
     </layout>
   </component>
-  <component name="RunManager" selected="Cargo.Test tests::test_part_one">
+  <component name="RunManager" selected="Cargo.Test tests::test_tokenizer">
     <configuration name="Run advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package advent_of_code --bin advent_of_code" />
@@ -135,8 +138,26 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Test tests::test_tokenizer" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 03 tests::test_tokenizer -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Test tests::test_tokenizer" />
         <item itemvalue="Cargo.Test tests::test_part_one" />
       </list>
     </recent_temporary>
@@ -153,17 +174,30 @@
       <updated>1740221504165</updated>
       <workItem from="1740221505221" duration="4752000" />
     </task>
+    <task id="LOCAL-00001" summary="Cleanups for day 2 code">
+      <option name="closed" value="true" />
+      <created>1740231074153</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740231074154</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Cleanups for day 2 code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleanups for day 2 code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/bin/03.rs</url>
-          <line>301</line>
+          <line>254</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
