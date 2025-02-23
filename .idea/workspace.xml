@@ -9,6 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="Cleanups for day 2 code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/examples/03.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/03.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bin/03.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/03.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,10 +34,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Cargo.Build `Test 03::tests`.executor": "Run",
     "Cargo.Build `Test tests::test_part_one`.executor": "Run",
     "Cargo.Run advent_of_code.executor": "Debug",
     "Cargo.Test 03::tests.executor": "Run",
+    "Cargo.Test tests::test_parse.executor": "Run",
     "Cargo.Test tests::test_part_one.executor": "Debug",
+    "Cargo.Test tests::test_part_two.executor": "Debug",
     "Cargo.Test tests::test_tokenizer.executor": "Debug",
     "Cargo.Test tests::test_tokenizer_seq1.executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
@@ -60,7 +64,7 @@
       <window_info id="Merge Requests" />
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13983345" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14012969" />
       <window_info id="Commit" order="1" weight="0.14517291" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" />
@@ -70,9 +74,9 @@
       <window_info anchor="bottom" id="File Transfer" />
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="Problems" order="1" />
-      <window_info anchor="bottom" id="Problems View" order="2" />
+      <window_info anchor="bottom" id="Problems View" order="2" weight="0.3116197" />
       <window_info anchor="bottom" id="Terminal" order="3" />
-      <window_info active="true" anchor="bottom" id="Build" order="4" visible="true" weight="0.31125438" />
+      <window_info active="true" anchor="bottom" id="Build" order="4" visible="true" weight="0.32940447" />
       <window_info anchor="bottom" id="Debug" order="5" weight="0.32940447" />
       <window_info anchor="bottom" id="Run" order="6" weight="0.32940447" />
       <window_info anchor="bottom" id="Services" order="7" />
@@ -87,7 +91,7 @@
       <window_info anchor="right" id="RustCargo" order="6" weight="0.2" />
     </layout>
   </component>
-  <component name="RunManager" selected="Cargo.Test tests::test_part_one">
+  <component name="RunManager" selected="Cargo.Test 03::tests">
     <configuration name="Run advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package advent_of_code --bin advent_of_code" />
@@ -140,8 +144,42 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Test tests::test_parse" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 03 tests::test_parse -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Test tests::test_part_one" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="test --package advent_of_code --bin 03 tests::test_part_one -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test tests::test_part_two" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 03 tests::test_part_two -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -174,47 +212,13 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_tokenizer_seq1" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 03 tests::test_tokenizer_seq1 -- --exact" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs />
-      <option name="emulateTerminal" value="true" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test tests::validate_transitions" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 03 tests::validate_transitions -- --exact" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs />
-      <option name="emulateTerminal" value="true" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Test tests::test_part_one" />
         <item itemvalue="Cargo.Test 03::tests" />
+        <item itemvalue="Cargo.Test tests::test_part_one" />
+        <item itemvalue="Cargo.Test tests::test_part_two" />
+        <item itemvalue="Cargo.Test tests::test_parse" />
         <item itemvalue="Cargo.Test tests::test_tokenizer" />
-        <item itemvalue="Cargo.Test tests::test_tokenizer_seq1" />
-        <item itemvalue="Cargo.Test tests::validate_transitions" />
       </list>
     </recent_temporary>
   </component>
@@ -231,7 +235,8 @@
       <workItem from="1740221505221" duration="4752000" />
       <workItem from="1740266597897" duration="289000" />
       <workItem from="1740306912484" duration="1958000" />
-      <workItem from="1740308891574" duration="5893000" />
+      <workItem from="1740308891574" duration="7951000" />
+      <workItem from="1740331233910" duration="5973000" />
     </task>
     <task id="LOCAL-00001" summary="Cleanups for day 2 code">
       <option name="closed" value="true" />
@@ -256,8 +261,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/bin/03.rs</url>
-          <line>254</line>
-          <option name="timeStamp" value="20" />
+          <line>375</line>
+          <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

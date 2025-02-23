@@ -1,10 +1,31 @@
+/*
+ * Advent of Code 2024 Day 3
+ * https://adventofcode.com/2024/day/3
+ *
+ * I really wanted to learn Rust, so I decided to write a lexer and parser to solve this problem.
+ * There are much simpler ways to do it:
+ *
+ * Bespoke logic that just keeps track of state as you parse the string
+ * Use a regular expression parser.  Very few lines could have solved this problem effectively.
+ *
+ * It wasn't the most efficient use of time to solve this problem, but I learned a lot 
+ * by doing it the hard way. Part 2 was relatively easy to solve once I had my lexer and
+ * parser in place. Amazinglu, I found and corrected at least one bug which could have stymied 
+ * me in part one, but the input didn't contain those edge cases.
+ *
+ * Main components:
+ * Tokenizer - Creates a simple lexical analysis program
+ * Parser - A simple parser that outputs a list of nodes instead of a traditional parse tree
+ */
 use std::fmt;
 
 advent_of_code::solution!(3);
 
-#[derive(PartialEq, Debug, Hash, Eq)]
+#[derive(PartialEq, Debug, Hash, Eq, Clone)]
 enum Token {
     MUL,
+    DO,
+    DONT,
     LParen,
     Number,
     Comma,
@@ -22,6 +43,8 @@ child nodes.
 enum State {
     Start,
     MUL,
+    DO,
+    DONT,
     LParen,
     Param1,
     Comma,
@@ -57,6 +80,7 @@ struct Entry {
 */
 #[derive(PartialEq, Debug, Clone)]
 struct Node {
+    symbol_name: Token,
     first_number: u64,
     second_number: u64,
 }
@@ -64,6 +88,7 @@ struct Node {
 impl Node {
     pub fn new() -> Node {
         Node {
+            symbol_name: Token::UNKNOWN,
             first_number: 0,
             second_number: 0,
         }
@@ -77,16 +102,31 @@ struct Tokenizer<'a> {
 }
 
 impl<'a> Tokenizer<'a> {
+    /// Instantiate a lexer for this problem. The lexical analyzer will keep state of the
+    /// current position in the input after each call to get().
+    ///
+    /// # Arguments
+    ///
+    /// * `input` - the string data to parse. 
+    ///
+    /// # Returns
+    ///
+    /// An instance of Tokenizer with the context set to the first character.
     pub fn new(input: &'a str) -> Tokenizer<'a> {
         Tokenizer { input, curr_pos: 0 }
     }
 
-    /* Intended to be called from get to consume all digits starting from curr_pos -1.
-      Assumes we already know that self.curr_pos is a valid digit.
-
-      Returns all of the consecutive digits in the stream
-    */
-    fn get_digits(&mut self) -> &'a str {
+    /// Intenrnal function to parse a sequence of up to 3 digits and return it as a slice
+    /// 
+    /// # Arguments
+    /// 
+    /// * `self` - uses the input string and current position. Modifies the current position
+    ///            on success.
+    ///
+    /// # Returns
+    ///
+    /// A slice containing the consecutive digits that represent the number.
+    fn get_number(&mut self) -> &'a str {
         let start_pos = self.curr_pos - 1;
         let mut len = self.input[start_pos..]
             .chars()
@@ -100,7 +140,40 @@ impl<'a> Tokenizer<'a> {
         &self.input[start_pos..self.curr_pos]
     }
 
-    /* Returns the next token in the input stream with a slice pointing to it's value */
+    /// Internal function to look ahead for a token that matches the &str passed in `symbol`.
+    /// Modifies the current position in the input on success.
+    fn look_for(
+        &mut self,
+        symbol: &str,
+        token: Token,
+        value: Option<&'a str>,
+    ) -> (Option<Token>, Option<&'a str>) {
+        let symbol_len = symbol.len();
+        let lookahead = self
+            .input
+            .get(self.curr_pos - 1..=self.curr_pos + symbol_len - 2);
+        // Look to see if there were enough characters
+        if !lookahead.is_none() {
+            let lookahead = lookahead.unwrap();
+            if lookahead == symbol {
+                self.curr_pos += symbol_len - 1;
+                return (Some(token), Some(lookahead));
+            }
+        }
+        (Some(Token::UNKNOWN), value)
+    }
+
+    /// Retrieve the next token in the input
+    /// 
+    /// # Arguments
+    /// 
+    /// * self - Instance of the Tokenizer
+    /// 
+    /// # Returns
+    /// 
+    /// If there was data, returns the next token in the input stream and a slice pointing to its value.
+    /// A value of Token::UNKNOWN is returned if it doesn't recognize the current character.
+    /// Returns `(None, None)` at the end of the input.
     pub fn get(&mut self) -> (Option<Token>, Option<&'a str>) {
         let value = self.input.get(self.curr_pos..self.curr_pos + 1);
         if value == None {
@@ -112,19 +185,16 @@ impl<'a> Tokenizer<'a> {
             '(' => (Some(Token::LParen), value),
             ',' => (Some(Token::Comma), value),
             ')' => (Some(Token::RParen), value),
-            'm' => {
-                let lookahead = self.input.get(self.curr_pos - 1..=self.curr_pos + 1);
-                // Look to see if there were enough characters
-                if !lookahead.is_none() {
-                    let lookahead = lookahead.unwrap();
-                    if lookahead == "mul" {
-                        self.curr_pos += 2;
-                        return (Some(Token::MUL), Some(lookahead));
-                    }
+            'd' => {
+                let (tok_option, ret_value) = self.look_for("don't", Token::DONT, value);
+                let test_ret_token = tok_option.unwrap();
+                if test_ret_token == Token::UNKNOWN {
+                    return self.look_for("do", Token::DO, value);
                 }
-                (Some(Token::UNKNOWN), value)
+                return (Some(test_ret_token), ret_value);
             }
-            '0'..='9' => return (Some(Token::Number), Some(Self::get_digits(self))),
+            'm' => self.look_for("mul", Token::MUL, value),
+            '0'..='9' => return (Some(Token::Number), Some(Self::get_number(self))),
             _ => return (Some(Token::UNKNOWN), value),
         }
     }
@@ -136,18 +206,46 @@ struct Parser<'a> {
     input: &'a str,
 }
 
-/* This parser uses the Tokenizer to do lexical analysis,
-  then creates a list of Node structures to correspond to the
-  valid data found in the input
-*/
-impl <'a>Parser<'a> {
-    fn new(input : &str) -> Parser {
+/// This parser uses the Tokenizer to do lexical analysis, then uses a state machine to analyze 
+/// the tokens in sequence.
+///
+/// # Returns
+/// ///
+/// A list of Node structures to correspond to the valid data found in the input
+impl<'a> Parser<'a> {
+    
+    /// Initialize a new instance.
+    fn new(input: &str) -> Parser {
         Parser {
             transitions: Vec::from([
                 Entry {
                     curr: State::Start,
                     tok: Token::MUL,
                     next: State::MUL,
+                    func: Self::process_symbol,
+                },
+                Entry {
+                    curr: State::Start,
+                    tok: Token::DO,
+                    next: State::DO,
+                    func: Self::process_symbol,
+                },
+                Entry {
+                    curr: State::DO,
+                    tok: Token::LParen,
+                    next: State::LParen,
+                    func: Self::consume,
+                },
+                Entry {
+                    curr: State::Start,
+                    tok: Token::DONT,
+                    next: State::DONT,
+                    func: Self::process_symbol,
+                },
+                Entry {
+                    curr: State::DONT,
+                    tok: Token::LParen,
+                    next: State::LParen,
                     func: Self::consume,
                 },
                 Entry {
@@ -155,6 +253,14 @@ impl <'a>Parser<'a> {
                     tok: Token::LParen,
                     next: State::LParen,
                     func: Self::consume,
+                },
+                
+                // State to end do() and don't()
+                Entry {
+                    curr: State::LParen,
+                    tok: Token::RParen,
+                    next: State::Start,
+                    func: Self::complete,
                 },
                 Entry {
                     curr: State::LParen,
@@ -174,6 +280,7 @@ impl <'a>Parser<'a> {
                     next: State::Param2,
                     func: Self::process_param,
                 },
+                // State to end mul(123,456)
                 Entry {
                     curr: State::Param2,
                     tok: Token::RParen,
@@ -182,7 +289,7 @@ impl <'a>Parser<'a> {
                 },
             ]),
             nodes: Vec::<Box<Node>>::new(),
-            input
+            input,
         }
     }
 
@@ -201,7 +308,8 @@ impl <'a>Parser<'a> {
         }
         None
     }
-    
+
+    /// This function runs lexical analysis and the parser, returning a list of valid nodes.
     pub fn parse(&mut self) -> Vec<Box<Node>> {
         let mut curr_node = Box::new(Node::new());
         let mut curr_state = State::Start;
@@ -213,11 +321,16 @@ impl <'a>Parser<'a> {
             }
             let next_value = next_value.unwrap();
             let next_token = next_token.unwrap();
-            let entry = self.find_entry(&curr_state, &next_token).clone();
-            // Can't find a valid state transistion? Go back to START
+            let mut entry = self.find_entry(&curr_state, &next_token).clone();
+            // Can't find a valid state transition? Try again with START
             if entry.is_none() {
+                // Try again assuming we are at the start state
                 curr_state = State::Start;
-                continue;
+                curr_node = Box::new(Node::new());
+                entry = self.find_entry(&curr_state, &next_token).clone();
+                if entry.is_none() {
+                    continue;
+                }
             }
             let entry = entry.unwrap();
             // Handle this transition with the function specified in the table
@@ -231,16 +344,17 @@ impl <'a>Parser<'a> {
         self.nodes.clone()
     }
 
-    /* consume - consume the token and proceed to the next state */
+    /// Consume the token.  The node is not complete yet. 
     fn consume(_token: &Token, _value: &str, _state: &State, _node: &mut Node) -> bool {
         false
     }
 
-    fn complete(_token: &Token, _value: &str, _state: &State, node: &mut Node) -> bool {
-        //print!("Got {} * {}", node.first_number, node.second_number);
+    /// Consume the token.  The node is complete.
+    fn complete(_token: &Token, _value: &str, _state: &State, _node: &mut Node) -> bool {
         true
     }
 
+    /// This is a parameter to one of the symbols.  Record it in the node.
     fn process_param(_token: &Token, value: &str, state: &State, node: &mut Node) -> bool {
         match state {
             State::Param1 => node.first_number = value.parse().unwrap(),
@@ -249,20 +363,40 @@ impl <'a>Parser<'a> {
         }
         false
     }
+    /// This is a token representing a function like `mul()`, `don't()` or `do()`. Record 
+    /// the token so we can process the node by type later.
+    fn process_symbol(token: &Token, _: &str, _state: &State, node: &mut Node) -> bool {
+        node.symbol_name = token.clone();
+        false
+    }
 }
 
 pub fn part_one(input: &str) -> Option<u64> {
     let nodes = Parser::new(input).parse();
     let mut sum = 0u64;
-    for node in nodes.iter() {
+    for node in nodes.iter().filter(|x| x.symbol_name == Token::MUL) {
         sum += node.first_number * node.second_number;
     }
     Some(sum)
 }
 
 pub fn part_two(input: &str) -> Option<u64> {
-    let _nodes = Parser::new(input).parse();
-    None
+    let nodes = Parser::new(input).parse();
+    let mut sum = 0u64;
+    let mut disabled = false;
+    for node in nodes.iter() {
+        match node.symbol_name {
+            Token::DO => disabled = false,
+            Token::DONT => disabled = true,
+            Token::MUL => {
+                if !disabled {
+                    sum += node.first_number * node.second_number
+                }
+            }
+            _ => panic!("Unknown symbol {:?}", node.symbol_name),
+        }
+    }
+    Some(sum)
 }
 
 #[cfg(test)]
@@ -273,6 +407,16 @@ mod tests {
     #[test]
     fn test_tokenizer() {
         assert_eq!(
+            (Some(Token::DO), Some("do")),
+            Tokenizer::new("do").get(),
+            "DO"
+        );
+        assert_eq!(
+            (Some(Token::DONT), Some("don't")),
+            Tokenizer::new("don't").get(),
+            "DONT"
+        );
+        assert_eq!(
             (Some(Token::MUL), Some("mul")),
             Tokenizer::new("mul").get(),
             "MUL valid"
@@ -280,7 +424,6 @@ mod tests {
         assert_eq!((Some(Token::LParen), Some("(")), Tokenizer::new("(").get());
         assert_eq!((Some(Token::Comma), Some(",",)), Tokenizer::new(",").get());
         assert_eq!((Some(Token::RParen), Some(")")), Tokenizer::new(")").get());
-
         assert_eq!(
             (Some(Token::UNKNOWN), Some("m")),
             Tokenizer::new("mu").get(),
@@ -355,6 +498,7 @@ mod tests {
         let result = *(parser.parse().get(0).unwrap()).clone();
         assert_eq!(
             Node {
+                symbol_name: Token::MUL,
                 first_number: 123,
                 second_number: 456,
             },
@@ -379,13 +523,12 @@ mod tests {
     #[test]
     fn test_part_one() {
         let result = part_one(&advent_of_code::template::read_file("examples", DAY));
-        //assert_eq!(result, None);
-        print!("Got result {}", result.unwrap());
+        assert_eq!(Some(39), result);
     }
 
     #[test]
     fn test_part_two() {
         let result = part_two(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
+        assert_eq!(Some(37), result);
     }
 }

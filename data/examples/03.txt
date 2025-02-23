@@ -1,9 +1,10 @@
-mul(1,3)
-mul(2343,2342)
-*mul(1,2)
-mulmul(4,5)
-mul(1,2)mul(3,4)
-
+mul(1,3)good 3
+mul(2343,2342)bad
+don't()good
+*mul(1,2)good 2
+do()good
+mulmul(4,5)good 20
+mul(1,2)mul(3,4)good 14
 mul(
 mul(2,3
 mul(2,3]
