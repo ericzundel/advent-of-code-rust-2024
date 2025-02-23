@@ -1,26 +1,36 @@
-/*
- * Advent of Code 2024 Day 3
- * https://adventofcode.com/2024/day/3
- *
- * I really wanted to learn Rust, so I decided to write a lexer and parser to solve this problem.
- * There are much simpler ways to do it:
- *
- * Bespoke logic that just keeps track of state as you parse the string
- * Use a regular expression parser.  Very few lines could have solved this problem effectively.
- *
- * It wasn't the most efficient use of time to solve this problem, but I learned a lot 
- * by doing it the hard way. Part 2 was relatively easy to solve once I had my lexer and
- * parser in place. Amazinglu, I found and corrected at least one bug which could have stymied 
- * me in part one, but the input didn't contain those edge cases.
- *
- * Main components:
- * Tokenizer - Creates a simple lexical analysis program
- * Parser - A simple parser that outputs a list of nodes instead of a traditional parse tree
- */
+//!
+//! # Advent of Code 2024 Day 3
+//! https://adventofcode.com/2024/day/3
+//!
+//!  I really wanted to learn Rust, so I decided to write a lexer and parser to solve this problem.
+//!  The grammar for this language looks something like:
+//! 
+//!  MUL -> "mul" "(" NUMBER "," NUMBER ")"
+//!  DO -> "do" "(" ")"
+//!  DONT -> "don't" "(" ")"
+//!  NUMBER -> [0-9]{1,3}
+//!  DATA -> ((MUL | DO | DONT) ?*)*
+//! 
+//!  There are much simpler ways to do it:
+//! 
+//!  - Bespoke logic that just keeps track of state as you parse the string
+//!  - Use a regular expression.  Very few lines could have solved this problem effectively.
+//! 
+//!  It wasn't the most efficient use of time to solve this problem, but I learned a lot
+//!  by doing it the hard way. Part 2 was relatively easy to solve once I had my lexer and
+//!  parser in place. Amazingly, I found and corrected at least one bug which could have stymied
+//!  me in part one, but the input didn't contain those edge cases.
+//! 
+//!  Main components:
+//!  Tokenizer - Creates a simple lexical analysis program
+//!  Parser - A simple parser that outputs a list of nodes instead of a traditional parse tree
+//!
 use std::fmt;
 
 advent_of_code::solution!(3);
 
+/// Represents a token in the language
+/// e.g. MUL(1,23) would return tokens: MUL LParen, Number, Comma, Number, RParen
 #[derive(PartialEq, Debug, Hash, Eq, Clone)]
 enum Token {
     MUL,
@@ -33,12 +43,7 @@ enum Token {
     UNKNOWN,
 }
 
-/* A state machine to parse MUL(<param1>,<param2>)
-
-Currently, I just parse into a list of MUL nodes.
-To do this the "right" way, you'd have the nodes as a tree with MUL as parent and parameters as
-child nodes.
-*/
+/// A state for use in the state machine embedded in the parser.
 #[derive(PartialEq, Debug, Hash, Eq, Clone)]
 enum State {
     Start,
@@ -50,42 +55,51 @@ enum State {
     Comma,
     Param2,
 }
+
 impl fmt::Display for State {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{:?}", self)
     }
 }
 
-/* TODO: modify the parser to load the state transitions into a .
-    Currently, I'm just doing that in a test to make sure I didn't
-    screw anything up.
-*/
+/// Key to use when loading transitions into a set. 
+/// 
+/// TODO: modify the parser to use it. Currently one used for a test.
 #[derive(Hash, Eq, PartialEq, Debug)]
 struct EntryKey {
     curr: State,
     tok: Token,
 }
 
+/// Represents an entry in the state table
 struct Entry {
+    /// Current state of the parser
     curr: State,
+    /// Next token to analyze
     tok: Token,
+    /// Next state to transition to
     next: State,
-    /* Function that processes the current state, then returns the current list of parsed nodes */
+    /// Function that processes the current state
     func: fn(&Token, &str, &State, &mut Node) -> bool,
 }
 
-/*
- Stores a list of parsed nodes.
- NB: In a traditional parser, the output is a tree, not a list.
-*/
+/// Stores the parsed representation of each statement.
+/// 
+/// NB: In a traditional parser, there nodes would have children to form a tree, This data structure
+/// doesn't have a list of children because the final output of the parser is just a list.
 #[derive(PartialEq, Debug, Clone)]
 struct Node {
+    /// The name of the function being parsed. I lazily reused the Token enum because it was already there.
+    /// Can represent a MUL, DO, or DONT function in the language
     symbol_name: Token,
+    /// First parameter to the MUL function if present
     first_number: u64,
+    /// Second parameter to the MUL function if present
     second_number: u64,
 }
 
 impl Node {
+    /// Instantiate an empty node of unknown type
     pub fn new() -> Node {
         Node {
             symbol_name: Token::UNKNOWN,
@@ -95,6 +109,7 @@ impl Node {
     }
 }
 
+/// Lexical analyzer for our language
 #[derive(Clone)]
 struct Tokenizer<'a> {
     input: &'a str,
@@ -107,7 +122,7 @@ impl<'a> Tokenizer<'a> {
     ///
     /// # Arguments
     ///
-    /// * `input` - the string data to parse. 
+    /// * `input` - the string data to parse.
     ///
     /// # Returns
     ///
@@ -117,9 +132,9 @@ impl<'a> Tokenizer<'a> {
     }
 
     /// Intenrnal function to parse a sequence of up to 3 digits and return it as a slice
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `self` - uses the input string and current position. Modifies the current position
     ///            on success.
     ///
@@ -164,13 +179,13 @@ impl<'a> Tokenizer<'a> {
     }
 
     /// Retrieve the next token in the input
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * self - Instance of the Tokenizer
-    /// 
+    ///
     /// # Returns
-    /// 
+    ///
     /// If there was data, returns the next token in the input stream and a slice pointing to its value.
     /// A value of Token::UNKNOWN is returned if it doesn't recognize the current character.
     /// Returns `(None, None)` at the end of the input.
@@ -200,20 +215,20 @@ impl<'a> Tokenizer<'a> {
     }
 }
 
+/// This parser uses the Tokenizer to do lexical analysis, then uses a state machine to analyze
+/// the tokens in sequence.
+///
+/// # Returns
+/// ///
+/// A list of Node structures to correspond to the valid data found in the input
 struct Parser<'a> {
     transitions: Vec<Entry>,
     nodes: Vec<Box<Node>>,
     input: &'a str,
 }
 
-/// This parser uses the Tokenizer to do lexical analysis, then uses a state machine to analyze 
-/// the tokens in sequence.
-///
-/// # Returns
-/// ///
-/// A list of Node structures to correspond to the valid data found in the input
 impl<'a> Parser<'a> {
-    
+
     /// Initialize a new instance.
     fn new(input: &str) -> Parser {
         Parser {
@@ -254,7 +269,7 @@ impl<'a> Parser<'a> {
                     next: State::LParen,
                     func: Self::consume,
                 },
-                
+
                 // State to end do() and don't()
                 Entry {
                     curr: State::LParen,
@@ -344,7 +359,7 @@ impl<'a> Parser<'a> {
         self.nodes.clone()
     }
 
-    /// Consume the token.  The node is not complete yet. 
+    /// Consume the token.  The node is not complete yet.
     fn consume(_token: &Token, _value: &str, _state: &State, _node: &mut Node) -> bool {
         false
     }
@@ -363,7 +378,7 @@ impl<'a> Parser<'a> {
         }
         false
     }
-    /// This is a token representing a function like `mul()`, `don't()` or `do()`. Record 
+    /// This is a token representing a function like `mul()`, `don't()` or `do()`. Record
     /// the token so we can process the node by type later.
     fn process_symbol(token: &Token, _: &str, _state: &State, node: &mut Node) -> bool {
         node.symbol_name = token.clone();
