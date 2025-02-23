@@ -18,7 +18,7 @@ Currently, I just parse into a list of MUL nodes.
 To do this the "right" way, you'd have the nodes as a tree with MUL as parent and parameters as
 child nodes.
 */
-#[derive(PartialEq, Debug, Hash, Eq)]
+#[derive(PartialEq, Debug, Hash, Eq, Clone)]
 enum State {
     Start,
     MUL,
@@ -130,17 +130,18 @@ impl<'a> Tokenizer<'a> {
     }
 }
 
-struct Parser {
+struct Parser<'a> {
     transitions: Vec<Entry>,
     nodes: Vec<Box<Node>>,
+    input: &'a str,
 }
 
 /* This parser uses the Tokenizer to do lexical analysis,
   then creates a list of Node structures to correspond to the
   valid data found in the input
 */
-impl Parser {
-    fn new() -> Parser {
+impl <'a>Parser<'a> {
+    fn new(input : &str) -> Parser {
         Parser {
             transitions: Vec::from([
                 Entry {
@@ -181,6 +182,7 @@ impl Parser {
                 },
             ]),
             nodes: Vec::<Box<Node>>::new(),
+            input
         }
     }
 
@@ -199,14 +201,11 @@ impl Parser {
         }
         None
     }
-    fn add_node(&mut self, node: Box<Node>) {
-        self.nodes.push(node);
-    }
-    pub fn parse(input: &str) -> Vec<Box<Node>> {
-        let mut tokenizer = Tokenizer::new(input);
-        let mut parser = Self::new();
+    
+    pub fn parse(&mut self) -> Vec<Box<Node>> {
         let mut curr_node = Box::new(Node::new());
-        let mut curr_state = &State::Start;
+        let mut curr_state = State::Start;
+        let mut tokenizer = Tokenizer::new(self.input);
         loop {
             let (next_token, next_value) = tokenizer.get();
             if next_token.is_none() {
@@ -214,25 +213,22 @@ impl Parser {
             }
             let next_value = next_value.unwrap();
             let next_token = next_token.unwrap();
-            let entry = {
-                let t = parser.find_entry(&curr_state, &next_token).clone();
-                t
-            };
+            let entry = self.find_entry(&curr_state, &next_token).clone();
             // Can't find a valid state transistion? Go back to START
             if entry.is_none() {
-                curr_state = &State::Start;
+                curr_state = State::Start;
                 continue;
             }
             let entry = entry.unwrap();
             // Handle this transition with the function specified in the table
-            let complete = (entry.func)(&next_token, next_value, &entry.next, & mut curr_node);
+            let complete = (entry.func)(&next_token, next_value, &entry.next, &mut curr_node);
+            curr_state = entry.next.clone();
             if complete {
-                parser.add_node(curr_node);
+                self.nodes.push(curr_node);
                 curr_node = Box::new(Node::new());
             }
-            curr_state = &entry.next;
         }
-        parser.nodes
+        self.nodes.clone()
     }
 
     /* consume - consume the token and proceed to the next state */
@@ -240,12 +236,12 @@ impl Parser {
         false
     }
 
-    fn complete<'a>(_token: &Token, _value: &str, _state: &State, node: &mut Node) -> bool {
-        print!("Got {} * {}", node.first_number, node.second_number);
+    fn complete(_token: &Token, _value: &str, _state: &State, node: &mut Node) -> bool {
+        //print!("Got {} * {}", node.first_number, node.second_number);
         true
     }
 
-    fn process_param<'a>(_token: &Token, value: &str, state: &State, node: &mut Node) -> bool {
+    fn process_param(_token: &Token, value: &str, state: &State, node: &mut Node) -> bool {
         match state {
             State::Param1 => node.first_number = value.parse().unwrap(),
             State::Param2 => node.second_number = value.parse().unwrap(),
@@ -256,7 +252,7 @@ impl Parser {
 }
 
 pub fn part_one(input: &str) -> Option<u64> {
-    let nodes = Parser::parse(input);
+    let nodes = Parser::new(input).parse();
     let mut sum = 0u64;
     for node in nodes.iter() {
         sum += node.first_number * node.second_number;
@@ -265,7 +261,7 @@ pub fn part_one(input: &str) -> Option<u64> {
 }
 
 pub fn part_two(input: &str) -> Option<u64> {
-    let _nodes = Parser::parse(input);
+    let _nodes = Parser::new(input).parse();
     None
 }
 
@@ -355,18 +351,20 @@ mod tests {
 
     #[test]
     fn test_parse() {
+        let mut parser = Parser::new("mul(123,456)");
+        let result = *(parser.parse().get(0).unwrap()).clone();
         assert_eq!(
             Node {
                 first_number: 123,
                 second_number: 456,
             },
-            *Parser::parse("mul(123,456)").get(0).unwrap()
+            result
         );
     }
 
     #[test]
     fn validate_transitions() {
-        let p = Parser::new();
+        let p = Parser::new("");
         let mut set: HashSet<EntryKey> = HashSet::new();
         for entry in p.transitions {
             let key = EntryKey {

@@ -60,7 +60,7 @@
       <window_info id="Merge Requests" />
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14517291" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13983345" />
       <window_info id="Commit" order="1" weight="0.14517291" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" />
@@ -72,7 +72,7 @@
       <window_info anchor="bottom" id="Problems" order="1" />
       <window_info anchor="bottom" id="Problems View" order="2" />
       <window_info anchor="bottom" id="Terminal" order="3" />
-      <window_info active="true" anchor="bottom" id="Build" order="4" visible="true" weight="0.32940447" />
+      <window_info active="true" anchor="bottom" id="Build" order="4" visible="true" weight="0.31125438" />
       <window_info anchor="bottom" id="Debug" order="5" weight="0.32940447" />
       <window_info anchor="bottom" id="Run" order="6" weight="0.32940447" />
       <window_info anchor="bottom" id="Services" order="7" />
@@ -231,7 +231,7 @@
       <workItem from="1740221505221" duration="4752000" />
       <workItem from="1740266597897" duration="289000" />
       <workItem from="1740306912484" duration="1958000" />
-      <workItem from="1740308891574" duration="4068000" />
+      <workItem from="1740308891574" duration="5893000" />
     </task>
     <task id="LOCAL-00001" summary="Cleanups for day 2 code">
       <option name="closed" value="true" />
@@ -256,7 +256,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/bin/03.rs</url>
-          <line>258</line>
+          <line>254</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
