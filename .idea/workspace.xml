@@ -7,9 +7,7 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="Completed Day 3 part 2.">
-      <change beforePath="$PROJECT_DIR$/src/bin/03.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/03.rs" afterDir="false" />
-    </list>
+    <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="Completed Day 3 part 2." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +16,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="RsBuildProfile:test" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="TQVTgQYh" />
@@ -33,10 +32,17 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Cargo.Build `Test 03::tests`.executor": "Run",
+    "Cargo.Build `Test tests::test_count_xmas`.executor": "Run",
+    "Cargo.Build `Test tests::test_horiz_str`.executor": "Run",
+    "Cargo.Build `Test tests::test_part_one (1)`.executor": "Run",
     "Cargo.Build `Test tests::test_part_one`.executor": "Run",
     "Cargo.Run advent_of_code.executor": "Debug",
     "Cargo.Test 03::tests.executor": "Run",
+    "Cargo.Test tests::test_count_xmas.executor": "Debug",
+    "Cargo.Test tests::test_count_xmas_in_strings.executor": "Run",
+    "Cargo.Test tests::test_horiz_str.executor": "Run",
     "Cargo.Test tests::test_parse.executor": "Run",
+    "Cargo.Test tests::test_part_one (1).executor": "Run",
     "Cargo.Test tests::test_part_one.executor": "Debug",
     "Cargo.Test tests::test_part_two.executor": "Debug",
     "Cargo.Test tests::test_tokenizer.executor": "Debug",
@@ -62,8 +68,8 @@
       <window_info id="Merge Requests" />
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.14012969" />
-      <window_info active="true" id="Commit" order="1" visible="true" weight="0.14012969" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1349757" />
+      <window_info id="Commit" order="1" weight="0.14012969" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="TypeScript" />
@@ -74,9 +80,9 @@
       <window_info anchor="bottom" id="Problems" order="1" />
       <window_info anchor="bottom" id="Problems View" order="2" weight="0.3116197" />
       <window_info anchor="bottom" id="Terminal" order="3" />
-      <window_info active="true" anchor="bottom" id="Build" order="4" visible="true" weight="0.32940447" />
-      <window_info anchor="bottom" id="Debug" order="5" weight="0.32940447" />
-      <window_info anchor="bottom" id="Run" order="6" weight="0.32940447" />
+      <window_info active="true" anchor="bottom" id="Build" order="4" visible="true" weight="0.32883936" />
+      <window_info anchor="bottom" id="Debug" order="5" weight="0.32883936" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.32883936" />
       <window_info anchor="bottom" id="Services" order="7" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.32940447" />
       <window_info anchor="right" id="Coverage" side_tool="true" />
@@ -89,7 +95,7 @@
       <window_info anchor="right" id="RustCargo" order="6" weight="0.2" />
     </layout>
   </component>
-  <component name="RunManager" selected="Cargo.Test 03::tests">
+  <component name="RunManager" selected="Cargo.Test tests::test_part_one (1)">
     <configuration name="Run advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package advent_of_code --bin advent_of_code" />
@@ -142,8 +148,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_parse" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 03 tests::test_parse -- --exact" />
+    <configuration name="Test tests::test_count_xmas" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 04 tests::test_count_xmas -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -159,8 +165,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_part_one" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 03 tests::test_part_one -- --exact" />
+    <configuration name="Test tests::test_count_xmas_in_strings" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 04 tests::test_count_xmas_in_strings -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -176,8 +182,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_part_two" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 03 tests::test_part_two -- --exact" />
+    <configuration name="Test tests::test_horiz_str" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 04 tests::test_horiz_str -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -193,8 +199,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_tokenizer" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 03 tests::test_tokenizer -- --exact" />
+    <configuration name="Test tests::test_part_one (1)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 04 tests::test_part_one -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -212,11 +218,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Test tests::test_part_one (1)" />
+        <item itemvalue="Cargo.Test tests::test_count_xmas_in_strings" />
+        <item itemvalue="Cargo.Test tests::test_horiz_str" />
+        <item itemvalue="Cargo.Test tests::test_count_xmas" />
         <item itemvalue="Cargo.Test 03::tests" />
-        <item itemvalue="Cargo.Test tests::test_part_one" />
-        <item itemvalue="Cargo.Test tests::test_part_two" />
-        <item itemvalue="Cargo.Test tests::test_parse" />
-        <item itemvalue="Cargo.Test tests::test_tokenizer" />
       </list>
     </recent_temporary>
   </component>
@@ -262,17 +268,6 @@
     <MESSAGE value="Cleanups for day 2 code" />
     <MESSAGE value="Completed Day 3 part 2." />
     <option name="LAST_COMMIT_MESSAGE" value="Completed Day 3 part 2." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/bin/03.rs</url>
-          <line>373</line>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
