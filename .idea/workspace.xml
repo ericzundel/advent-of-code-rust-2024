@@ -29,47 +29,48 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Cargo.Build `Test 03::tests`.executor": "Run",
-    "Cargo.Build `Test 04::tests`.executor": "Run",
-    "Cargo.Build `Test tests::test_count_xmas`.executor": "Run",
-    "Cargo.Build `Test tests::test_horiz_str`.executor": "Run",
-    "Cargo.Build `Test tests::test_part_one (1)`.executor": "Run",
-    "Cargo.Build `Test tests::test_part_one`.executor": "Run",
-    "Cargo.Build `Test tests::test_xmas_in_vec`.executor": "Run",
-    "Cargo.Run advent_of_code.executor": "Debug",
-    "Cargo.Test 03::tests.executor": "Run",
-    "Cargo.Test 04::tests.executor": "Run",
-    "Cargo.Test 05::tests.executor": "Run",
-    "Cargo.Test tests::test_count_xmas.executor": "Debug",
-    "Cargo.Test tests::test_count_xmas_in_strings.executor": "Run",
-    "Cargo.Test tests::test_horiz_str.executor": "Run",
-    "Cargo.Test tests::test_is_x_mas.executor": "Run",
-    "Cargo.Test tests::test_load_data.executor": "Run",
-    "Cargo.Test tests::test_parse.executor": "Run",
-    "Cargo.Test tests::test_part_one (1).executor": "Run",
-    "Cargo.Test tests::test_part_one.executor": "Debug",
-    "Cargo.Test tests::test_part_two.executor": "Debug",
-    "Cargo.Test tests::test_rows_to_columns.executor": "Run",
-    "Cargo.Test tests::test_tokenizer.executor": "Debug",
-    "Cargo.Test tests::test_tokenizer_seq1.executor": "Debug",
-    "Cargo.Test tests::test_xmas_in_vec.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.rust.reset.selective.auto.import": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "org.rust.first.attach.projects": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Cargo.Build `Test 03::tests`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test 04::tests`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_count_xmas`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_horiz_str`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_part_one (1)`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_part_one`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_xmas_in_vec`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Run advent_of_code.executor&quot;: &quot;Debug&quot;,
+    &quot;Cargo.Test 03::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test 04::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test 05::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_count_xmas.executor&quot;: &quot;Debug&quot;,
+    &quot;Cargo.Test tests::test_count_xmas_in_strings.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_horiz_str.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_is_x_mas.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_load_data.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_parse.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_parse_update_line.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_part_one (1).executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_part_one.executor&quot;: &quot;Debug&quot;,
+    &quot;Cargo.Test tests::test_part_two.executor&quot;: &quot;Debug&quot;,
+    &quot;Cargo.Test tests::test_rows_to_columns.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_tokenizer.executor&quot;: &quot;Debug&quot;,
+    &quot;Cargo.Test tests::test_tokenizer_seq1.executor&quot;: &quot;Debug&quot;,
+    &quot;Cargo.Test tests::test_xmas_in_vec.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
+    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
     <layout>
       <window_info id="Bookmarks" side_tool="true" />
@@ -103,7 +104,7 @@
       <window_info anchor="right" id="RustCargo" order="6" weight="0.2" />
     </layout>
   </component>
-  <component name="RunManager" selected="Cargo.Test tests::test_load_data">
+  <component name="RunManager" selected="Cargo.Test 05::tests">
     <configuration name="Run advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package advent_of_code --bin advent_of_code" />
@@ -207,8 +208,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_part_one (1)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 04 tests::test_part_one -- --exact" />
+    <configuration name="Test tests::test_parse_update_line" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 05 tests::test_parse_update_line -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -226,11 +227,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Test tests::test_load_data" />
         <item itemvalue="Cargo.Test 05::tests" />
+        <item itemvalue="Cargo.Test tests::test_parse_update_line" />
+        <item itemvalue="Cargo.Test tests::test_load_data" />
         <item itemvalue="Cargo.Test 04::tests" />
         <item itemvalue="Cargo.Test tests::test_is_x_mas" />
-        <item itemvalue="Cargo.Test tests::test_part_one (1)" />
       </list>
     </recent_temporary>
   </component>
