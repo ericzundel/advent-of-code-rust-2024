@@ -7,10 +7,7 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="Completed Day 3 part 2.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bin/04.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/04.rs" afterDir="false" />
-    </list>
+    <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="Completed Day 4 part 2" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,43 +29,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Cargo.Build `Test 03::tests`.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Build `Test tests::test_count_xmas`.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Build `Test tests::test_horiz_str`.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Build `Test tests::test_part_one (1)`.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Build `Test tests::test_part_one`.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Build `Test tests::test_xmas_in_vec`.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Run advent_of_code.executor&quot;: &quot;Debug&quot;,
-    &quot;Cargo.Test 03::tests.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test 04::tests.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test tests::test_count_xmas.executor&quot;: &quot;Debug&quot;,
-    &quot;Cargo.Test tests::test_count_xmas_in_strings.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test tests::test_horiz_str.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test tests::test_parse.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test tests::test_part_one (1).executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test tests::test_part_one.executor&quot;: &quot;Debug&quot;,
-    &quot;Cargo.Test tests::test_part_two.executor&quot;: &quot;Debug&quot;,
-    &quot;Cargo.Test tests::test_rows_to_columns.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test tests::test_tokenizer.executor&quot;: &quot;Debug&quot;,
-    &quot;Cargo.Test tests::test_tokenizer_seq1.executor&quot;: &quot;Debug&quot;,
-    &quot;Cargo.Test tests::test_xmas_in_vec.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
-    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Cargo.Build `Test 03::tests`.executor": "Run",
+    "Cargo.Build `Test 04::tests`.executor": "Run",
+    "Cargo.Build `Test tests::test_count_xmas`.executor": "Run",
+    "Cargo.Build `Test tests::test_horiz_str`.executor": "Run",
+    "Cargo.Build `Test tests::test_part_one (1)`.executor": "Run",
+    "Cargo.Build `Test tests::test_part_one`.executor": "Run",
+    "Cargo.Build `Test tests::test_xmas_in_vec`.executor": "Run",
+    "Cargo.Run advent_of_code.executor": "Debug",
+    "Cargo.Test 03::tests.executor": "Run",
+    "Cargo.Test 04::tests.executor": "Run",
+    "Cargo.Test 05::tests.executor": "Run",
+    "Cargo.Test tests::test_count_xmas.executor": "Debug",
+    "Cargo.Test tests::test_count_xmas_in_strings.executor": "Run",
+    "Cargo.Test tests::test_horiz_str.executor": "Run",
+    "Cargo.Test tests::test_is_x_mas.executor": "Run",
+    "Cargo.Test tests::test_load_data.executor": "Run",
+    "Cargo.Test tests::test_parse.executor": "Run",
+    "Cargo.Test tests::test_part_one (1).executor": "Run",
+    "Cargo.Test tests::test_part_one.executor": "Debug",
+    "Cargo.Test tests::test_part_two.executor": "Debug",
+    "Cargo.Test tests::test_rows_to_columns.executor": "Run",
+    "Cargo.Test tests::test_tokenizer.executor": "Debug",
+    "Cargo.Test tests::test_tokenizer_seq1.executor": "Debug",
+    "Cargo.Test tests::test_xmas_in_vec.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.rust.reset.selective.auto.import": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "org.rust.first.attach.projects": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
     <layout>
       <window_info id="Bookmarks" side_tool="true" />
@@ -76,7 +77,7 @@
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.07321359" />
-      <window_info id="Commit" order="1" weight="0.14012969" />
+      <window_info id="Commit" order="1" weight="0.07321359" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="TypeScript" />
@@ -87,9 +88,9 @@
       <window_info anchor="bottom" id="Problems" order="1" />
       <window_info anchor="bottom" id="Problems View" order="2" weight="0.3116197" />
       <window_info anchor="bottom" id="Terminal" order="3" />
-      <window_info anchor="bottom" id="Build" order="4" weight="0.19059584" />
-      <window_info anchor="bottom" id="Debug" order="5" weight="0.32883936" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.19059584" />
+      <window_info anchor="bottom" id="Build" order="4" weight="0.2552046" />
+      <window_info anchor="bottom" id="Debug" order="5" weight="0.18413496" />
+      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.2552046" />
       <window_info anchor="bottom" id="Services" order="7" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.32940447" />
       <window_info anchor="right" id="Coverage" side_tool="true" />
@@ -102,27 +103,10 @@
       <window_info anchor="right" id="RustCargo" order="6" weight="0.2" />
     </layout>
   </component>
-  <component name="RunManager" selected="Cargo.Test 04::tests">
+  <component name="RunManager" selected="Cargo.Test tests::test_load_data">
     <configuration name="Run advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package advent_of_code --bin advent_of_code" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs />
-      <option name="emulateTerminal" value="true" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test 03::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 03 tests" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -155,8 +139,59 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Test 05::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 05 tests" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Test advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="test --workspace" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test tests::test_is_x_mas" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 04 tests::test_is_x_mas -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test tests::test_load_data" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 05 tests::test_load_data -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -189,47 +224,13 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_rows_to_columns" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 04 tests::test_rows_to_columns -- --exact" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs />
-      <option name="emulateTerminal" value="true" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test tests::test_xmas_in_vec" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 04 tests::test_xmas_in_vec -- --exact" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs />
-      <option name="emulateTerminal" value="true" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Test tests::test_load_data" />
+        <item itemvalue="Cargo.Test 05::tests" />
         <item itemvalue="Cargo.Test 04::tests" />
+        <item itemvalue="Cargo.Test tests::test_is_x_mas" />
         <item itemvalue="Cargo.Test tests::test_part_one (1)" />
-        <item itemvalue="Cargo.Test tests::test_xmas_in_vec" />
-        <item itemvalue="Cargo.Test tests::test_rows_to_columns" />
-        <item itemvalue="Cargo.Test 03::tests" />
       </list>
     </recent_temporary>
   </component>
@@ -267,7 +268,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740342299598</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Completed Day 4 part 2">
+      <option name="closed" value="true" />
+      <created>1740566476587</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1740566476587</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -276,7 +285,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Cleanups for day 2 code" />
     <MESSAGE value="Completed Day 3 part 2." />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed Day 3 part 2." />
+    <MESSAGE value="Completed Day 4 part 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed Day 4 part 2" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
