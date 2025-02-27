@@ -33,6 +33,7 @@
   &quot;keyToString&quot;: {
     &quot;Cargo.Build `Test 03::tests`.executor&quot;: &quot;Run&quot;,
     &quot;Cargo.Build `Test 04::tests`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test 05::tests`.executor&quot;: &quot;Run&quot;,
     &quot;Cargo.Build `Test tests::test_count_xmas`.executor&quot;: &quot;Run&quot;,
     &quot;Cargo.Build `Test tests::test_horiz_str`.executor&quot;: &quot;Run&quot;,
     &quot;Cargo.Build `Test tests::test_part_one (1)`.executor&quot;: &quot;Run&quot;,
@@ -104,7 +105,7 @@
       <window_info anchor="right" id="RustCargo" order="6" weight="0.2" />
     </layout>
   </component>
-  <component name="RunManager" selected="Cargo.Test 05::tests">
+  <component name="RunManager" selected="Cargo.Test 04::tests">
     <configuration name="Run advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package advent_of_code --bin advent_of_code" />
@@ -227,10 +228,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Test 04::tests" />
         <item itemvalue="Cargo.Test 05::tests" />
         <item itemvalue="Cargo.Test tests::test_parse_update_line" />
         <item itemvalue="Cargo.Test tests::test_load_data" />
-        <item itemvalue="Cargo.Test 04::tests" />
         <item itemvalue="Cargo.Test tests::test_is_x_mas" />
       </list>
     </recent_temporary>
