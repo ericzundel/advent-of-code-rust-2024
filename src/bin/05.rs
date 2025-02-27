@@ -32,7 +32,7 @@ impl <'a>SafetyManual {
         if updates.len() == 0 {
             return true;
         }
-        let (_head, remainder) = updates.split_at(1);
+        let (head, remainder) = updates.split_at(1);
         for rule in self.rules.iter() {
             if rule.post == page {
                 if remainder.contains(&rule.pre) {
@@ -41,7 +41,7 @@ impl <'a>SafetyManual {
             }
         }
         // Recursively search
-        return self.is_valid(page, remainder);
+        return self.is_valid(head[0], remainder);
     }
 
     fn valid_updates(&'a self) -> Vec<&'a Update> {
@@ -79,6 +79,8 @@ fn parse_update_line(update_line: &str) -> Update {
     Update { pages }
 }
 
+/// Sanity checking on an unwritten rule of the dataset: all pages in the updates have
+/// entries in the rule list. Useful to know if you want to walk a graph.
 fn check_rules_and_updates(rules: &Vec<Rule>, updates: &Vec<Update>) {
     let mut set: HashSet<u64> = HashSet::new();
     rules.iter().for_each(|x| {
@@ -108,7 +110,7 @@ pub fn part_one(input: &str) -> Option<u64> {
     for update in manual.valid_updates() {
         count += update.clone().mid();
     }
-    // Answer to data from website is < 6631
+    // Answer to data from website is 6267
     Some(count)
 }
 
