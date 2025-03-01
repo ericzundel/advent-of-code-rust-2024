@@ -1,3 +1,5 @@
+use std::fmt::{Display, Formatter, Write};
+
 advent_of_code::solution!(6);
 
 #[derive(Clone, Debug)]
@@ -18,9 +20,11 @@ impl LabMap {
         self.visit(&guard.position);
         self.visit(&new_position);
 
-        self.guard = Some(Guard::new(new_position.x,
-                                     new_position.y,
-                                     guard.direction.to_char()));
+        self.guard = Some(Guard::new(
+            new_position.x,
+            new_position.y,
+            guard.direction.to_char(),
+        ));
     }
 
     pub(crate) fn is_column(&self, position: Option<Position>) -> bool {
@@ -194,6 +198,35 @@ impl LabMap {
     }
 }
 
+impl Display for LabMap {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let mut buf: String = String::new();
+        for row in 0..self.tiles.len() {
+            for col in 0..self.tiles[0].len() {
+                let mut character = match self.tiles[row][col] {
+                    Tile::Column => '#',
+                    Tile::Empty { visited } => {
+                        if visited {
+                            'X'
+                        } else {
+                            '.'
+                        }
+                    }
+                };
+                if self.clone().get_guard().is_some() {
+                    let guard = self.clone().guard.unwrap();
+                    if row == guard.position.y && col == guard.position.x {
+                        character = guard.direction.to_char();
+                    }
+                }
+                buf.push(character);
+            }
+            buf.push('\n');
+        }
+        f.write_str(buf.as_str())
+    }
+}
+
 struct Simulation {
     map: LabMap,
 }
@@ -263,6 +296,7 @@ impl Simulation {
             return true;
         }
 
+        // Would this new position hit a column? If so, then turn, else move to the new spot
         if self.map.is_column(new_position.clone()) {
             guard.turn();
         } else {
@@ -270,6 +304,7 @@ impl Simulation {
         }
         false
     }
+
     pub fn run(&mut self) {
         while !self.tick() {}
     }
@@ -335,6 +370,11 @@ mod tests {
         assert_eq!(lab_map.is_column(Some(Position { x: 2, y: 1 })), false);
     }
     #[test]
+    fn test_lab_map_print() {
+        let lab_map = LabMap::new(".#.\n.^.\n");
+        print!("{}\n", lab_map);
+    }
+    #[test]
     fn test_turn() {
         let mut guard = Guard::new(1, 1, '^');
         assert_eq!(Direction::Up, guard.direction);
@@ -353,8 +393,23 @@ mod tests {
     fn test_move_guard() {
         let mut lab_map = LabMap::new("...\n.^.\n");
         lab_map.move_guard(&Position { x: 1, y: 0 });
-        assert_eq!(lab_map.get_guard().unwrap().position, Position { x: 1, y: 0 });
+        assert_eq!(
+            lab_map.get_guard().unwrap().position,
+            Position { x: 1, y: 0 }
+        );
     }
+
+    #[test]
+    fn test_simulation1() {
+        let lab_map = LabMap::new("...\n.^.\n");
+        let mut simulation = Simulation::new(lab_map.clone());
+        print!("Original:\n{}\n", simulation.map);
+        simulation.tick();
+        print!("Tick1:\n{}\n", simulation.map);
+        simulation.tick();
+        print!("Tick 2:\n{}\n", simulation.map);
+    }
+    
     #[test]
     fn test_part_one() {
         let result = part_one(&advent_of_code::template::read_file("examples", DAY));
