@@ -27,31 +27,93 @@ impl Update {
     }
 }
 
-impl <'a>SafetyManual {
+impl<'a> SafetyManual {
     fn is_valid(&self, page: u64, updates: &[u64]) -> bool {
         if updates.len() == 0 {
             return true;
         }
-        let (head, remainder) = updates.split_at(1);
         for rule in self.rules.iter() {
             if rule.post == page {
-                if remainder.contains(&rule.pre) {
+                if updates.contains(&rule.pre) {
                     return false;
                 }
             }
         }
         // Recursively search
-        return self.is_valid(head[0], remainder);
+        return self.is_valid(updates[0], &updates[1..]);
     }
 
-    fn valid_updates(&'a self) -> Vec<&'a Update> {
+    fn is_valid_update(&self, update: &Update) -> bool {
+        self.is_valid(*update.pages.get(0).unwrap(), update.pages.as_slice())
+    }
+    
+    // Helper function for valid_updates() also re-used for repairing updates
+    fn calc_valid_updates(&'a self, updates: &'a Vec<Update>) -> Vec<&'a Update> {
         let mut results: Vec<&'a Update> = Vec::new();
-        for update in self.updates.iter() {
-            if self.is_valid(*update.pages.get(0).unwrap(), update.pages.as_slice()) {
+        for update in updates.iter() {
+            if self.is_valid_update(update) {
                 results.push(update);
             }
         }
         results
+    }
+
+    // Return the list of valid updates from the SafetyManual
+    fn valid_updates(&'a self) -> Vec<&'a Update> {
+        self.calc_valid_updates(&self.updates)
+    }
+    
+    // Return the list of invalid updates from the SafetyManual
+    fn invalid_updates(&'a self) -> Vec<&'a Update> {
+        let mut results: Vec<&'a Update> = Vec::new();
+        for update in self.updates.iter() {
+            if !self.is_valid(*update.pages.get(0).unwrap(), update.pages.as_slice()) {
+                results.push(update);
+            }
+        }
+        results
+    }
+
+    fn repair_pages(&'a self, pages: &'a Vec<u64>) -> Vec<u64> {
+        // Recursively sort the vector using quicksort
+        if pages.len() <= 1 {
+            return pages.clone();
+        }
+        let split = pages.split_at(1);
+        let partition = split.0[0];
+        let remainder = split.1;
+        let mut pre_list: Vec<u64> = Vec::new();
+        let mut post_list: Vec<u64> = Vec::new();
+        for page in remainder {
+            if self.is_valid(partition, &[*page]) {
+                post_list.push(*page);
+            } else {
+                pre_list.push(*page);
+            }
+        }
+
+        let mut result = Vec::new();
+        let pre_repaired: Vec<u64> = self.repair_pages(&pre_list);
+        result.extend(pre_repaired);
+        result.push(partition);
+        let post_repaired: Vec<u64> = self.repair_pages(&post_list);
+        result.extend(post_repaired);
+        result
+    }
+    
+    /// Given an update line, try to repair it by reordering the pages.
+    /// If it can't be repaired, return None.
+    fn repair_update(&self, update_to_repair: &Update) -> Option<Update> {
+        let pages_to_repair = update_to_repair.clone().pages;
+        let repared_pages = self.repair_pages(&pages_to_repair);
+        let result = Update {
+            pages: repared_pages.clone(),
+        };
+        if self.is_valid_update(&result) {
+            Some(result)
+        } else {
+            None
+        }
     }
 }
 
@@ -116,7 +178,24 @@ pub fn part_one(input: &str) -> Option<u64> {
 
 pub fn part_two(input: &str) -> Option<u64> {
     let manual = load_data(input);
-    None
+    let invalid_updates = manual.invalid_updates();
+    let mut repaired_updates: Vec<Update> = Vec::new();
+    for update in invalid_updates {
+        match manual.repair_update(update) {
+            Some(update) => repaired_updates.push(update),
+            None => continue,
+        }
+    }
+    if repaired_updates.len() == 0 {
+        None
+    } else {
+        Some(
+            repaired_updates
+                .into_iter()
+                .map(|x| x.clone().mid())
+                .sum::<u64>(),
+        )
+    }
 }
 
 #[cfg(test)]
@@ -139,39 +218,66 @@ mod tests {
         assert_eq!(34, update.mid());
     }
 
-    #[test]
-    fn test_load_data() {
+    fn example_safety_manual() -> SafetyManual {
         let expected_rules: Vec<Rule> = vec![
             Rule { pre: 12, post: 23 },
             Rule { pre: 34, post: 45 },
-            Rule { pre: 56, post: 78 },
+            Rule { pre: 23, post: 56 },
         ];
         let expected_updates: Vec<Update> = vec![
             Update {
-                pages: vec![12, 34, 56],
+                pages: vec![12, 23, 56],
             },
             Update {
-                pages: vec![78, 23, 45],
+                pages: vec![23, 56, 12],
             },
         ];
-        let expected = SafetyManual {
+        SafetyManual {
             rules: expected_rules,
             updates: expected_updates,
-        };
+        }
+    }
+
+    #[test]
+    fn test_load_data() {
+        let expected = example_safety_manual();
         assert_eq!(
             expected,
-            load_data("12|23\n34|45\n56|78\n\n12,34,56\n78,23,45")
+            load_data("12|23\n34|45\n23|56\n\n12,23,56\n23,56,12")
         )
     }
+
+    #[test]
+    fn test_valid_updates() {
+        let safety_manual = example_safety_manual();
+        assert_eq!(safety_manual.is_valid(12, &[12u64, 23u64, 56u64]), true);
+        assert_eq!(safety_manual.is_valid(23, &[23u64, 56u64, 12u64]), false);
+    }
+
     #[test]
     fn test_part_one() {
         let result = part_one(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
+        assert_eq!(result, Some(143));
+    }
+
+    #[test]
+    fn test_repair_update() {
+        let safety_manual = example_safety_manual();
+        let invalid_update = Update {
+            pages: vec![23u64, 56u64, 12u64],
+        };
+        let valid_update = Update {
+            pages: vec![12u64, 23u64, 56u64],
+        };
+        assert_eq!(safety_manual.is_valid_update(&valid_update), true);
+        assert_eq!(safety_manual.is_valid_update(&invalid_update), false);
+        let result = safety_manual.repair_update(&invalid_update).unwrap();
+        assert_eq!(result, valid_update)
     }
 
     #[test]
     fn test_part_two() {
         let result = part_two(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
+        assert_eq!(result, Some(123));
     }
 }
