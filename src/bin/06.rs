@@ -1,4 +1,4 @@
-use std::fmt::{Display, Formatter, Write};
+use std::fmt::{Display, Formatter};
 
 advent_of_code::solution!(6);
 
@@ -15,6 +15,10 @@ impl LabMap {
         }
         let guard = self.guard.take().unwrap();
 
+        if new_position.x >= self.tiles[0].len() || new_position.y >= self.tiles.len() {
+            self.guard = None;
+            return;
+        }
         // This is sloppy. I'm not sure if the tile has been visited yet
         // when the map is first created.
         self.visit(&guard.position);
@@ -30,10 +34,15 @@ impl LabMap {
     pub(crate) fn is_column(&self, position: Option<Position>) -> bool {
         match position {
             None => false,
-            Some(pos) => match self.tiles[pos.y][pos.x] {
-                Tile::Column => true,
-                _ => false,
-            },
+            Some(pos) => {
+                if pos.x >= self.tiles[0].len() || pos.y >= self.tiles.len() {
+                    return false;
+                }
+                match self.tiles[pos.y][pos.x] {
+                    Tile::Column => true,
+                    _ => false,
+                }
+            }
         }
     }
 }
@@ -47,7 +56,8 @@ enum Tile {
 impl Tile {
     fn new(character: &char) -> Tile {
         match character {
-            '.' | '>' | '<' | '^' | 'v' => Tile::Empty { visited: false },
+            '.' => Tile::Empty { visited: false },
+            '>' | '<' | '^' | 'v' => Tile::Empty { visited: true },
             '#' => Tile::Column,
             _ => panic!("Unknown char in map {:?}", character),
         }
@@ -157,10 +167,10 @@ impl LabMap {
     /// Returns the Guard structure if the character is found.
     /// Assumes there is at most one guard one the map.
     fn find_guard(tiles: &Vec<Vec<char>>) -> Option<Guard> {
-        for x in 0..tiles.len() {
-            for y in 0..tiles[x].len() {
-                if Guard::is_guard_char(tiles[x][y]) {
-                    return Some(Guard::new(x, y, tiles[x][y]));
+        for y in 0..tiles.len() {
+            for x in 0..tiles[y].len() {
+                if Guard::is_guard_char(tiles[y][x]) {
+                    return Some(Guard::new(x, y, tiles[y][x]));
                 }
             }
         }
@@ -187,7 +197,7 @@ impl LabMap {
         }
     }
     fn visit(&mut self, position: &Position) {
-        self.tiles[position.x][position.y].visit();
+        self.tiles[position.y][position.x].visit();
     }
 
     fn get_visit_count(&self) -> usize {
@@ -200,7 +210,7 @@ impl LabMap {
 
 impl Display for LabMap {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        let mut buf: String = String::new();
+        let mut buf: String = String::with_capacity((2 * self.tiles.len()) ^ 2);
         for row in 0..self.tiles.len() {
             for col in 0..self.tiles[0].len() {
                 let mut character = match self.tiles[row][col] {
@@ -213,8 +223,8 @@ impl Display for LabMap {
                         }
                     }
                 };
-                if self.clone().get_guard().is_some() {
-                    let guard = self.clone().guard.unwrap();
+                if self.get_guard().is_some() {
+                    let guard = self.get_guard().unwrap();
                     if row == guard.position.y && col == guard.position.x {
                         character = guard.direction.to_char();
                     }
@@ -238,12 +248,11 @@ impl Simulation {
 
     /// returns true when simulation is complete
     fn tick(&mut self) -> bool {
-        let mut binding = self.map.clone();
-        let guard: Option<&mut Guard> = binding.get_guard_mut();
+        let guard: Option<&Guard> = self.map.get_guard();
         if guard.is_none() {
             return true;
         }
-        let guard: &mut Guard = guard.unwrap();
+        let guard = guard.unwrap();
         let direction = &guard.direction;
         let max_col = self.map.tiles[0].len();
         let max_row = self.map.tiles.len();
@@ -298,7 +307,7 @@ impl Simulation {
 
         // Would this new position hit a column? If so, then turn, else move to the new spot
         if self.map.is_column(new_position.clone()) {
-            guard.turn();
+            self.map.get_guard_mut().unwrap().turn();
         } else {
             self.map.move_guard(&new_position.unwrap());
         }
@@ -316,10 +325,13 @@ impl Simulation {
 
 pub fn part_one(input: &str) -> Option<u64> {
     let lab_map = LabMap::new(input);
+    print!("Start:\n{}\n", lab_map);
+
     assert!(!lab_map.get_guard().is_none());
     let mut simulation = Simulation::new(lab_map);
     simulation.run();
     let visit_count: u64 = simulation.get_visit_count() as u64;
+    print!("End:\n{}\n", simulation.map);
     if visit_count > 0 {
         Some(visit_count)
     } else {
@@ -334,6 +346,54 @@ pub fn part_two(input: &str) -> Option<u64> {
 }
 
 #[cfg(test)]
+mod simulation_tests {
+    use super::*;
+    #[test]
+    fn test_simulation1() {
+        let lab_map = LabMap::new(".#.\n.^.\n");
+        let mut simulation = Simulation::new(lab_map.clone());
+        print!("Original:\n{}\n", simulation.map);
+        assert_eq!(
+            simulation.map.get_guard_mut().unwrap().direction,
+            Direction::Up
+        );
+        assert_eq!(
+            simulation.map.get_guard_mut().unwrap().position,
+            Position { x: 1, y: 1 }
+        );
+
+        simulation.tick();
+        print!("Tick1:\n{}\n", simulation.map);
+        assert_eq!(
+            simulation.map.get_guard_mut().unwrap().direction,
+            Direction::Right
+        );
+        assert_eq!(
+            simulation.map.get_guard_mut().unwrap().position,
+            Position { x: 1, y: 1 }
+        );
+        assert_eq!(simulation.map.tiles[1][1].is_visited(), true);
+        assert_eq!(simulation.map.tiles[1][2].is_visited(), false);
+
+        simulation.tick();
+        print!("Tick 2:\n{}\n", simulation.map);
+        assert_eq!(
+            simulation.map.get_guard_mut().unwrap().direction,
+            Direction::Right
+        );
+        assert_eq!(
+            simulation.map.get_guard_mut().unwrap().position,
+            Position { x: 2, y: 1 }
+        );
+        assert_eq!(simulation.map.tiles[1][1].is_visited(), true);
+        assert_eq!(simulation.map.tiles[1][2].is_visited(), true);
+
+        simulation.tick();
+        print!("Tick 3:\n{}\n", simulation.map);
+        assert!(simulation.map.get_guard().is_none());
+    }
+}
+#[cfg(test)]
 mod tests {
     use super::*;
 
@@ -347,7 +407,7 @@ mod tests {
         ];
         let ex_row2: Vec<Tile> = vec![
             Tile::Empty { visited: false },
-            Tile::Empty { visited: false },
+            Tile::Empty { visited: true },
             Tile::Empty { visited: false },
         ];
         assert_eq!(vec![ex_row1, ex_row2], lab_map.tiles);
@@ -356,7 +416,7 @@ mod tests {
             direction: Direction::Up,
         };
         assert_eq!(lab_map.get_guard().unwrap(), &expected_guard);
-        assert_eq!(0, lab_map.get_visit_count());
+        assert_eq!(1, lab_map.get_visit_count());
     }
 
     #[test]
@@ -372,7 +432,7 @@ mod tests {
     #[test]
     fn test_lab_map_print() {
         let lab_map = LabMap::new(".#.\n.^.\n");
-        print!("{}\n", lab_map);
+        assert_eq!(".#.\n.^.\n", format!("{}", lab_map));
     }
     #[test]
     fn test_turn() {
@@ -400,20 +460,9 @@ mod tests {
     }
 
     #[test]
-    fn test_simulation1() {
-        let lab_map = LabMap::new("...\n.^.\n");
-        let mut simulation = Simulation::new(lab_map.clone());
-        print!("Original:\n{}\n", simulation.map);
-        simulation.tick();
-        print!("Tick1:\n{}\n", simulation.map);
-        simulation.tick();
-        print!("Tick 2:\n{}\n", simulation.map);
-    }
-    
-    #[test]
     fn test_part_one() {
         let result = part_one(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
+        assert_eq!(result, Some(38));
     }
 
     #[test]
