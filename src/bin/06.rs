@@ -7,8 +7,17 @@
 //! column is added somewhere in the map.
 //!
 //! My original code stored a 'visited' state in the tile map. That is not sufficient to
-//! detect cycles. For part 2, I store the edges in a separate graph.
-//! I'll detect if an edge is re-visited.
+//! detect cycles. For part 2, I store the traversed edges in a set.
+//! If an edge is re-visited then a cycle has been detected.
+//! 
+//! Possible performance improvements:
+//! Limiting testing of new columns from every empty tile to just those visited in the original
+//! simulation reduces run time from 70s to 17s.
+//! 
+//! We don't have to resolve the entire problem every time.  If we were to save the state 
+//! of the original simulation after each tick, we could test the addition of the column from there.
+//! This would require cloning the graph and edges each time so it is still O(n^2), but it's likely we could save
+//! a fair amount of time as the simulation progresses to the end.
 
 use std::collections::HashSet;
 use std::fmt::{Display, Formatter};
