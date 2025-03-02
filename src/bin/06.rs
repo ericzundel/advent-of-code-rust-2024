@@ -49,30 +49,50 @@ impl LabMap {
 
 #[derive(Clone, Debug, PartialEq)]
 enum Tile {
-    Empty { visited: bool },
+    Empty { visited: bool, turned: bool },
     Column,
 }
 
 impl Tile {
     fn new(character: &char) -> Tile {
         match character {
-            '.' => Tile::Empty { visited: false },
-            '>' | '<' | '^' | 'v' => Tile::Empty { visited: true },
+            '.' => Tile::Empty {
+                visited: false,
+                turned: false,
+            },
+            '>' | '<' | '^' | 'v' => Tile::Empty {
+                visited: true,
+                turned: false,
+            },
             '#' => Tile::Column,
             _ => panic!("Unknown char in map {:?}", character),
         }
     }
+    fn turn(&mut self) {
+        match self {
+            Tile::Column => panic!("Can't turn a column!"),
+            Tile::Empty { visited: _, turned } => *turned = true,
+        }
+    }
+
     fn visit(&mut self) {
         match self {
             Tile::Column => panic!("Can't visit column!"),
-            Tile::Empty { visited } => *visited = true,
+            Tile::Empty { visited, turned: _ } => *visited = true,
         }
     }
 
     fn is_visited(&self) -> bool {
         match self {
             Tile::Column => false,
-            Tile::Empty { visited } => *visited,
+            Tile::Empty { visited, turned: _ } => *visited,
+        }
+    }
+
+    fn has_turned(&self) -> bool {
+        match self {
+            Tile::Column => false,
+            Tile::Empty { visited: _, turned } => *turned,
         }
     }
 }
@@ -215,7 +235,7 @@ impl Display for LabMap {
             for col in 0..self.tiles[0].len() {
                 let mut character = match self.tiles[row][col] {
                     Tile::Column => '#',
-                    Tile::Empty { visited } => {
+                    Tile::Empty { visited, turned: _ } => {
                         if visited {
                             'X'
                         } else {
@@ -241,18 +261,25 @@ struct Simulation {
     map: LabMap,
 }
 
+#[derive(PartialEq)]
+enum SimulationStatus {
+    InProgress,
+    GuardExited,
+    GuardCycle,
+}
+
 impl Simulation {
     pub fn new(map: LabMap) -> Self {
         Simulation { map }
     }
 
     /// returns true when simulation is complete
-    fn tick(&mut self) -> bool {
+    fn tick(&mut self) -> SimulationStatus {
         let guard: Option<&Guard> = self.map.get_guard();
         if guard.is_none() {
-            return true;
+            return SimulationStatus::GuardExited;
         }
-        let guard = guard.unwrap();
+        let guard = guard.unwrap().clone();
         let direction = &guard.direction;
         let max_col = self.map.tiles[0].len();
         let max_row = self.map.tiles.len();
@@ -302,20 +329,26 @@ impl Simulation {
 
         if new_position.is_none() {
             self.map.guard = None;
-            return true;
+            return SimulationStatus::GuardExited;
         }
 
         // Would this new position hit a column? If so, then turn, else move to the new spot
         if self.map.is_column(new_position.clone()) {
+            let curr_tile = &mut self.map.tiles[guard.position.y][guard.position.x];
+            // Have we already turned here before? If so, we have detected a cycle
+            if curr_tile.has_turned() {
+                return SimulationStatus::GuardCycle;
+            }
+            curr_tile.turn();
             self.map.get_guard_mut().unwrap().turn();
         } else {
             self.map.move_guard(&new_position.unwrap());
         }
-        false
+        SimulationStatus::InProgress
     }
 
     pub fn run(&mut self) {
-        while !self.tick() {}
+        while self.tick() == SimulationStatus::InProgress {}
     }
 
     pub fn get_visit_count(&self) -> usize {
@@ -340,8 +373,10 @@ pub fn part_one(input: &str) -> Option<u64> {
 }
 
 pub fn part_two(input: &str) -> Option<u64> {
-    let _lab_map = LabMap::load_map_data(input);
-
+    let original_lab_map = LabMap::new(input);
+    let first_run_lap_map = original_lab_map.clone();
+    let mut simulation = Simulation::new(first_run_lap_map);
+    simulation.run();
     None
 }
 
@@ -361,6 +396,7 @@ mod simulation_tests {
             simulation.map.get_guard_mut().unwrap().position,
             Position { x: 1, y: 1 }
         );
+        assert_eq!(simulation.map.tiles[1][1].has_turned(), false);
 
         simulation.tick();
         print!("Tick1:\n{}\n", simulation.map);
@@ -373,6 +409,7 @@ mod simulation_tests {
             Position { x: 1, y: 1 }
         );
         assert_eq!(simulation.map.tiles[1][1].is_visited(), true);
+        assert_eq!(simulation.map.tiles[1][1].has_turned(), true);
         assert_eq!(simulation.map.tiles[1][2].is_visited(), false);
 
         simulation.tick();
@@ -401,14 +438,29 @@ mod tests {
     fn test_load_map() {
         let lab_map = LabMap::new(".#.\n.^.\n");
         let ex_row1: Vec<Tile> = vec![
-            Tile::Empty { visited: false },
+            Tile::Empty {
+                visited: false,
+                turned: false,
+            },
             Tile::Column,
-            Tile::Empty { visited: false },
+            Tile::Empty {
+                visited: false,
+                turned: false,
+            },
         ];
         let ex_row2: Vec<Tile> = vec![
-            Tile::Empty { visited: false },
-            Tile::Empty { visited: true },
-            Tile::Empty { visited: false },
+            Tile::Empty {
+                visited: false,
+                turned: false,
+            },
+            Tile::Empty {
+                visited: true,
+                turned: false,
+            },
+            Tile::Empty {
+                visited: false,
+                turned: false,
+            },
         ];
         assert_eq!(vec![ex_row1, ex_row2], lab_map.tiles);
         let expected_guard = Guard {
