@@ -1,7 +1,30 @@
+//! https://adventofcode.com/2024/day/6
+//!
+//! This is a graph problem
+//!
+//! Part 1: Detect how many tiles(nodes) were visited when the guard leaves the map
+//! Part 2: Detect cycles in the guard's path (an edge is traversed twice) when an extra
+//! column is added somewhere in the map.
+//!
+//! My original code stored a 'visited' state in the tile map. That is not sufficient to
+//! detect cycles. For part 2, I store the edges in a separate graph.
+//! I'll detect if an edge is re-visited.
+
+use std::collections::HashSet;
 use std::fmt::{Display, Formatter};
+use std::io;
+use std::io::Write;
 
 advent_of_code::solution!(6);
 
+/// Used to record a movement from one tile to another.
+#[derive(PartialEq, Hash, Clone, Debug, Eq)]
+struct Edge {
+    from: Position,
+    to: Position,
+}
+
+/// A structure to contain the map and the guard
 #[derive(Clone, Debug)]
 struct LabMap {
     tiles: Vec<Vec<Tile>>,
@@ -9,15 +32,23 @@ struct LabMap {
 }
 
 impl LabMap {
+    /// Stick a column in the map, presumably to replace an empty tile.
     pub(crate) fn add_column(&mut self, pos: &Position) {
         self.tiles[pos.y][pos.x] = Tile::Column;
     }
 
+    /// Moves the position of the guard without changing it's direction.
+    /// Enforces moving just one square from previous position
     pub(crate) fn move_guard(&mut self, new_position: &Position) {
         if self.guard.is_none() {
             return;
         }
         let guard = self.guard.take().unwrap();
+        {
+            let x_diff = new_position.x.abs_diff(guard.position.x);
+            let y_diff = new_position.y.abs_diff(guard.position.y);
+            assert!(x_diff + y_diff == 1);
+        }
 
         if new_position.x >= self.tiles[0].len() || new_position.y >= self.tiles.len() {
             self.guard = None;
@@ -49,131 +80,6 @@ impl LabMap {
             }
         }
     }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-enum Tile {
-    Empty { visited: bool, turned: bool },
-    Column,
-}
-
-impl Tile {
-    fn new(character: &char) -> Tile {
-        match character {
-            '.' => Tile::Empty {
-                visited: false,
-                turned: false,
-            },
-            '>' | '<' | '^' | 'v' => Tile::Empty {
-                visited: true,
-                turned: false,
-            },
-            '#' => Tile::Column,
-            _ => panic!("Unknown char in map {:?}", character),
-        }
-    }
-    fn turn(&mut self) {
-        match self {
-            Tile::Column => panic!("Can't turn a column!"),
-            Tile::Empty { visited: _, turned } => *turned = true,
-        }
-    }
-
-    fn visit(&mut self) {
-        match self {
-            Tile::Column => panic!("Can't visit column!"),
-            Tile::Empty { visited, turned: _ } => *visited = true,
-        }
-    }
-
-    fn is_column(&self) -> bool {
-        match self {
-            Tile::Column => true,
-            _ => false,
-        }
-    }
-
-    fn is_visited(&self) -> bool {
-        match self {
-            Tile::Column => false,
-            Tile::Empty { visited, turned: _ } => *visited,
-        }
-    }
-
-    fn has_turned(&self) -> bool {
-        match self {
-            Tile::Column => false,
-            Tile::Empty { visited: _, turned } => *turned,
-        }
-    }
-}
-
-#[derive(Debug, PartialEq, Clone)]
-struct Position {
-    x: usize,
-    y: usize,
-}
-
-#[derive(Debug, Clone, PartialEq)]
-enum Direction {
-    Up,
-    Down,
-    Left,
-    Right,
-}
-
-impl Direction {
-    fn to_char(&self) -> char {
-        match self {
-            Direction::Up => '^',
-            Direction::Right => '>',
-            Direction::Left => '<',
-            Direction::Down => 'v',
-        }
-    }
-
-    fn from_char(character: &char) -> Direction {
-        match character {
-            '^' => Direction::Up,
-            '>' => Direction::Right,
-            '<' => Direction::Left,
-            'v' => Direction::Down,
-            _ => panic!("Not a guard character! Check with is_guard_char() first!"),
-        }
-    }
-}
-
-#[derive(Debug, Clone, PartialEq)]
-struct Guard {
-    position: Position,
-    direction: Direction,
-}
-
-impl Guard {
-    fn new(x: usize, y: usize, character: char) -> Guard {
-        let direction = Direction::from_char(&character);
-        Guard {
-            position: Position { x, y },
-            direction,
-        }
-    }
-    fn is_guard_char(character: char) -> bool {
-        match character {
-            '^' | '>' | '<' | 'v' => true,
-            _ => false,
-        }
-    }
-
-    fn turn(&mut self) {
-        self.direction = match self.direction {
-            Direction::Up => Direction::Right,
-            Direction::Right => Direction::Down,
-            Direction::Left => Direction::Up,
-            Direction::Down => Direction::Left,
-        }
-    }
-}
-impl LabMap {
     fn load_map_data(input: &str) -> Vec<Vec<char>> {
         let result: Vec<Vec<char>> = input
             .lines()
@@ -239,14 +145,15 @@ impl LabMap {
     }
 }
 
+
 impl Display for LabMap {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         let mut buf: String = String::with_capacity((2 * self.tiles.len()) ^ 2);
-        for row in 0..self.tiles.len() {
-            for col in 0..self.tiles[0].len() {
-                let mut character = match self.tiles[row][col] {
+        for y in 0..self.tiles.len() {
+            for x in 0..self.tiles[0].len() {
+                let mut character = match self.tiles[y][x] {
                     Tile::Column => '#',
-                    Tile::Empty { visited, turned: _ } => {
+                    Tile::Empty { visited } => {
                         if visited {
                             'X'
                         } else {
@@ -256,7 +163,7 @@ impl Display for LabMap {
                 };
                 if self.get_guard().is_some() {
                     let guard = self.get_guard().unwrap();
-                    if row == guard.position.y && col == guard.position.x {
+                    if y == guard.position.y && x == guard.position.x {
                         character = guard.direction.to_char();
                     }
                 }
@@ -268,8 +175,117 @@ impl Display for LabMap {
     }
 }
 
+/// Represents a single tile in the map
+#[derive(Clone, Debug, PartialEq)]
+enum Tile {
+    Empty { visited: bool },
+    Column,
+}
+
+impl Tile {
+    fn new(character: &char) -> Tile {
+        match character {
+            '.' => Tile::Empty { visited: false },
+            '>' | '<' | '^' | 'v' => Tile::Empty { visited: true },
+            '#' => Tile::Column,
+            _ => panic!("Unknown char in map {:?}", character),
+        }
+    }
+
+    /// Record that a tile has been visited by the guard.
+    fn visit(&mut self) {
+        match self {
+            Tile::Column => panic!("Can't visit column!"),
+            Tile::Empty { visited } => *visited = true,
+        }
+    }
+
+    fn is_column(&self) -> bool {
+        match self {
+            Tile::Column => true,
+            _ => false,
+        }
+    }
+
+    fn is_visited(&self) -> bool {
+        match self {
+            Tile::Column => false,
+            Tile::Empty { visited } => *visited,
+        }
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Hash, Eq)]
+struct Position {
+    x: usize,
+    y: usize,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+enum Direction {
+    Up,
+    Down,
+    Left,
+    Right,
+}
+
+impl Direction {
+    fn to_char(&self) -> char {
+        match self {
+            Direction::Up => '^',
+            Direction::Right => '>',
+            Direction::Left => '<',
+            Direction::Down => 'v',
+        }
+    }
+
+    fn from_char(character: &char) -> Direction {
+        match character {
+            '^' => Direction::Up,
+            '>' => Direction::Right,
+            '<' => Direction::Left,
+            'v' => Direction::Down,
+            _ => panic!("Not a guard character! Check with is_guard_char() first!"),
+        }
+    }
+}
+
+/// Represents the position of the guard and the direction the guard is facing.
+#[derive(Debug, Clone, PartialEq)]
+struct Guard {
+    position: Position,
+    direction: Direction,
+}
+
+impl Guard {
+    fn new(x: usize, y: usize, character: char) -> Guard {
+        let direction = Direction::from_char(&character);
+        Guard {
+            position: Position { x, y },
+            direction,
+        }
+    }
+    fn is_guard_char(character: char) -> bool {
+        match character {
+            '^' | '>' | '<' | 'v' => true,
+            _ => false,
+        }
+    }
+
+    fn turn(&mut self) {
+        self.direction = match self.direction {
+            Direction::Up => Direction::Right,
+            Direction::Right => Direction::Down,
+            Direction::Left => Direction::Up,
+            Direction::Down => Direction::Left,
+        }
+    }
+}
+
+
 struct Simulation {
     map: LabMap,
+    visited_edges: HashSet<Edge>,
 }
 
 #[derive(PartialEq, Debug)]
@@ -281,7 +297,10 @@ enum SimulationStatus {
 
 impl Simulation {
     pub fn new(map: LabMap) -> Self {
-        Simulation { map }
+        Simulation {
+            map,
+            visited_edges: HashSet::new(),
+        }
     }
 
     pub fn get_tiles(&self) -> &Vec<Vec<Tile>> {
@@ -299,48 +318,49 @@ impl Simulation {
             return SimulationStatus::GuardExited;
         }
         let guard = guard.unwrap().clone();
+        let guard_position = &guard.position;
         let direction = &guard.direction;
-        let max_col = self.map.tiles[0].len();
-        let max_row = self.map.tiles.len();
+        let max_col = self.map.tiles[0].len() - 1;
+        let max_row = self.map.tiles.len() - 1;
 
         let new_position: Option<Position> = match direction {
             Direction::Down => {
-                if guard.position.y >= max_row {
+                if guard_position.y > max_row {
                     None
                 } else {
                     Some(Position {
-                        x: guard.position.x,
-                        y: guard.position.y + 1,
+                        x: guard_position.x,
+                        y: guard_position.y + 1,
                     })
                 }
             }
             Direction::Up => {
-                if guard.position.y == 0 {
+                if guard_position.y == 0 {
                     None
                 } else {
                     Some(Position {
-                        x: guard.position.x,
-                        y: guard.position.y - 1,
+                        x: guard_position.x,
+                        y: guard_position.y - 1,
                     })
                 }
             }
             Direction::Right => {
-                if guard.position.x >= max_col {
+                if guard_position.x > max_col {
                     None
                 } else {
                     Some(Position {
-                        x: guard.position.x + 1,
-                        y: guard.position.y,
+                        x: guard_position.x + 1,
+                        y: guard_position.y,
                     })
                 }
             }
             Direction::Left => {
-                if guard.position.x == 0 {
+                if guard_position.x == 0 {
                     None
                 } else {
                     Some(Position {
-                        x: guard.position.x - 1,
-                        y: guard.position.y,
+                        x: guard_position.x - 1,
+                        y: guard_position.y,
                     })
                 }
             }
@@ -350,18 +370,21 @@ impl Simulation {
             self.map.guard = None;
             return SimulationStatus::GuardExited;
         }
-
+        let new_position = new_position.unwrap();
         // Would this new position hit a column? If so, then turn, else move to the new spot
-        if self.map.is_column(new_position.clone()) {
-            let curr_tile = &mut self.map.tiles[guard.position.y][guard.position.x];
-            // Have we already turned here before? If so, we have detected a cycle
-            if curr_tile.has_turned() {
-                return SimulationStatus::GuardCycle;
-            }
-            curr_tile.turn();
+        if self.map.is_column(Some(new_position.clone())) {
             self.map.get_guard_mut().unwrap().turn();
         } else {
-            self.map.move_guard(&new_position.unwrap());
+            let edge = Edge {
+                from: guard_position.clone(),
+                to: new_position.clone(),
+            };
+            if self.visited_edges.contains(&edge) {
+                return SimulationStatus::GuardCycle;
+            } else {
+                self.visited_edges.insert(edge);
+            }
+            self.map.move_guard(&new_position);
         }
         SimulationStatus::InProgress
     }
@@ -406,12 +429,14 @@ pub fn part_two(input: &str) -> Option<u64> {
 
     let mut count: u64 = 0;
     let tiles = original_simulation.get_tiles();
-    for row in 0..tiles.len() {
-        for col in 0..tiles[row].len() {
-            let tile = original_simulation.get_tile(row, col);
-            let curr_position = &Position { x: col, y: row };
+    let guard_position: &Position = &original_lab_map.get_guard().unwrap().position;
+    for y in 0..tiles.len() {
+        for x in 0..tiles[y].len() {
+            let tile = original_simulation.get_tile(x, y);
+            let curr_position = &Position { x, y };
             // We can't put a column in the original guard position
-            if &original_lab_map.get_guard().unwrap().position == curr_position {
+            if guard_position == curr_position {
+                print!("^");
                 continue;
             }
             if !tile.is_column() && tile.is_visited() {
@@ -421,11 +446,15 @@ pub fn part_two(input: &str) -> Option<u64> {
                 let mut new_simulation = Simulation::new(new_lab_map);
                 if new_simulation.run() == SimulationStatus::GuardCycle {
                     count += 1;
+                    print!("*");
+                } else {
+                    print!(".");
                 }
             }
+            io::stdout().flush().unwrap();
         }
     }
-    // The value from the AOC test data is > 783
+    // The value from the AOC test data is 1711
     Some(count)
 }
 
@@ -445,7 +474,6 @@ mod simulation_tests {
             simulation.map.get_guard_mut().unwrap().position,
             Position { x: 1, y: 1 }
         );
-        assert_eq!(simulation.map.tiles[1][1].has_turned(), false);
 
         simulation.tick();
         print!("Tick1:\n{}\n", simulation.map);
@@ -458,7 +486,6 @@ mod simulation_tests {
             Position { x: 1, y: 1 }
         );
         assert_eq!(simulation.map.tiles[1][1].is_visited(), true);
-        assert_eq!(simulation.map.tiles[1][1].has_turned(), true);
         assert_eq!(simulation.map.tiles[1][2].is_visited(), false);
 
         simulation.tick();
@@ -498,29 +525,14 @@ mod tests {
     fn test_load_map() {
         let lab_map = LabMap::new(".#.\n.^.\n");
         let ex_row1: Vec<Tile> = vec![
-            Tile::Empty {
-                visited: false,
-                turned: false,
-            },
+            Tile::Empty { visited: false },
             Tile::Column,
-            Tile::Empty {
-                visited: false,
-                turned: false,
-            },
+            Tile::Empty { visited: false },
         ];
         let ex_row2: Vec<Tile> = vec![
-            Tile::Empty {
-                visited: false,
-                turned: false,
-            },
-            Tile::Empty {
-                visited: true,
-                turned: false,
-            },
-            Tile::Empty {
-                visited: false,
-                turned: false,
-            },
+            Tile::Empty { visited: false },
+            Tile::Empty { visited: true },
+            Tile::Empty { visited: false },
         ];
         assert_eq!(vec![ex_row1, ex_row2], lab_map.tiles);
         let expected_guard = Guard {
@@ -589,6 +601,6 @@ mod tests {
     #[test]
     fn test_part_two() {
         let result = part_two(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
+        assert_eq!(result, Some(6));
     }
 }
