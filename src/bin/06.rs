@@ -9,6 +9,10 @@ struct LabMap {
 }
 
 impl LabMap {
+    pub(crate) fn add_column(&mut self, pos: &Position) {
+        self.tiles[pos.y][pos.x] = Tile::Column;
+    }
+
     pub(crate) fn move_guard(&mut self, new_position: &Position) {
         if self.guard.is_none() {
             return;
@@ -79,6 +83,13 @@ impl Tile {
         match self {
             Tile::Column => panic!("Can't visit column!"),
             Tile::Empty { visited, turned: _ } => *visited = true,
+        }
+    }
+
+    fn is_column(&self) -> bool {
+        match self {
+            Tile::Column => true,
+            _ => false,
         }
     }
 
@@ -261,7 +272,7 @@ struct Simulation {
     map: LabMap,
 }
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Debug)]
 enum SimulationStatus {
     InProgress,
     GuardExited,
@@ -271,6 +282,14 @@ enum SimulationStatus {
 impl Simulation {
     pub fn new(map: LabMap) -> Self {
         Simulation { map }
+    }
+
+    pub fn get_tiles(&self) -> &Vec<Vec<Tile>> {
+        &self.map.tiles
+    }
+
+    pub fn get_tile(&self, x: usize, y: usize) -> &Tile {
+        &self.map.tiles[y][x]
     }
 
     /// returns true when simulation is complete
@@ -347,8 +366,13 @@ impl Simulation {
         SimulationStatus::InProgress
     }
 
-    pub fn run(&mut self) {
-        while self.tick() == SimulationStatus::InProgress {}
+    pub fn run(&mut self) -> SimulationStatus {
+        loop {
+            let result = self.tick();
+            if result != SimulationStatus::InProgress {
+                return result;
+            }
+        }
     }
 
     pub fn get_visit_count(&self) -> usize {
@@ -373,11 +397,36 @@ pub fn part_one(input: &str) -> Option<u64> {
 }
 
 pub fn part_two(input: &str) -> Option<u64> {
-    let original_lab_map = LabMap::new(input);
+    // Make a read-only version of the original map
+    let original_lab_map = &LabMap::new(input);
     let first_run_lap_map = original_lab_map.clone();
-    let mut simulation = Simulation::new(first_run_lap_map);
-    simulation.run();
-    None
+    let mut original_simulation = Simulation::new(first_run_lap_map);
+    let original_simulation_result = original_simulation.run();
+    assert_eq!(original_simulation_result, SimulationStatus::GuardExited);
+
+    let mut count: u64 = 0;
+    let tiles = original_simulation.get_tiles();
+    for row in 0..tiles.len() {
+        for col in 0..tiles[row].len() {
+            let tile = original_simulation.get_tile(row, col);
+            let curr_position = &Position { x: col, y: row };
+            // We can't put a column in the original guard position
+            if &original_lab_map.get_guard().unwrap().position == curr_position {
+                continue;
+            }
+            if !tile.is_column() && tile.is_visited() {
+                // Try replacing this tile with a column in a new map
+                let mut new_lab_map = original_lab_map.clone();
+                new_lab_map.add_column(curr_position);
+                let mut new_simulation = Simulation::new(new_lab_map);
+                if new_simulation.run() == SimulationStatus::GuardCycle {
+                    count += 1;
+                }
+            }
+        }
+    }
+    // The value from the AOC test data is > 783
+    Some(count)
 }
 
 #[cfg(test)]
@@ -428,6 +477,17 @@ mod simulation_tests {
         simulation.tick();
         print!("Tick 3:\n{}\n", simulation.map);
         assert!(simulation.map.get_guard().is_none());
+    }
+
+    #[test]
+    fn test_detect_cycle() {
+        // This pattern of columns will cause the guard to cycle infinitely
+        let map_cycle_data = vec![".#....", ".^...#", "#.....", "....#."];
+        let lab_map = LabMap::new(map_cycle_data.join("\n").as_str());
+        let mut simulation = Simulation::new(lab_map);
+        let simulation_status = simulation.run();
+        print!("{}", simulation.map);
+        assert_eq!(simulation_status, SimulationStatus::GuardCycle);
     }
 }
 #[cfg(test)]
@@ -480,6 +540,15 @@ mod tests {
         assert_eq!(lab_map.is_column(Some(Position { x: 0, y: 1 })), false);
         assert_eq!(lab_map.is_column(Some(Position { x: 1, y: 1 })), false);
         assert_eq!(lab_map.is_column(Some(Position { x: 2, y: 1 })), false);
+    }
+
+    #[test]
+    fn test_add_column() {
+        let mut lab_map = LabMap::new(".#.\n.^.\n");
+        let position = &Position { x: 2, y: 0 };
+        assert!(!lab_map.is_column(Some(position.clone())));
+        lab_map.add_column(position);
+        assert!(lab_map.is_column(Some(position.clone())));
     }
     #[test]
     fn test_lab_map_print() {
