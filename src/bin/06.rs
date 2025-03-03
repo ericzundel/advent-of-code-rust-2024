@@ -291,7 +291,9 @@ impl Guard {
     }
 }
 
-
+/// Holds the results of a simulation of running the guard through the map.
+/// The simulation runs one step when you call tick() and returns either status GuardCycle or 
+/// GuardExited when the simulation is complete.
 struct Simulation {
     map: LabMap,
     visited_edges: HashSet<Edge>,
