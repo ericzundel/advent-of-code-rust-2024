@@ -1,5 +1,3 @@
-use std::collections::HashSet;
-
 /// https://adventofcode.com/2024/day/8
 ///
 /// Part 1, compute antinodes
@@ -7,7 +5,7 @@ advent_of_code::solution!(8);
 
 #[derive(Debug, Clone, PartialEq)]
 struct Distance {
-    frequency: char,
+    name: char,
     x_distance: usize,
     y_distance: usize,
 }
@@ -19,11 +17,11 @@ struct Antenna {
     y_position: usize,
 }
 impl Distance {
-    pub(crate) fn new(frequency: char, x_distance: i32, y_distance: i32) -> Distance {
+    pub(crate) fn new(name: char, x_distance: usize, y_distance: usize) -> Distance {
         Distance {
-            frequency,
-            x_distance: x_distance.abs() as usize,
-            y_distance: y_distance.abs() as usize,
+            name,
+            x_distance: x_distance,
+            y_distance: y_distance,
         }
     }
 }
@@ -42,7 +40,21 @@ impl Node {
 
 impl Node {
     fn has_antinode(&self) -> bool {
-        todo!("Search antinode_distances")
+        for i in 0..self.antennae_distances.len() - 1 {
+            let distance = &self.antennae_distances[i];
+            let rest: &[Distance] = &self.antennae_distances[(i + 1)..];
+            for j in 0..rest.len() {
+                let other_distance = &rest[j];
+
+                if distance.name == other_distance.name &&
+                    ((other_distance.x_distance == 2 * distance.x_distance
+                        && other_distance.y_distance == 2 * distance.y_distance) || (2 * other_distance.x_distance == distance.x_distance
+                    && 2 * other_distance.y_distance == distance.y_distance)) {
+                    return true;
+                }
+            }
+        }
+        false
     }
 }
 
@@ -123,21 +135,16 @@ impl CityMap {
     }
 
     pub fn compute_distances(&mut self) {
-        let mut count: u64 = 0;
         for y in 0..self.node_map.len() {
             for x in 0..self.node_map[y].len() {
-                let node = self.get_node_mut(x, y);
-                let antenna_name = node.get_antenna_name();
-                if antenna_name.is_some() {
-                    let antenna_name = antenna_name.unwrap();
-                    // Add to the set of antennae
-                    self.antennae.push(Antenna {
-                        name: antenna_name,
-                        x_position: x,
-                        y_position: y,
-                    });
+                for antenna in self.antennae.iter() {
+                    let node: &mut Node = &mut self.node_map[y][x];
+                    node.antennae_distances.push(Distance::new(
+                        antenna.name,
+                        antenna.x_position.abs_diff(x),
+                        antenna.y_position.abs_diff(y),
+                    ));
                 }
-                todo!("Compute all distance data and store it in the map")
             }
         }
     }

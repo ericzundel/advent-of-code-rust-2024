@@ -5,8 +5,11 @@ advent_of_code::solution!(7);
 
 #[derive(Debug, PartialEq)]
 struct Equation {
+    /// Result you are trying to get
     computed: u64,
+    /// Numbers passed in the input
     operands: Vec<u64>,
+    /// *, + or ||
     operators: Vec<Operator>,
 }
 

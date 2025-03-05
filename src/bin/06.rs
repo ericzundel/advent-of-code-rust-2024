@@ -328,7 +328,7 @@ impl Simulation {
         if guard.is_none() {
             return SimulationStatus::GuardExited;
         }
-        let guard = guard.unwrap().clone();
+        let guard = &guard.unwrap();
         let guard_position = &guard.position;
         let direction = &guard.direction;
         let max_col = self.map.tiles[0].len() - 1;
