@@ -1,8 +1,12 @@
-use std::fmt::{Display, Formatter, Write};
+//! Advent of code 2024 Day 8
+//! https://adventofcode.com/2024/day/8
+//!
+//! Part 1, compute antinodes just one distance away
+//! Part 2, compute antinodes as lines drawn throut 2 antennae
+//!
+//!
 
-/// https://adventofcode.com/2024/day/8
-///
-/// Part 1, compute antinodes
+use std::fmt::{Display, Formatter, Write};
 advent_of_code::solution!(8);
 
 #[derive(Debug, Clone, PartialEq)]
@@ -12,12 +16,13 @@ struct Distance {
     y_distance: i32,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 struct Antenna {
     name: char,
     x_position: i32,
     y_position: i32,
 }
+
 impl Distance {
     pub(crate) fn new(name: char, x_distance: i32, y_distance: i32) -> Distance {
         Distance {
@@ -61,8 +66,15 @@ impl Node {
         self.is_antinode = Some(false)
     }
 
+    pub(crate) fn set_antinode(&mut self) {
+        self.is_antinode = Some(true);
+    }
+
     fn is_antinode(&self) -> bool {
-        return self.is_antinode.unwrap();
+        if self.is_antinode.is_none() {
+            return false;
+        }
+        self.is_antinode.unwrap()
     }
 
     fn to_char(&self) -> char {
@@ -147,10 +159,6 @@ impl CityMap {
         return &self.node_map[y][x];
     }
 
-    fn get_node_mut(&mut self, x: usize, y: usize) -> &mut Node {
-        return &mut self.node_map[y][x];
-    }
-
     pub fn collect_antennae(node_map: &Vec<Vec<Node>>) -> Vec<Antenna> {
         let mut antennae: Vec<Antenna> = Vec::new();
         for y in 0..node_map.len() {
@@ -186,7 +194,8 @@ impl CityMap {
         }
     }
 
-    fn compute_antinodes(&mut self) {
+    pub fn compute_antinodes_part_one(&mut self) {
+        self.compute_distances();
         for y in 0..self.node_map.len() {
             for x in 0..self.node_map[y].len() {
                 let node: &mut Node = &mut self.node_map[y][x];
@@ -207,19 +216,68 @@ impl CityMap {
         }
         count
     }
+
+    fn mark_antinodes(&mut self, antenna: &Antenna, x_dist: i32, y_dist: i32) {
+        let mut curr_x = antenna.x_position;
+        let mut curr_y = antenna.y_position;
+        let max_x = self.node_map[0].len() as i32;
+        let max_y = self.node_map.len() as i32;
+        while curr_x > 0 && curr_x < max_x && curr_y > 0 && curr_y < max_y {
+            self.node_map[curr_y as usize][curr_x as usize].set_antinode();
+            curr_x += x_dist;
+            curr_y += y_dist;
+        }
+    }
+
+    fn compute_antinodes_recursive(&mut self, antenna: &Antenna, rest: Vec<&Antenna>) {
+        if rest.len() == 0 {
+            return;
+        }
+
+        for other_antenna in rest.iter() {
+            if other_antenna.name == antenna.name {
+                // mark the two antennae as antinodes
+                self.node_map[antenna.y_position as usize][antenna.x_position as usize]
+                    .set_antinode();
+                self.node_map[other_antenna.y_position as usize][other_antenna.x_position as usize]
+                    .set_antinode();
+                // compute the distance between the two antennae
+                let x_dist = antenna.x_position - other_antenna.y_position;
+                let y_dist = antenna.y_position - other_antenna.x_position;
+                self.mark_antinodes(&antenna, x_dist, y_dist);
+                self.mark_antinodes(&antenna, -x_dist, -y_dist);
+            }
+        }
+        let head = rest[0];
+        let rest = rest[1..].to_vec();
+        self.compute_antinodes_recursive(head, rest);
+    }
+
+    pub fn compute_antinodes_part_two(&mut self) {
+        let antennae = self.antennae.clone();
+        let head = &antennae[0];
+        let rest : Vec<&Antenna>= antennae[1..].iter().collect();
+        self.compute_antinodes_recursive(head, rest);
+    }
 }
+
 pub fn part_one(input: &str) -> Option<u64> {
     let mut map = CityMap::new(input);
-    map.compute_distances();
-    map.compute_antinodes();
+
+    map.compute_antinodes_part_one();
     print!("{}", map);
-    
+
     // Answer with input data from AOC is 308
     Some(map.count_antinodes())
 }
 
 pub fn part_two(input: &str) -> Option<u64> {
-    None
+    let mut map = CityMap::new(input);
+    map.compute_antinodes_part_two();
+    print!("{}", map);
+
+    // Answer with input data from AOC is ???
+    Some(map.count_antinodes())
 }
 
 #[cfg(test)]
@@ -342,6 +400,6 @@ mod tests {
     #[test]
     fn test_part_two() {
         let result = part_two(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
+        assert_eq!(result, Some(34));
     }
 }
