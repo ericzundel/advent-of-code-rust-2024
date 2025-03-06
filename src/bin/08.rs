@@ -222,7 +222,7 @@ impl CityMap {
         let mut curr_y = antenna.y_position;
         let max_x = self.node_map[0].len() as i32;
         let max_y = self.node_map.len() as i32;
-        while curr_x > 0 && curr_x < max_x && curr_y > 0 && curr_y < max_y {
+        while curr_x >= 0 && curr_x < max_x && curr_y >= 0 && curr_y < max_y {
             self.node_map[curr_y as usize][curr_x as usize].set_antinode();
             curr_x += x_dist;
             curr_y += y_dist;
@@ -241,11 +241,17 @@ impl CityMap {
                     .set_antinode();
                 self.node_map[other_antenna.y_position as usize][other_antenna.x_position as usize]
                     .set_antinode();
+                
                 // compute the distance between the two antennae
-                let x_dist = antenna.x_position - other_antenna.y_position;
-                let y_dist = antenna.y_position - other_antenna.x_position;
+                let x_dist = antenna.x_position - other_antenna.x_position;
+                let y_dist = antenna.y_position - other_antenna.y_position;
                 self.mark_antinodes(&antenna, x_dist, y_dist);
                 self.mark_antinodes(&antenna, -x_dist, -y_dist);
+
+                // let x_dist = other_antenna.x_position - antenna.y_position;
+                // let y_dist = other_antenna.y_position - antenna.x_position;
+                // self.mark_antinodes(&antenna, x_dist, y_dist);
+                // self.mark_antinodes(&antenna, -x_dist, -y_dist);
             }
         }
         let head = rest[0];
