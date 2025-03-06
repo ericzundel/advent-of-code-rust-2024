@@ -7,7 +7,10 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="Completed Day 4 part 2" />
+    <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="8.1 in progress">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bin/08.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/08.rs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,74 +32,106 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Cargo.Build `Test 03::tests`.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Build `Test 04::tests`.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Build `Test 05::tests`.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Build `Test tests::test_count_xmas`.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Build `Test tests::test_horiz_str`.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Build `Test tests::test_part_one (1)`.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Build `Test tests::test_part_one`.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Build `Test tests::test_xmas_in_vec`.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Run advent_of_code.executor&quot;: &quot;Debug&quot;,
-    &quot;Cargo.Test 03::tests.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test 04::tests.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test 05::tests.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test tests::test_count_xmas.executor&quot;: &quot;Debug&quot;,
-    &quot;Cargo.Test tests::test_count_xmas_in_strings.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test tests::test_horiz_str.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test tests::test_is_x_mas.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test tests::test_load_data.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test tests::test_parse.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test tests::test_parse_update_line.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test tests::test_part_one (1).executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test tests::test_part_one.executor&quot;: &quot;Debug&quot;,
-    &quot;Cargo.Test tests::test_part_two.executor&quot;: &quot;Debug&quot;,
-    &quot;Cargo.Test tests::test_rows_to_columns.executor&quot;: &quot;Run&quot;,
-    &quot;Cargo.Test tests::test_tokenizer.executor&quot;: &quot;Debug&quot;,
-    &quot;Cargo.Test tests::test_tokenizer_seq1.executor&quot;: &quot;Debug&quot;,
-    &quot;Cargo.Test tests::test_xmas_in_vec.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
-    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Cargo.Build `Test 03::tests`.executor": "Run",
+    "Cargo.Build `Test 04::tests`.executor": "Run",
+    "Cargo.Build `Test 05::tests`.executor": "Run",
+    "Cargo.Build `Test 06::tests`.executor": "Run",
+    "Cargo.Build `Test 07::tests`.executor": "Run",
+    "Cargo.Build `Test 08::tests`.executor": "Run",
+    "Cargo.Build `Test simulation_tests::test_simulation1`.executor": "Run",
+    "Cargo.Build `Test tests::test_count_xmas`.executor": "Run",
+    "Cargo.Build `Test tests::test_equation_mult_sum`.executor": "Run",
+    "Cargo.Build `Test tests::test_horiz_str`.executor": "Run",
+    "Cargo.Build `Test tests::test_is_column`.executor": "Run",
+    "Cargo.Build `Test tests::test_lab_map_print`.executor": "Run",
+    "Cargo.Build `Test tests::test_load_map`.executor": "Run",
+    "Cargo.Build `Test tests::test_move_guard`.executor": "Run",
+    "Cargo.Build `Test tests::test_part_one (1)`.executor": "Run",
+    "Cargo.Build `Test tests::test_part_one`.executor": "Run",
+    "Cargo.Build `Test tests::test_repair_update`.executor": "Run",
+    "Cargo.Build `Test tests::test_simulation1`.executor": "Run",
+    "Cargo.Build `Test tests::test_valid_rule`.executor": "Run",
+    "Cargo.Build `Test tests::test_xmas_in_vec`.executor": "Run",
+    "Cargo.Run advent_of_code.executor": "Debug",
+    "Cargo.Test 01::tests.executor": "Run",
+    "Cargo.Test 02::tests.executor": "Run",
+    "Cargo.Test 03::tests.executor": "Run",
+    "Cargo.Test 04::tests.executor": "Run",
+    "Cargo.Test 05::tests.executor": "Run",
+    "Cargo.Test 06::tests.executor": "Run",
+    "Cargo.Test 07::tests.executor": "Run",
+    "Cargo.Test 08::tests.executor": "Run",
+    "Cargo.Test simulation_tests.executor": "Debug",
+    "Cargo.Test simulation_tests::test_detect_cycle.executor": "Run",
+    "Cargo.Test simulation_tests::test_simulation1.executor": "Run",
+    "Cargo.Test tests::test_add_column.executor": "Run",
+    "Cargo.Test tests::test_count_xmas.executor": "Debug",
+    "Cargo.Test tests::test_count_xmas_in_strings.executor": "Run",
+    "Cargo.Test tests::test_equation_mult_sum.executor": "Run",
+    "Cargo.Test tests::test_has_antinode.executor": "Debug",
+    "Cargo.Test tests::test_horiz_str.executor": "Run",
+    "Cargo.Test tests::test_is_column.executor": "Run",
+    "Cargo.Test tests::test_is_x_mas.executor": "Run",
+    "Cargo.Test tests::test_lab_map_print.executor": "Run",
+    "Cargo.Test tests::test_load_data.executor": "Run",
+    "Cargo.Test tests::test_load_map.executor": "Debug",
+    "Cargo.Test tests::test_move_guard.executor": "Run",
+    "Cargo.Test tests::test_parse.executor": "Run",
+    "Cargo.Test tests::test_parse_update_line.executor": "Run",
+    "Cargo.Test tests::test_part_one (1).executor": "Run",
+    "Cargo.Test tests::test_part_one.executor": "Run",
+    "Cargo.Test tests::test_part_two.executor": "Debug",
+    "Cargo.Test tests::test_repair_update.executor": "Run",
+    "Cargo.Test tests::test_rows_to_columns.executor": "Run",
+    "Cargo.Test tests::test_simulation1.executor": "Debug",
+    "Cargo.Test tests::test_tokenizer.executor": "Debug",
+    "Cargo.Test tests::test_tokenizer_seq1.executor": "Debug",
+    "Cargo.Test tests::test_valid_rule.executor": "Run",
+    "Cargo.Test tests::test_valid_rules.executor": "Run",
+    "Cargo.Test tests::test_with_concat.executor": "Run",
+    "Cargo.Test tests::test_xmas_in_vec.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.rust.reset.selective.auto.import": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "org.rust.first.attach.projects": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
     <layout>
       <window_info id="Bookmarks" side_tool="true" />
       <window_info id="Merge Requests" />
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.07321359" />
-      <window_info id="Commit" order="1" weight="0.07321359" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.16551006" />
+      <window_info id="Commit" order="1" weight="0.23565014" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="TypeScript" />
-      <window_info anchor="bottom" id="TODO" />
       <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="File Transfer" />
-      <window_info anchor="bottom" id="Version Control" order="0" />
-      <window_info anchor="bottom" id="Problems" order="1" />
-      <window_info anchor="bottom" id="Problems View" order="2" weight="0.3116197" />
-      <window_info anchor="bottom" id="Terminal" order="3" />
-      <window_info anchor="bottom" id="Build" order="4" weight="0.2552046" />
-      <window_info anchor="bottom" id="Debug" order="5" weight="0.18413496" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.2552046" />
-      <window_info anchor="bottom" id="Services" order="7" />
-      <window_info anchor="bottom" id="Find" order="8" weight="0.32940447" />
+      <window_info active="true" anchor="bottom" id="Run" order="0" visible="true" weight="0.5588658" />
+      <window_info anchor="bottom" id="Version Control" order="1" weight="0.32940447" />
+      <window_info anchor="bottom" id="Problems" order="2" />
+      <window_info anchor="bottom" id="Problems View" order="3" weight="0.32940447" />
+      <window_info anchor="bottom" id="Terminal" order="4" weight="0.32940447" />
+      <window_info anchor="bottom" id="Build" order="5" weight="0.5588658" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.2854631" />
+      <window_info anchor="bottom" id="Services" order="8" weight="0.32940447" />
+      <window_info anchor="bottom" id="TODO" order="9" weight="0.3298636" />
+      <window_info anchor="bottom" id="Find" order="9" weight="0.32940447" />
       <window_info anchor="right" id="Coverage" side_tool="true" />
-      <window_info anchor="right" content_ui="combo" id="Notifications" order="0" weight="0.25" />
+      <window_info anchor="right" id="Notifications" order="0" weight="0.32720333" />
       <window_info anchor="right" id="AIAssistant" order="1" weight="0.25" />
       <window_info anchor="right" id="Database" order="2" weight="0.25" />
       <window_info anchor="right" id="Gradle" order="3" weight="0.25" />
@@ -105,7 +140,7 @@
       <window_info anchor="right" id="RustCargo" order="6" weight="0.2" />
     </layout>
   </component>
-  <component name="RunManager" selected="Cargo.Test 04::tests">
+  <component name="RunManager" selected="Cargo.Test 08::tests">
     <configuration name="Run advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package advent_of_code --bin advent_of_code" />
@@ -124,8 +159,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test 04::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 04 tests" />
+    <configuration name="Test 07::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 07 tests" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -141,8 +176,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test 05::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 05 tests" />
+    <configuration name="Test 08::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 08 tests" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -175,8 +210,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_is_x_mas" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 04 tests::test_is_x_mas -- --exact" />
+    <configuration name="Test tests::test_equation_mult_sum" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 07 tests::test_equation_mult_sum -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -192,8 +227,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_load_data" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 05 tests::test_load_data -- --exact" />
+    <configuration name="Test tests::test_has_antinode" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 08 tests::test_has_antinode -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -209,8 +244,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_parse_update_line" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 05 tests::test_parse_update_line -- --exact" />
+    <configuration name="Test tests::test_with_concat" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 07 tests::test_with_concat -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -228,11 +263,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Test 04::tests" />
-        <item itemvalue="Cargo.Test 05::tests" />
-        <item itemvalue="Cargo.Test tests::test_parse_update_line" />
-        <item itemvalue="Cargo.Test tests::test_load_data" />
-        <item itemvalue="Cargo.Test tests::test_is_x_mas" />
+        <item itemvalue="Cargo.Test 08::tests" />
+        <item itemvalue="Cargo.Test tests::test_has_antinode" />
+        <item itemvalue="Cargo.Test 07::tests" />
+        <item itemvalue="Cargo.Test tests::test_with_concat" />
+        <item itemvalue="Cargo.Test tests::test_equation_mult_sum" />
       </list>
     </recent_temporary>
   </component>
@@ -253,6 +288,7 @@
       <workItem from="1740331233910" duration="6328000" />
       <workItem from="1740445810516" duration="5928000" />
       <workItem from="1740530555410" duration="2640000" />
+      <workItem from="1740713412374" duration="62868000" />
     </task>
     <task id="LOCAL-00001" summary="Cleanups for day 2 code">
       <option name="closed" value="true" />
@@ -278,17 +314,120 @@
       <option name="project" value="LOCAL" />
       <updated>1740566476587</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Completed Day 5 part 2">
+      <option name="closed" value="true" />
+      <created>1740805959650</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1740805959650</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Day 6 part 1 in progress. All the functions are implemented, but it gets the wrong answer.">
+      <option name="closed" value="true" />
+      <created>1740838525491</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1740838525491</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Day 6 part 1 still in progress.  test_simulation1 shows the bug, looks like swapping X and Y">
+      <option name="closed" value="true" />
+      <created>1740869776277</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1740869776277</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Day 6 part 2 solved.">
+      <option name="closed" value="true" />
+      <created>1740935961332</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1740935961332</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fix tests for Day 1 so github continuous integration will work.">
+      <option name="closed" value="true" />
+      <created>1740938185003</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1740938185003</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Fix tests for Day 1 so github continuous integration will work.">
+      <option name="closed" value="true" />
+      <created>1740938327448</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1740938327449</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Solved 7.1">
+      <option name="closed" value="true" />
+      <created>1740967391271</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1740967391271</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Solved 7.2">
+      <option name="closed" value="true" />
+      <created>1740999217509</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1740999217509</updated>
+    </task>
+    <task id="LOCAL-00012" summary="8.1 in progress">
+      <option name="closed" value="true" />
+      <created>1741050476814</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1741050476814</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Cleanups for day 2 code" />
     <MESSAGE value="Completed Day 3 part 2." />
     <MESSAGE value="Completed Day 4 part 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed Day 4 part 2" />
+    <MESSAGE value="Completed Day 5 part 2" />
+    <MESSAGE value="Day 6 part 1 in progress. All the functions are implemented, but it gets the wrong answer." />
+    <MESSAGE value="Day 6 part 1 still in progress.  test_simulation1 shows the bug, looks like swapping X and Y" />
+    <MESSAGE value="Day 6 part 2 solved." />
+    <MESSAGE value="Fix tests for Day 1 so github continuous integration will work." />
+    <MESSAGE value="Solved 7.1" />
+    <MESSAGE value="Solved 7.2" />
+    <MESSAGE value="6.1 in progress" />
+    <MESSAGE value="8.1 in progress" />
+    <option name="LAST_COMMIT_MESSAGE" value="8.1 in progress" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/bin/08.rs</url>
+          <line>44</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
