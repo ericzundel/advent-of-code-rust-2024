@@ -8,8 +8,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="8.1 in progress">
+      <change afterPath="$PROJECT_DIR$/data/examples/10.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bin/10.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bin/09.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/09.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +42,7 @@
     "Cargo.Build `Test 07::tests`.executor": "Run",
     "Cargo.Build `Test 08::tests`.executor": "Run",
     "Cargo.Build `Test 09::tests`.executor": "Run",
+    "Cargo.Build `Test 10::tests`.executor": "Run",
     "Cargo.Build `Test simulation_tests::test_simulation1`.executor": "Run",
     "Cargo.Build `Test tests::test_count_xmas`.executor": "Run",
     "Cargo.Build `Test tests::test_equation_mult_sum`.executor": "Run",
@@ -66,10 +68,12 @@
     "Cargo.Test 07::tests.executor": "Run",
     "Cargo.Test 08::tests.executor": "Run",
     "Cargo.Test 09::tests.executor": "Run",
+    "Cargo.Test 10::tests.executor": "Run",
     "Cargo.Test simulation_tests.executor": "Debug",
     "Cargo.Test simulation_tests::test_detect_cycle.executor": "Run",
     "Cargo.Test simulation_tests::test_simulation1.executor": "Run",
     "Cargo.Test tests::test_add_column.executor": "Run",
+    "Cargo.Test tests::test_adjacent_positions.executor": "Run",
     "Cargo.Test tests::test_checksum.executor": "Run",
     "Cargo.Test tests::test_count_xmas.executor": "Debug",
     "Cargo.Test tests::test_count_xmas_in_strings.executor": "Run",
@@ -78,6 +82,7 @@
     "Cargo.Test tests::test_horiz_str.executor": "Run",
     "Cargo.Test tests::test_is_column.executor": "Run",
     "Cargo.Test tests::test_is_x_mas.executor": "Run",
+    "Cargo.Test tests::test_island2.executor": "Debug",
     "Cargo.Test tests::test_lab_map_print.executor": "Run",
     "Cargo.Test tests::test_load_data.executor": "Run",
     "Cargo.Test tests::test_load_map.executor": "Debug",
@@ -95,6 +100,7 @@
     "Cargo.Test tests::test_simulation1.executor": "Debug",
     "Cargo.Test tests::test_tokenizer.executor": "Debug",
     "Cargo.Test tests::test_tokenizer_seq1.executor": "Debug",
+    "Cargo.Test tests::test_trailhead2.executor": "Run",
     "Cargo.Test tests::test_valid_rule.executor": "Run",
     "Cargo.Test tests::test_valid_rules.executor": "Run",
     "Cargo.Test tests::test_with_concat.executor": "Run",
@@ -127,13 +133,13 @@
       <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="File Transfer" />
-      <window_info active="true" anchor="bottom" id="Run" order="0" visible="true" weight="0.24515435" />
+      <window_info anchor="bottom" id="Run" order="0" weight="0.24515435" />
       <window_info anchor="bottom" id="Version Control" order="1" weight="0.32940447" />
       <window_info anchor="bottom" id="Problems" order="2" />
       <window_info anchor="bottom" id="Problems View" order="3" weight="0.32940447" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32940447" />
       <window_info anchor="bottom" id="Build" order="5" weight="0.24515435" />
-      <window_info anchor="bottom" id="Debug" order="6" weight="0.24515435" />
+      <window_info active="true" anchor="bottom" id="Debug" order="6" visible="true" weight="0.24515435" />
       <window_info anchor="bottom" id="Services" order="8" weight="0.32940447" />
       <window_info anchor="bottom" id="TODO" order="9" weight="0.3298636" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.32940447" />
@@ -147,7 +153,7 @@
       <window_info anchor="right" id="RustCargo" order="6" weight="0.2" />
     </layout>
   </component>
-  <component name="RunManager" selected="Cargo.Test 09::tests">
+  <component name="RunManager" selected="Cargo.Test tests::test_island2">
     <configuration name="Run advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package advent_of_code --bin advent_of_code" />
@@ -166,8 +172,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test 09::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 09 tests" />
+    <configuration name="Test 10::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 10 tests" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -200,8 +206,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_checksum" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 09 tests::test_checksum -- --exact" />
+    <configuration name="Test tests::test_adjacent_positions" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 10 tests::test_adjacent_positions -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -217,25 +223,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_new_disk2" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 09 tests::test_new_disk2 -- --exact" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs />
-      <option name="emulateTerminal" value="true" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test tests::test_optimized" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 09 tests::test_optimized -- --exact" />
+    <configuration name="Test tests::test_island2" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 10 tests::test_island2 -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -252,7 +241,24 @@
       </method>
     </configuration>
     <configuration name="Test tests::test_part_one" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 09 tests::test_part_one -- --exact" />
+      <option name="command" value="test --package advent_of_code --bin 10 tests::test_part_one -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test tests::test_trailhead2" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 10 tests::test_trailhead2 -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -270,11 +276,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Test 09::tests" />
-        <item itemvalue="Cargo.Test tests::test_checksum" />
-        <item itemvalue="Cargo.Test tests::test_new_disk2" />
+        <item itemvalue="Cargo.Test tests::test_island2" />
+        <item itemvalue="Cargo.Test 10::tests" />
         <item itemvalue="Cargo.Test tests::test_part_one" />
-        <item itemvalue="Cargo.Test tests::test_optimized" />
+        <item itemvalue="Cargo.Test tests::test_adjacent_positions" />
+        <item itemvalue="Cargo.Test tests::test_trailhead2" />
       </list>
     </recent_temporary>
   </component>
@@ -295,7 +301,7 @@
       <workItem from="1740331233910" duration="6328000" />
       <workItem from="1740445810516" duration="5928000" />
       <workItem from="1740530555410" duration="2640000" />
-      <workItem from="1740713412374" duration="94572000" />
+      <workItem from="1740713412374" duration="100203000" />
     </task>
     <task id="LOCAL-00001" summary="Cleanups for day 2 code">
       <option name="closed" value="true" />
@@ -424,6 +430,17 @@
     <MESSAGE value="6.1 in progress" />
     <MESSAGE value="8.1 in progress" />
     <option name="LAST_COMMIT_MESSAGE" value="8.1 in progress" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/bin/10.rs</url>
+          <line>110</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
