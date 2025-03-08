@@ -16,10 +16,9 @@ struct Disk {
 
 impl Display for Disk {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
-        write!(f, "Input:  ")?;
         for block in self.blocks.iter() {
             match block {
-                Block::Free => write!(f, ".")?,
+                Block::Free => write!(f, " . ")?,
                 Block::File(id) => write!(f, "[{}]", id)?,
             }
         }
@@ -171,7 +170,11 @@ impl Disk {
     /// Checks the two disks to see that they contain the same blocks (regardless of position)
     pub fn consistency_check(disk1: &Disk, disk2: &Disk) -> bool {
         if disk1.blocks.len() != disk2.blocks.len() {
-            dbg!("Disks differ in block length");
+            dbg!(
+                "Disks differ in block length",
+                disk1.blocks.len(),
+                disk2.blocks.len()
+            );
             return false;
         }
         let hash1 = disk1.build_hash();
@@ -242,57 +245,54 @@ impl Filesystem {
         Filesystem { files }
     }
 
-    pub(crate) fn optimize_part_two_aborted(&self) -> Filesystem {
-        let mut optimized_files = Vec::new();
-
-        let mut from_tail = self.files.iter().rev();
-        let mut from_head = self.files.iter();
-
-        let mut front = from_head.next().unwrap();
-        let tail = from_tail.next().unwrap();
-        while front.ne(tail) {
-            if front.id.is_some() {
-                optimized_files.push(front.clone());
-                front = from_head.next().unwrap();
-            }
-            if front.id.is_none() {
-                // We have a hole
-                todo!();
-            }
-        }
-        Filesystem {
-            files: optimized_files,
-        }
-    }
-
     pub(crate) fn optimize_part_two(&self) -> Filesystem {
         let mut optimized_files = Vec::new();
-        let mut remaining_files: Vec<File> = self.files.clone();
+        let mut remaining_files: Vec<File> =self.files.clone();
         let mut copied_files_set: HashSet<File> = HashSet::with_capacity(self.files.len());
-        for file in self.files.iter() {
-            if copied_files_set.contains(file) {
-                continue;
-            }
-            if file.id.is_some() {
-                copied_files_set.insert(file.clone());
-                optimized_files.push(file.clone());
-            } else {
-                // We have a hole. We need to fill it.
-                let mut len = file.len;
-                while (len > 0) {
-                    let idx = Self::rev_find_from_idx(file.len, &remaining_files);
-                    let file_to_copy = remaining_files.remove(idx);
-                    copied_files_set.insert(file_to_copy.clone());
-                    optimized_files.push(file_to_copy.clone());
-                    len -= file_to_copy.len;
+        let mut file_idx = 0;
+        while file_idx < remaining_files.len() {
+            let file :&mut File = &mut remaining_files[file_idx];
+            // still needed?
+            if !copied_files_set.contains(file) {
+                if file.id.is_some() {
+                    copied_files_set.insert(file.clone());
+                    optimized_files.push(file.clone());
+                    let file_to_copy = remaining_files.remove(file_idx);
+                    remaining_files.insert(
+                        file_idx,
+                        File {
+                            id: None,
+                            len: file_to_copy.len,
+                        },
+                    );
+                } else {
+                    // We have a hole. We need to fill it.
+                    let mut len = file.len;
+                    'inner: while len > 0 {
+                        let idx = Self::rev_find_from_idx(len, &remaining_files);
+                        if idx.is_none() {
+                            break 'inner;
+                        }
+                        let idx = idx.unwrap();
+                        let file_to_copy = remaining_files.remove(idx);
+                        remaining_files.insert(
+                            idx,
+                            File {
+                                id: None,
+                                len: file_to_copy.len,
+                            },
+                        );
+                        copied_files_set.insert(file_to_copy.clone());
+                        optimized_files.push(file_to_copy.clone());
+                        len -= file_to_copy.len;
+                    }
+                    // Didn't fill the hole? Let's create a free spot on the optimized disk to match.
+                    if len > 0 {
+                        optimized_files.push(File { id: None, len: len });
+                    }
                 }
-                if len > 0 {
-                    optimized_files.push(File {
-                        id: None,
-                        len: len,
-                    })
-                }
             }
+            file_idx += 1;
         }
 
         Filesystem {
@@ -300,14 +300,14 @@ impl Filesystem {
         }
     }
 
-    fn rev_find_from_idx(len: usize, working_files: &Vec<File>) -> usize {
+    fn rev_find_from_idx(len: usize, working_files: &Vec<File>) -> Option<usize> {
         for i in (0..working_files.len()).rev() {
             let file = &working_files[i];
             if file.id.is_some() && file.len <= len {
-                return i;
+                return Some(i);
             }
         }
-        0
+        None
     }
 }
 
@@ -315,12 +315,15 @@ pub fn part_two(input: &str) -> Option<u64> {
     let orig_disk = Disk::new(input);
     let orig_filesystem = Filesystem::new(input);
     let reconstituted_disk = orig_filesystem.clone().into();
+    print!("Original Disk:  {}", orig_disk);
     assert!(Disk::consistency_check(&orig_disk, &reconstituted_disk));
     let optimized_filesystem = orig_filesystem.optimize_part_two();
-
     let reconstituted_disk = optimized_filesystem.into();
+    print!("Optimized Disk: {}", reconstituted_disk);
     assert!(Disk::consistency_check(&orig_disk, &reconstituted_disk));
-    None
+    
+    // Answer from AOC data is 6423258376982
+    Some(reconstituted_disk.checksum())
 }
 
 #[cfg(test)]
@@ -413,6 +416,6 @@ mod tests {
     #[test]
     fn test_part_two() {
         let result = part_two(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
+        assert_eq!(result, Some(2858));
     }
 }
