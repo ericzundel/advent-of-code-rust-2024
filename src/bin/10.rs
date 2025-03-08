@@ -64,27 +64,30 @@ impl Island {
 
     fn find_adjacent(&self, curr: Position, value: char) -> Vec<Position> {
         let mut result: Vec<Position> = Vec::new();
-        let max_x = self.topo_map[0].len() -1;
-        let max_y = self.topo_map.len() -1; 
+        let max_x = self.topo_map[0].len() - 1;
+        let max_y = self.topo_map.len() - 1;
         if curr.x > 0 && self.topo_map[curr.y][curr.x - 1] == value {
             // west
             result.push(Position {
                 x: curr.x - 1,
                 y: curr.y,
             });
-        } else if curr.y > 0 && self.topo_map[curr.y - 1][curr.x] == value {
+        }
+        if curr.y > 0 && self.topo_map[curr.y - 1][curr.x] == value {
             // north
             result.push(Position {
                 x: curr.x,
                 y: curr.y - 1,
             });
-        } else if curr.y < max_y && self.topo_map[curr.y + 1][curr.x] == value {
+        }
+        if curr.y < max_y && self.topo_map[curr.y + 1][curr.x] == value {
             // south
             result.push(Position {
                 x: curr.x,
                 y: curr.y + 1,
             });
-        } else if curr.x < max_x && self.topo_map[curr.y][curr.x + 1] == value {
+        }
+        if curr.x < max_x && self.topo_map[curr.y][curr.x + 1] == value {
             // east
             result.push(Position {
                 x: curr.x + 1,
@@ -103,7 +106,7 @@ impl Island {
         if value == '9' {
             // base case!
             found.insert(curr.clone());
-            dbg!("Found", curr);
+            // dbg!("Found", curr);
         } else {
             // Search for the next one!
             let next_char = from_digit(value.to_digit(10).unwrap() + 1, 10).unwrap();
@@ -125,7 +128,7 @@ impl Island {
 
 pub fn part_one(input: &str) -> Option<u64> {
     let island = Island::new(input);
-
+    // Answer is 698 using AOC data
     Some(island.sum_scores())
 }
 
@@ -150,6 +153,14 @@ mod tests {
         8111118\n\
         9111119\n";
 
+    static EXAMPLE3: &str = "1190559\n\
+        5551598\n\
+        8882717\n\
+        6543456\n\
+        7651987\n\
+        8761111\n\
+        9871111\n";
+
     // 2 trailheads with a score of 1 and 2
     static EXAMPLE4: &str = "1055955\n\
         2555855\n\
@@ -170,14 +181,26 @@ mod tests {
     #[test]
     fn test_adjacent_positions() {
         let island = Island::new(EXAMPLE2);
-        assert_eq!(vec![Position{ x: 3, y: 1 }], 
-                   island.find_adjacent(Position { x: 3, y: 0 }, '1'));
-        assert_eq!(vec![Position{ x: 6, y: 3 }],
-                   island.find_adjacent(Position { x: 5, y: 3 }, '6'));
-        assert_eq!(vec![Position{ x: 0, y: 3 }],
-                   island.find_adjacent(Position { x: 1, y: 3 }, '6'));
-        assert_eq!(vec![Position{ x: 0, y: 6 }],
-                   island.find_adjacent(Position { x: 0, y: 5 }, '9'));
+        assert_eq!(
+            vec![Position { x: 3, y: 1 }],
+            island.find_adjacent(Position { x: 3, y: 0 }, '1')
+        );
+        assert_eq!(
+            vec![Position { x: 6, y: 3 }],
+            island.find_adjacent(Position { x: 5, y: 3 }, '6')
+        );
+        assert_eq!(
+            vec![Position { x: 0, y: 3 }],
+            island.find_adjacent(Position { x: 1, y: 3 }, '6')
+        );
+        assert_eq!(
+            vec![Position { x: 0, y: 6 }],
+            island.find_adjacent(Position { x: 0, y: 5 }, '9')
+        );
+        assert_eq!(
+            vec![Position { x: 2, y: 3 }, Position { x: 4, y: 3 }],
+            island.find_adjacent(Position { x: 3, y: 3 }, '4')
+        );
     }
     #[test]
     fn test_island2() {
@@ -187,13 +210,20 @@ mod tests {
         assert_eq!(2, island.sum_scores())
     }
     #[test]
+    fn test_island3() {
+        dbg!("test_island3()");
+        let island = Island::new(EXAMPLE3);
+        assert_eq!(vec![Position { x: 3, y: 0 }], island.find_trailheads());
+        assert_eq!(4, island.sum_scores())
+    }
+    #[test]
     fn test_island4() {
         let island = Island::new(EXAMPLE4);
         assert_eq!(
             vec![Position { x: 1, y: 0 }, Position { x: 5, y: 6 }],
             island.find_trailheads()
         );
-        assert_eq!(2, island.sum_scores())
+        assert_eq!(3, island.sum_scores())
     }
     #[test]
     fn test_part_one() {

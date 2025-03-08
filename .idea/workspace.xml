@@ -8,9 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="8.1 in progress">
-      <change afterPath="$PROJECT_DIR$/data/examples/10.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/bin/10.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bin/10.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/10.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +81,7 @@
     "Cargo.Test tests::test_horiz_str.executor": "Run",
     "Cargo.Test tests::test_is_column.executor": "Run",
     "Cargo.Test tests::test_is_x_mas.executor": "Run",
-    "Cargo.Test tests::test_island2.executor": "Debug",
+    "Cargo.Test tests::test_island2.executor": "Run",
     "Cargo.Test tests::test_lab_map_print.executor": "Run",
     "Cargo.Test tests::test_load_data.executor": "Run",
     "Cargo.Test tests::test_load_map.executor": "Debug",
@@ -138,8 +137,8 @@
       <window_info anchor="bottom" id="Problems" order="2" />
       <window_info anchor="bottom" id="Problems View" order="3" weight="0.32940447" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32940447" />
-      <window_info anchor="bottom" id="Build" order="5" weight="0.24515435" />
-      <window_info active="true" anchor="bottom" id="Debug" order="6" visible="true" weight="0.24515435" />
+      <window_info active="true" anchor="bottom" id="Build" order="5" visible="true" weight="0.24515435" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.24515435" />
       <window_info anchor="bottom" id="Services" order="8" weight="0.32940447" />
       <window_info anchor="bottom" id="TODO" order="9" weight="0.3298636" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.32940447" />
@@ -153,7 +152,7 @@
       <window_info anchor="right" id="RustCargo" order="6" weight="0.2" />
     </layout>
   </component>
-  <component name="RunManager" selected="Cargo.Test tests::test_island2">
+  <component name="RunManager" selected="Cargo.Test 10::tests">
     <configuration name="Run advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package advent_of_code --bin advent_of_code" />
@@ -276,10 +275,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Test tests::test_island2" />
         <item itemvalue="Cargo.Test 10::tests" />
-        <item itemvalue="Cargo.Test tests::test_part_one" />
+        <item itemvalue="Cargo.Test tests::test_island2" />
         <item itemvalue="Cargo.Test tests::test_adjacent_positions" />
+        <item itemvalue="Cargo.Test tests::test_part_one" />
         <item itemvalue="Cargo.Test tests::test_trailhead2" />
       </list>
     </recent_temporary>
@@ -301,7 +300,7 @@
       <workItem from="1740331233910" duration="6328000" />
       <workItem from="1740445810516" duration="5928000" />
       <workItem from="1740530555410" duration="2640000" />
-      <workItem from="1740713412374" duration="100203000" />
+      <workItem from="1740713412374" duration="101283000" />
     </task>
     <task id="LOCAL-00001" summary="Cleanups for day 2 code">
       <option name="closed" value="true" />
@@ -430,17 +429,6 @@
     <MESSAGE value="6.1 in progress" />
     <MESSAGE value="8.1 in progress" />
     <option name="LAST_COMMIT_MESSAGE" value="8.1 in progress" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/bin/10.rs</url>
-          <line>110</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
