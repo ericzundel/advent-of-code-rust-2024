@@ -26,11 +26,20 @@ impl Island {
         }
         result
     }
-    pub(crate) fn sum_scores(&self) -> u64 {
+    pub(crate) fn sum_unique_ends(&self) -> u64 {
         let trailheads = self.find_trailheads();
         let mut score: u64 = 0;
         for trailhead in trailheads {
-            score += self.walk_trailhead(trailhead);
+            score += self.find_unique_ends(trailhead);
+        }
+        score
+    }
+
+    pub(crate) fn sum_unique_paths(&self) -> u64 {
+        let trailheads = self.find_trailheads();
+        let mut score: u64 = 0;
+        for trailhead in trailheads {
+            score += self.find_unique_paths(trailhead);
         }
         score
     }
@@ -119,22 +128,47 @@ impl Island {
     }
 
     /// Returns the number of distinct trails found to distinct endpoints.
-    pub fn walk_trailhead(&self, trailhead: Position) -> u64 {
-        let mut found: HashSet<Position> = HashSet::new();
-        let ends: &mut HashSet<Position> = self.find_ends_recursive(trailhead, &mut found);
+    pub fn find_unique_ends(&self, trailhead: Position) -> u64 {
+        let mut ends_found: HashSet<Position> = HashSet::new();
+        let ends: &mut HashSet<Position> = self.find_ends_recursive(trailhead, &mut ends_found);
         return ends.len() as u64;
     }
+
+    fn find_paths_recursive(&self, curr: Position) -> u64 {
+        let value = self.topo_map[curr.y][curr.x];
+        let mut result : u64 = 0;
+        if value == '9' {
+            // base case!
+            return 1;
+        } else {
+            // Search for the next one!
+            let next_char = from_digit(value.to_digit(10).unwrap() + 1, 10).unwrap();
+            let adjacent_positions: Vec<Position> = self.find_adjacent(curr, next_char);
+            for adjacent_position in adjacent_positions {
+                result += self.find_paths_recursive(adjacent_position);
+            }
+        }
+        return result;
+    }
+    
+    /// Returns the number of unique paths from a trailhead to any end.
+    pub fn find_unique_paths(&self, trailhead: Position) -> u64 {
+        let ends_found: u64 = self.find_paths_recursive(trailhead);
+        ends_found
+    }
+    
 }
 
 pub fn part_one(input: &str) -> Option<u64> {
     let island = Island::new(input);
     // Answer is 698 using AOC data
-    Some(island.sum_scores())
+    Some(island.sum_unique_ends())
 }
 
 pub fn part_two(input: &str) -> Option<u64> {
     let mut island = Island::new(input);
-    None
+    // Answer is 1436 using AOC data
+    Some(island.sum_unique_paths())
 }
 
 #[cfg(test)]
@@ -174,7 +208,7 @@ mod tests {
     fn test_island1() {
         let island = Island::new(EXAMPLE1);
         assert_eq!(vec![Position { x: 0, y: 0 }], island.find_trailheads());
-        let sum_score = island.sum_scores();
+        let sum_score = island.sum_unique_ends();
         assert_eq!(1, sum_score);
     }
 
@@ -207,14 +241,14 @@ mod tests {
         dbg!("test_island2()");
         let island = Island::new(EXAMPLE2);
         assert_eq!(vec![Position { x: 3, y: 0 }], island.find_trailheads());
-        assert_eq!(2, island.sum_scores())
+        assert_eq!(2, island.sum_unique_ends())
     }
     #[test]
     fn test_island3() {
         dbg!("test_island3()");
         let island = Island::new(EXAMPLE3);
         assert_eq!(vec![Position { x: 3, y: 0 }], island.find_trailheads());
-        assert_eq!(4, island.sum_scores())
+        assert_eq!(4, island.sum_unique_ends())
     }
     #[test]
     fn test_island4() {
@@ -223,7 +257,7 @@ mod tests {
             vec![Position { x: 1, y: 0 }, Position { x: 5, y: 6 }],
             island.find_trailheads()
         );
-        assert_eq!(3, island.sum_scores())
+        assert_eq!(3, island.sum_unique_ends())
     }
     #[test]
     fn test_part_one() {
@@ -234,6 +268,6 @@ mod tests {
     #[test]
     fn test_part_two() {
         let result = part_two(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
+        assert_eq!(result, Some(81));
     }
 }

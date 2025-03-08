@@ -132,12 +132,12 @@
       <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="File Transfer" />
-      <window_info anchor="bottom" id="Run" order="0" weight="0.24515435" />
+      <window_info active="true" anchor="bottom" id="Run" order="0" visible="true" weight="0.24515435" />
       <window_info anchor="bottom" id="Version Control" order="1" weight="0.32940447" />
       <window_info anchor="bottom" id="Problems" order="2" />
       <window_info anchor="bottom" id="Problems View" order="3" weight="0.32940447" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32940447" />
-      <window_info active="true" anchor="bottom" id="Build" order="5" visible="true" weight="0.24515435" />
+      <window_info anchor="bottom" id="Build" order="5" weight="0.24515435" />
       <window_info anchor="bottom" id="Debug" order="6" weight="0.24515435" />
       <window_info anchor="bottom" id="Services" order="8" weight="0.32940447" />
       <window_info anchor="bottom" id="TODO" order="9" weight="0.3298636" />
@@ -300,7 +300,7 @@
       <workItem from="1740331233910" duration="6328000" />
       <workItem from="1740445810516" duration="5928000" />
       <workItem from="1740530555410" duration="2640000" />
-      <workItem from="1740713412374" duration="101283000" />
+      <workItem from="1740713412374" duration="102208000" />
     </task>
     <task id="LOCAL-00001" summary="Cleanups for day 2 code">
       <option name="closed" value="true" />
