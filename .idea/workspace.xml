@@ -49,6 +49,7 @@
     "Cargo.Build `Test tests::test_lab_map_print`.executor": "Run",
     "Cargo.Build `Test tests::test_load_map`.executor": "Run",
     "Cargo.Build `Test tests::test_move_guard`.executor": "Run",
+    "Cargo.Build `Test tests::test_new_disk2`.executor": "Run",
     "Cargo.Build `Test tests::test_part_one (1)`.executor": "Run",
     "Cargo.Build `Test tests::test_part_one`.executor": "Run",
     "Cargo.Build `Test tests::test_repair_update`.executor": "Run",
@@ -132,7 +133,7 @@
       <window_info anchor="bottom" id="Problems View" order="3" weight="0.32940447" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32940447" />
       <window_info anchor="bottom" id="Build" order="5" weight="0.24515435" />
-      <window_info anchor="bottom" id="Debug" order="6" weight="0.2854631" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.24515435" />
       <window_info anchor="bottom" id="Services" order="8" weight="0.32940447" />
       <window_info anchor="bottom" id="TODO" order="9" weight="0.3298636" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.32940447" />
@@ -146,7 +147,7 @@
       <window_info anchor="right" id="RustCargo" order="6" weight="0.2" />
     </layout>
   </component>
-  <component name="RunManager" selected="Cargo.Test tests::test_new_disk2">
+  <component name="RunManager" selected="Cargo.Test 09::tests">
     <configuration name="Run advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package advent_of_code --bin advent_of_code" />
@@ -269,10 +270,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Test tests::test_new_disk2" />
         <item itemvalue="Cargo.Test 09::tests" />
-        <item itemvalue="Cargo.Test tests::test_part_one" />
         <item itemvalue="Cargo.Test tests::test_checksum" />
+        <item itemvalue="Cargo.Test tests::test_new_disk2" />
+        <item itemvalue="Cargo.Test tests::test_part_one" />
         <item itemvalue="Cargo.Test tests::test_optimized" />
       </list>
     </recent_temporary>
@@ -294,7 +295,7 @@
       <workItem from="1740331233910" duration="6328000" />
       <workItem from="1740445810516" duration="5928000" />
       <workItem from="1740530555410" duration="2640000" />
-      <workItem from="1740713412374" duration="85365000" />
+      <workItem from="1740713412374" duration="92070000" />
     </task>
     <task id="LOCAL-00001" summary="Cleanups for day 2 code">
       <option name="closed" value="true" />

@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::fmt::{Display, Formatter};
 
 advent_of_code::solution!(9);
@@ -28,33 +28,59 @@ impl Display for Disk {
     }
 }
 
+impl From<Filesystem> for Disk {
+    fn from(value: Filesystem) -> Self {
+        let mut blocks = Vec::new();
+        for file in value.files {
+            for _ in 0..file.len {
+                if file.id.is_none() {
+                    blocks.push(Block::Free);
+                } else {
+                    blocks.push(Block::File(file.id.unwrap()));
+                }
+            }
+        }
+        Disk { blocks }
+    }
+}
+
 impl Disk {
     pub fn new(input: &str) -> Disk {
         let input = input.trim();
         let mut input_blocks: Vec<Block> = Vec::new();
         let mut id = 0;
-        for i in (0..input.len()).step_by(2) {
-            let file_blocks = input[i..i + 1].parse().unwrap();
-
-            for _ in 0..file_blocks {
-                input_blocks.push(Block::File(id));
+        let mut is_file = true;
+        // Track the total number of blocks as a consistency check
+        let mut block_count: usize = 0;
+        for i in 0..input.len() {
+            let val: u64 = input[i..i + 1].parse().unwrap();
+            block_count += val as usize;
+            if is_file {
+                assert!(val > 0);
             }
-            if i + 1 < input.len() {
-                let free_blocks = input[i + 1..i + 2].parse().unwrap();
-                for _ in 0..free_blocks {
+            for _ in 0..val {
+                if is_file {
+                    input_blocks.push(Block::File(id));
+                } else {
                     input_blocks.push(Block::Free);
                 }
             }
-            id += 1;
+            if is_file {
+                id += 1;
+            }
+            is_file = !is_file;
         }
+        assert_eq!(input_blocks.len(), block_count);
+
         Disk {
             blocks: input_blocks,
         }
     }
 
-    pub fn optimize(self) -> Disk {
+    pub fn optimize_part_one(self) -> Disk {
         let mut start_index = 0;
         let mut end_index = self.blocks.len() - 1;
+        let start_len = self.blocks.len();
         let input_blocks = &self.blocks;
         let optimized_blocks: Vec<Block> = vec![Block::Free; input_blocks.len()];
         let mut optimized = Disk {
@@ -69,13 +95,38 @@ impl Disk {
                 }
                 Block::Free => {
                     let (new_end_index, block) = self.find_last_nonfree_block(end_index);
+                    assert!(new_end_index < end_index);
                     if new_end_index > start_index {
                         optimized.blocks[start_index] = block.clone();
                         end_index = new_end_index;
+                    } else {
+                        // Tricky edge case!  There was a free block right before the end!
+                        if optimized.blocks[start_index] == Block::Free {
+                            optimized.blocks[start_index] = self.blocks[end_index].clone();
+                        }
+                        break;
                     }
                 }
             }
             start_index += 1;
+        }
+
+        assert_eq!(self.blocks.len(), start_len);
+
+        // Check the optimized list to make sure there are no free blocks in the middle.
+        let mut is_free = false;
+        for i in 0..optimized.blocks.len() {
+            let block = &optimized.blocks[i];
+            match block {
+                Block::Free => is_free = true,
+                Block::File(_) => {
+                    if is_free {
+                        println!("{}", optimized);
+                        println!("Found free block in the middle at {i}");
+                        assert!(false);
+                    }
+                }
+            }
         }
         optimized
     }
@@ -97,7 +148,7 @@ impl Disk {
                 Block::File(id) => {
                     let mul = id.checked_mul(i as u64).unwrap();
                     result = result.checked_add(mul).unwrap();
-                },
+                }
                 Block::Free => continue,
             }
         }
@@ -116,10 +167,11 @@ impl Disk {
         }
         result
     }
-    
+
     /// Checks the two disks to see that they contain the same blocks (regardless of position)
     pub fn consistency_check(disk1: &Disk, disk2: &Disk) -> bool {
-        if (disk1.blocks.len() != disk2.blocks.len()) {
+        if disk1.blocks.len() != disk2.blocks.len() {
+            dbg!("Disks differ in block length");
             return false;
         }
         let hash1 = disk1.build_hash();
@@ -127,8 +179,17 @@ impl Disk {
         assert_eq!(hash1.len(), hash2.len());
         for (key, value) in hash1.iter() {
             let other_value = hash2.get(key);
-            if other_value.is_none() { return false; }
+            if other_value.is_none() {
+                dbg!("different number of blocks for id {:?} (0)", key);
+                return false;
+            }
             if value != other_value.unwrap() {
+                dbg!(
+                    "for key {:?} value {:?} differs from {:?}",
+                    key,
+                    value,
+                    other_value
+                );
                 return false;
             }
         }
@@ -138,15 +199,127 @@ impl Disk {
 
 pub fn part_one(input: &str) -> Option<u64> {
     let orig_disk = Disk::new(input);
-    println!("Before Optimization:\n{}", orig_disk);
-    let optimized = orig_disk.clone().optimize();
-    println!("After Optimization:\n{}", optimized);
+    // println!("Before Optimization:\n{}", orig_disk);
+    let optimized = orig_disk.clone().optimize_part_one();
+    // println!("After Optimization:\n{}", optimized);
     assert!(Disk::consistency_check(&orig_disk, &optimized));
-    // 6386640371050 is too high in AOC data
+    // Answer with AOC data is 6386640365805
     Some(optimized.checksum())
 }
 
+#[derive(Debug, Clone, PartialEq, Hash, Eq)]
+struct File {
+    id: Option<u64>,
+    len: usize,
+}
+
+#[derive(Debug, Clone)]
+struct Filesystem {
+    files: Vec<File>,
+}
+
+impl Filesystem {
+    pub fn new(input: &str) -> Filesystem {
+        let mut files: Vec<File> = Vec::new();
+        let mut id = 0;
+        let mut is_file: bool = true;
+        for character in input.trim().chars() {
+            let val: u8 = format!("{}", character).parse().unwrap();
+            if is_file {
+                files.push(File {
+                    id: Some(id),
+                    len: val as usize,
+                });
+                id += 1;
+            } else {
+                files.push(File {
+                    id: None,
+                    len: val as usize,
+                })
+            }
+            is_file = !is_file;
+        }
+        Filesystem { files }
+    }
+
+    pub(crate) fn optimize_part_two_aborted(&self) -> Filesystem {
+        let mut optimized_files = Vec::new();
+
+        let mut from_tail = self.files.iter().rev();
+        let mut from_head = self.files.iter();
+
+        let mut front = from_head.next().unwrap();
+        let tail = from_tail.next().unwrap();
+        while front.ne(tail) {
+            if front.id.is_some() {
+                optimized_files.push(front.clone());
+                front = from_head.next().unwrap();
+            }
+            if front.id.is_none() {
+                // We have a hole
+                todo!();
+            }
+        }
+        Filesystem {
+            files: optimized_files,
+        }
+    }
+
+    pub(crate) fn optimize_part_two(&self) -> Filesystem {
+        let mut optimized_files = Vec::new();
+        let mut remaining_files: Vec<File> = self.files.clone();
+        let mut copied_files_set: HashSet<File> = HashSet::with_capacity(self.files.len());
+        for file in self.files.iter() {
+            if copied_files_set.contains(file) {
+                continue;
+            }
+            if file.id.is_some() {
+                copied_files_set.insert(file.clone());
+                optimized_files.push(file.clone());
+            } else {
+                // We have a hole. We need to fill it.
+                let mut len = file.len;
+                while (len > 0) {
+                    let idx = Self::rev_find_from_idx(file.len, &remaining_files);
+                    let file_to_copy = remaining_files.remove(idx);
+                    copied_files_set.insert(file_to_copy.clone());
+                    optimized_files.push(file_to_copy.clone());
+                    len -= file_to_copy.len;
+                }
+                if len > 0 {
+                    optimized_files.push(File {
+                        id: None,
+                        len: len,
+                    })
+                }
+            }
+        }
+
+        Filesystem {
+            files: optimized_files,
+        }
+    }
+
+    fn rev_find_from_idx(len: usize, working_files: &Vec<File>) -> usize {
+        for i in (0..working_files.len()).rev() {
+            let file = &working_files[i];
+            if file.id.is_some() && file.len <= len {
+                return i;
+            }
+        }
+        0
+    }
+}
+
 pub fn part_two(input: &str) -> Option<u64> {
+    let orig_disk = Disk::new(input);
+    let orig_filesystem = Filesystem::new(input);
+    let reconstituted_disk = orig_filesystem.clone().into();
+    assert!(Disk::consistency_check(&orig_disk, &reconstituted_disk));
+    let optimized_filesystem = orig_filesystem.optimize_part_two();
+
+    let reconstituted_disk = optimized_filesystem.into();
+    assert!(Disk::consistency_check(&orig_disk, &reconstituted_disk));
     None
 }
 
@@ -173,7 +346,7 @@ mod tests {
         };
         assert_eq!(expected, Disk::new("1120331"));
     }
-    
+
     #[test]
     fn test_new_disk2() {
         let expected: Disk = Disk {
@@ -213,12 +386,12 @@ mod tests {
             ],
         };
         let orig_disk = Disk::new("1120331");
-        assert_eq!(expected, orig_disk.optimize());
+        assert_eq!(expected, orig_disk.optimize_part_one());
     }
 
     #[test]
     fn test_checksum() {
-        let optimized = Disk::new("1120331").optimize();
+        let optimized = Disk::new("1120331").optimize_part_one();
         let expected: u64 = 0 * 0 + 3 * 1 + 1 * 2 + 1 * 3 + 2 * 4 + 2 * 5 + 2 * 6;
         assert_eq!(expected, optimized.checksum())
     }
@@ -229,6 +402,14 @@ mod tests {
         assert_eq!(result, Some(1928));
     }
 
+    #[test]
+    fn test_disk_from_filesystem() {
+        let input = "1120331";
+        let orig_disk = Disk::new(input);
+        let orig_filesystem = Filesystem::new(input);
+        let reconstituted_disk: Disk = orig_filesystem.into();
+        assert_eq!(&orig_disk, &reconstituted_disk);
+    }
     #[test]
     fn test_part_two() {
         let result = part_two(&advent_of_code::template::read_file("examples", DAY));
