@@ -9,7 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="8.1 in progress">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bin/10.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/10.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bin/12.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/12.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +162,7 @@
       <window_info anchor="right" id="RustCargo" order="6" weight="0.2" />
     </layout>
   </component>
-  <component name="RunManager" selected="Cargo.Test tests::test_example2 (1)">
+  <component name="RunManager" selected="Cargo.Test 12::tests">
     <configuration name="Run advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package advent_of_code --bin advent_of_code" />
@@ -285,8 +285,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Test tests::test_example2 (1)" />
         <item itemvalue="Cargo.Test 12::tests" />
+        <item itemvalue="Cargo.Test tests::test_example2 (1)" />
         <item itemvalue="Cargo.Test tests::test_example1 (1)" />
         <item itemvalue="Cargo.Test 11::tests" />
         <item itemvalue="Cargo.Test tests::test_example2_25" />
@@ -310,7 +310,7 @@
       <workItem from="1740331233910" duration="6328000" />
       <workItem from="1740445810516" duration="5928000" />
       <workItem from="1740530555410" duration="2640000" />
-      <workItem from="1740713412374" duration="110996000" />
+      <workItem from="1740713412374" duration="113563000" />
     </task>
     <task id="LOCAL-00001" summary="Cleanups for day 2 code">
       <option name="closed" value="true" />
