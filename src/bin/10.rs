@@ -150,13 +150,13 @@ impl Island {
         }
         return result;
     }
-    
+
     /// Returns the number of unique paths from a trailhead to any end.
     pub fn find_unique_paths(&self, trailhead: Position) -> u64 {
         let ends_found: u64 = self.find_paths_recursive(trailhead);
         ends_found
     }
-    
+
 }
 
 pub fn part_one(input: &str) -> Option<u64> {
