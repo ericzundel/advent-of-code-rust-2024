@@ -8,11 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="8.1 in progress">
-      <change afterPath="$PROJECT_DIR$/data/examples/13.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/bin/13.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bin/13.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/13.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +55,7 @@
     "Cargo.Build `Test tests::test_load_map`.executor": "Run",
     "Cargo.Build `Test tests::test_move_guard`.executor": "Run",
     "Cargo.Build `Test tests::test_new_disk2`.executor": "Run",
+    "Cargo.Build `Test tests::test_parse_solver`.executor": "Run",
     "Cargo.Build `Test tests::test_part_one (1)`.executor": "Run",
     "Cargo.Build `Test tests::test_part_one`.executor": "Run",
     "Cargo.Build `Test tests::test_repair_update`.executor": "Run",
@@ -107,7 +105,7 @@
     "Cargo.Test tests::test_new_disk2.executor": "Run",
     "Cargo.Test tests::test_optimized.executor": "Run",
     "Cargo.Test tests::test_parse.executor": "Run",
-    "Cargo.Test tests::test_parse_solver.executor": "Debug",
+    "Cargo.Test tests::test_parse_solver.executor": "Run",
     "Cargo.Test tests::test_parse_update_line.executor": "Run",
     "Cargo.Test tests::test_part_one (1).executor": "Run",
     "Cargo.Test tests::test_part_one.executor": "Run",
@@ -150,13 +148,13 @@
       <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="File Transfer" />
-      <window_info anchor="bottom" id="Run" order="0" weight="0.24515435" />
+      <window_info active="true" anchor="bottom" id="Run" order="0" visible="true" weight="0.4003517" />
       <window_info anchor="bottom" id="Version Control" order="1" weight="0.32940447" />
       <window_info anchor="bottom" id="Problems" order="2" />
-      <window_info anchor="bottom" id="Problems View" order="3" weight="0.32940447" />
+      <window_info anchor="bottom" id="Problems View" order="3" weight="0.4003517" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32940447" />
-      <window_info anchor="bottom" id="Build" order="5" weight="0.24515435" />
-      <window_info active="true" anchor="bottom" id="Debug" order="6" visible="true" weight="0.4003517" />
+      <window_info anchor="bottom" id="Build" order="5" weight="0.4003517" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.4003517" />
       <window_info anchor="bottom" id="Services" order="8" weight="0.32940447" />
       <window_info anchor="bottom" id="TODO" order="9" weight="0.3298636" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.32940447" />
@@ -170,7 +168,7 @@
       <window_info anchor="right" id="RustCargo" order="6" weight="0.2" />
     </layout>
   </component>
-  <component name="RunManager" selected="Cargo.Test tests::test_parse_solver">
+  <component name="RunManager" selected="Cargo.Test 13::tests">
     <configuration name="Run advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package advent_of_code --bin advent_of_code" />
@@ -293,8 +291,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Test tests::test_parse_solver" />
         <item itemvalue="Cargo.Test 13::tests" />
+        <item itemvalue="Cargo.Test tests::test_parse_solver" />
         <item itemvalue="Cargo.Test 12::tests" />
         <item itemvalue="Cargo.Test tests::test_example2_part_two" />
         <item itemvalue="Cargo.Test tests::test_example1_part_two" />
@@ -318,7 +316,7 @@
       <workItem from="1740331233910" duration="6328000" />
       <workItem from="1740445810516" duration="5928000" />
       <workItem from="1740530555410" duration="2640000" />
-      <workItem from="1740713412374" duration="123706000" />
+      <workItem from="1740713412374" duration="128104000" />
     </task>
     <task id="LOCAL-00001" summary="Cleanups for day 2 code">
       <option name="closed" value="true" />
@@ -447,6 +445,22 @@
     <MESSAGE value="6.1 in progress" />
     <MESSAGE value="8.1 in progress" />
     <option name="LAST_COMMIT_MESSAGE" value="8.1 in progress" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/bin/13.rs</url>
+          <line>121</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/bin/13.rs</url>
+          <line>85</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
