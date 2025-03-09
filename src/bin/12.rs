@@ -171,18 +171,138 @@ impl Garden {
         }
         result
     }
+
+    fn count_vertical_edges(&self, id: u64) -> u64 {
+        let mut result: u64 = 0;
+        for x in 0..self.plots[0].len() {
+            let mut found_west_edge = false;
+            let mut found_east_edge = false;
+            for y in 0..self.plots.len() {
+                let plot = &self.plots[y][x];
+                if plot.id != Some(id) {
+                    found_west_edge = false;
+                    found_east_edge = false;
+                    continue;
+                }
+                if self.is_plant_west(x, y, id) {
+                    if found_west_edge {
+                        found_west_edge = false;
+                    }
+                } else {
+                    if !found_west_edge {
+                        found_west_edge = true;
+                        result += 1;
+                    }
+                }
+                if self.is_plant_east(x, y, id) {
+                    if found_east_edge {
+                        found_east_edge = false;
+                    }
+                } else {
+                    if !found_east_edge {
+                        found_east_edge = true;
+                        result += 1;
+                    }
+                }
+            }
+        }
+        result
+    }
+    fn count_horizontal_edges(&self, id: u64) -> u64 {
+        let mut result: u64 = 0;
+        for y in 0..self.plots.len() {
+            let mut found_north_edge = false;
+            let mut found_south_edge = false;
+
+            for x in 0..self.plots[0].len() {
+                let plot = &self.plots[y][x];
+                if plot.id != Some(id) {
+                    found_north_edge = false;
+                    found_south_edge = false;
+                    continue;
+                }
+                if self.is_plant_north(x, y, id) {
+                    if found_north_edge {
+                        found_north_edge = false;
+                    }
+                } else {
+                    if !found_north_edge {
+                        found_north_edge = true;
+                        result += 1;
+                    }
+                }
+                if self.is_plant_south(x, y, id) {
+                    if found_south_edge {
+                        found_south_edge = false;
+                    }
+                } else {
+                    if !found_south_edge {
+                        found_south_edge = true;
+                        result += 1;
+                    }
+                }
+            }
+        }
+        result
+    }
+    pub(crate) fn calc_num_sides(&self, id: u64) -> u64 {
+        // scan for vertical edges
+        let mut result: u64 = self.count_vertical_edges(id);
+        // scan for horizontal edges
+        result += self.count_horizontal_edges(id);
+        result
+    }
+
+    /// Used to calculate costs for part 2
+    pub(crate) fn calculate_bulk_cost(&self) -> u64 {
+        let mut result: u64 = 0;
+        for id in 0..self.max_id {
+            result += self.calc_area(id) * self.calc_num_sides(id);
+        }
+        result
+    }
+
+    fn is_plant_west(&self, x: usize, y: usize, id: u64) -> bool {
+        if x > 0 && self.plots[y][x - 1].id == Some(id) {
+            return true;
+        }
+        false
+    }
+    fn is_plant_east(&self, x: usize, y: usize, id: u64) -> bool {
+        let max_x = self.plots[0].len() - 1;
+        if x < max_x && self.plots[y][x + 1].id == Some(id) {
+            return true;
+        }
+        false
+    }
+    fn is_plant_north(&self, x: usize, y: usize, id: u64) -> bool {
+        if y > 0 && self.plots[y - 1][x].id == Some(id) {
+            return true;
+        }
+        false
+    }
+    fn is_plant_south(&self, x: usize, y: usize, id: u64) -> bool {
+        let max_y = self.plots.len() - 1;
+        if y < max_y && self.plots[y + 1][x].id == Some(id) {
+            return true;
+        }
+        false
+    }
 }
 
 pub fn part_one(input: &str) -> Option<u64> {
     let mut garden = Garden::new(input);
     garden.assign_ids();
-    
+
     // Answer from AOC data is 1477762
     Some(garden.calculate_cost())
 }
-
 pub fn part_two(input: &str) -> Option<u64> {
-    None
+    let mut garden = Garden::new(input);
+    garden.assign_ids();
+    
+    // AOC answer to part 2 is 923480
+    Some(garden.calculate_bulk_cost())
 }
 
 #[cfg(test)]
@@ -228,7 +348,7 @@ mod tests {
 
         assert_eq!(garden.calc_area(6), 0);
         assert_eq!(garden.calc_perimeter(6), 0);
-        
+
         assert_eq!(garden.calc_area(0), 21);
         assert_eq!(garden.calc_perimeter(0), 36);
 
@@ -246,8 +366,82 @@ mod tests {
     }
 
     #[test]
+    fn test_example1_part_two() {
+        let input: &str = "AAAA\n\
+          BBCD\n\
+          BBCC\n\
+          EEEC\n";
+        let mut garden = Garden::new(input);
+        garden.assign_ids();
+
+        assert_eq!(garden.calc_num_sides(0), 4);
+        assert_eq!(garden.calc_num_sides(1), 4);
+        assert_eq!(garden.calc_num_sides(2), 8);
+        assert_eq!(garden.calc_num_sides(3), 4);
+        assert_eq!(garden.calc_num_sides(4), 4);
+        assert_eq!(garden.calc_num_sides(5), 0);
+
+        assert_eq!(garden.calculate_bulk_cost(), 80);
+    }
+
+    #[test]
+    fn test_example2_part_two() {
+        let input: &str = "EEEEE\n\
+        EXXXX\n\
+        EEEEE\n\
+        EXXXX\n\
+        EEEEE\n";
+        let mut garden = Garden::new(input);
+        garden.assign_ids();
+        assert_eq!(garden.is_plant_south(0, 4, 0), false);
+        assert_eq!(garden.is_plant_south(4, 4, 0), false);
+        assert_eq!(garden.count_horizontal_edges(0), 6);
+
+        assert_eq!(garden.is_plant_west(0, 0, 0), false);
+        assert_eq!(garden.is_plant_west(0, 1, 0), false);
+        assert_eq!(garden.is_plant_west(0, 2, 0), false);
+        assert_eq!(garden.is_plant_west(0, 3, 0), false);
+        assert_eq!(garden.is_plant_west(0, 4, 0), false);
+        assert_eq!(garden.is_plant_east(0, 0, 0), true);
+        assert_eq!(garden.is_plant_east(0, 1, 0), false);
+        assert_eq!(garden.is_plant_east(0, 2, 0), true);
+        assert_eq!(garden.is_plant_east(0, 3, 0), false);
+        assert_eq!(garden.is_plant_east(0, 4, 0), true);
+
+        assert_eq!(garden.is_plant_east(4, 0, 0), false);
+        assert_eq!(garden.is_plant_east(4, 1, 0), false);
+        assert_eq!(garden.is_plant_east(4, 2, 0), false);
+        assert_eq!(garden.is_plant_east(4, 3, 0), false);
+        assert_eq!(garden.is_plant_east(4, 4, 0), false);
+
+        assert_eq!(garden.count_vertical_edges(0), 6);
+
+        assert_eq!(garden.calc_num_sides(0), 12);
+        assert_eq!(garden.calc_area(0), 17);
+        assert_eq!(garden.calc_num_sides(1), 4);
+        assert_eq!(garden.calc_area(1), 4);
+        assert_eq!(garden.calc_num_sides(2), 4);
+        assert_eq!(garden.calc_area(2), 4);
+
+        assert_eq!(garden.calculate_bulk_cost(), 236);
+    }
+
+    #[test]
+    fn test_example_3_part_two() {
+        let input: &str = "AAAAAA\n\
+          AAABBA\n\
+          AAABBA\n\
+          ABBAAA\n\
+          ABBAAA\n\
+          AAAAAA\n";
+        let mut garden = Garden::new(input);
+        garden.assign_ids();
+        assert_eq!(garden.calculate_bulk_cost(), 368);
+    }
+    
+    #[test]
     fn test_part_two() {
         let result = part_two(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
+        assert_eq!(result, Some(1206));
     }
 }
