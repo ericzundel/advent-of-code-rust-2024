@@ -9,6 +9,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="8.1 in progress">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bin/13.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/13.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,128 +34,132 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Cargo.Build `Test 03::tests`.executor": "Run",
-    "Cargo.Build `Test 04::tests`.executor": "Run",
-    "Cargo.Build `Test 05::tests`.executor": "Run",
-    "Cargo.Build `Test 06::tests`.executor": "Run",
-    "Cargo.Build `Test 07::tests`.executor": "Run",
-    "Cargo.Build `Test 08::tests`.executor": "Run",
-    "Cargo.Build `Test 09::tests`.executor": "Run",
-    "Cargo.Build `Test 10::tests`.executor": "Run",
-    "Cargo.Build `Test 11::tests`.executor": "Run",
-    "Cargo.Build `Test 12::tests`.executor": "Run",
-    "Cargo.Build `Test 13::tests`.executor": "Run",
-    "Cargo.Build `Test simulation_tests::test_simulation1`.executor": "Run",
-    "Cargo.Build `Test tests::test_count_xmas`.executor": "Run",
-    "Cargo.Build `Test tests::test_equation_mult_sum`.executor": "Run",
-    "Cargo.Build `Test tests::test_example1`.executor": "Run",
-    "Cargo.Build `Test tests::test_horiz_str`.executor": "Run",
-    "Cargo.Build `Test tests::test_is_column`.executor": "Run",
-    "Cargo.Build `Test tests::test_lab_map_print`.executor": "Run",
-    "Cargo.Build `Test tests::test_load_map`.executor": "Run",
-    "Cargo.Build `Test tests::test_move_guard`.executor": "Run",
-    "Cargo.Build `Test tests::test_new_disk2`.executor": "Run",
-    "Cargo.Build `Test tests::test_parse_solver`.executor": "Run",
-    "Cargo.Build `Test tests::test_part_one (1)`.executor": "Run",
-    "Cargo.Build `Test tests::test_part_one`.executor": "Run",
-    "Cargo.Build `Test tests::test_repair_update`.executor": "Run",
-    "Cargo.Build `Test tests::test_simulation1`.executor": "Run",
-    "Cargo.Build `Test tests::test_valid_rule`.executor": "Run",
-    "Cargo.Build `Test tests::test_xmas_in_vec`.executor": "Run",
-    "Cargo.Run advent_of_code.executor": "Debug",
-    "Cargo.Test 01::tests.executor": "Run",
-    "Cargo.Test 02::tests.executor": "Run",
-    "Cargo.Test 03::tests.executor": "Run",
-    "Cargo.Test 04::tests.executor": "Run",
-    "Cargo.Test 05::tests.executor": "Run",
-    "Cargo.Test 06::tests.executor": "Run",
-    "Cargo.Test 07::tests.executor": "Run",
-    "Cargo.Test 08::tests.executor": "Run",
-    "Cargo.Test 09::tests.executor": "Run",
-    "Cargo.Test 10::tests.executor": "Run",
-    "Cargo.Test 11::tests.executor": "Run",
-    "Cargo.Test 12::tests.executor": "Run",
-    "Cargo.Test 13::tests.executor": "Run",
-    "Cargo.Test simulation_tests.executor": "Debug",
-    "Cargo.Test simulation_tests::test_detect_cycle.executor": "Run",
-    "Cargo.Test simulation_tests::test_simulation1.executor": "Run",
-    "Cargo.Test tests::test_add_column.executor": "Run",
-    "Cargo.Test tests::test_adjacent_positions.executor": "Run",
-    "Cargo.Test tests::test_checksum.executor": "Run",
-    "Cargo.Test tests::test_count_xmas.executor": "Debug",
-    "Cargo.Test tests::test_count_xmas_in_strings.executor": "Run",
-    "Cargo.Test tests::test_equation_mult_sum.executor": "Run",
-    "Cargo.Test tests::test_example1 (1).executor": "Run",
-    "Cargo.Test tests::test_example1.executor": "Run",
-    "Cargo.Test tests::test_example1_part_two.executor": "Run",
-    "Cargo.Test tests::test_example2 (1).executor": "Run",
-    "Cargo.Test tests::test_example2.executor": "Run",
-    "Cargo.Test tests::test_example2_25.executor": "Run",
-    "Cargo.Test tests::test_example2_part_two.executor": "Run",
-    "Cargo.Test tests::test_has_antinode.executor": "Debug",
-    "Cargo.Test tests::test_horiz_str.executor": "Run",
-    "Cargo.Test tests::test_is_column.executor": "Run",
-    "Cargo.Test tests::test_is_x_mas.executor": "Run",
-    "Cargo.Test tests::test_island2.executor": "Run",
-    "Cargo.Test tests::test_lab_map_print.executor": "Run",
-    "Cargo.Test tests::test_load_data.executor": "Run",
-    "Cargo.Test tests::test_load_map.executor": "Debug",
-    "Cargo.Test tests::test_move_guard.executor": "Run",
-    "Cargo.Test tests::test_new_disk.executor": "Run",
-    "Cargo.Test tests::test_new_disk2.executor": "Run",
-    "Cargo.Test tests::test_optimized.executor": "Run",
-    "Cargo.Test tests::test_parse.executor": "Run",
-    "Cargo.Test tests::test_parse_solver.executor": "Run",
-    "Cargo.Test tests::test_parse_update_line.executor": "Run",
-    "Cargo.Test tests::test_part_one (1).executor": "Run",
-    "Cargo.Test tests::test_part_one.executor": "Run",
-    "Cargo.Test tests::test_part_two.executor": "Debug",
-    "Cargo.Test tests::test_repair_update.executor": "Run",
-    "Cargo.Test tests::test_rows_to_columns.executor": "Run",
-    "Cargo.Test tests::test_simulation1.executor": "Debug",
-    "Cargo.Test tests::test_tokenizer.executor": "Debug",
-    "Cargo.Test tests::test_tokenizer_seq1.executor": "Debug",
-    "Cargo.Test tests::test_trailhead2.executor": "Run",
-    "Cargo.Test tests::test_valid_rule.executor": "Run",
-    "Cargo.Test tests::test_valid_rules.executor": "Run",
-    "Cargo.Test tests::test_with_concat.executor": "Run",
-    "Cargo.Test tests::test_xmas_in_vec.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.rust.reset.selective.auto.import": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "org.rust.first.attach.projects": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Cargo.Build `Test 03::tests`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test 04::tests`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test 05::tests`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test 06::tests`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test 07::tests`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test 08::tests`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test 09::tests`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test 10::tests`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test 11::tests`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test 12::tests`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test 13::tests`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test simulation_tests::test_simulation1`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_count_xmas`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_equation_mult_sum`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_example1_part_two (1)`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_example1`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_horiz_str`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_is_column`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_lab_map_print`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_load_map`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_move_guard`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_new_disk2`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_parse_solver`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_part_one (1)`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_part_one`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_repair_update`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_simulation1`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_valid_rule`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Build `Test tests::test_xmas_in_vec`.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Run advent_of_code.executor&quot;: &quot;Debug&quot;,
+    &quot;Cargo.Test 01::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test 02::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test 03::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test 04::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test 05::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test 06::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test 07::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test 08::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test 09::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test 10::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test 11::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test 12::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test 13::tests.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test simulation_tests.executor&quot;: &quot;Debug&quot;,
+    &quot;Cargo.Test simulation_tests::test_detect_cycle.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test simulation_tests::test_simulation1.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_add_column.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_adjacent_positions.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_checksum.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_count_xmas.executor&quot;: &quot;Debug&quot;,
+    &quot;Cargo.Test tests::test_count_xmas_in_strings.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_divide_by_two.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_equation_mult_sum.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_example1 (1).executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_example1.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_example1_part_two (1).executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_example1_part_two.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_example2 (1).executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_example2.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_example2_25.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_example2_part_two.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_factor_100000.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_has_antinode.executor&quot;: &quot;Debug&quot;,
+    &quot;Cargo.Test tests::test_horiz_str.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_is_column.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_is_x_mas.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_island2.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_lab_map_print.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_load_data.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_load_map.executor&quot;: &quot;Debug&quot;,
+    &quot;Cargo.Test tests::test_move_guard.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_new_disk.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_new_disk2.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_optimized.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_parse.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_parse_solver.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_parse_update_line.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_part_one (1).executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_part_one.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_part_two.executor&quot;: &quot;Debug&quot;,
+    &quot;Cargo.Test tests::test_repair_update.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_rows_to_columns.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_simulation1.executor&quot;: &quot;Debug&quot;,
+    &quot;Cargo.Test tests::test_tokenizer.executor&quot;: &quot;Debug&quot;,
+    &quot;Cargo.Test tests::test_tokenizer_seq1.executor&quot;: &quot;Debug&quot;,
+    &quot;Cargo.Test tests::test_trailhead2.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_valid_rule.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_valid_rules.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_with_concat.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test tests::test_xmas_in_vec.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
+    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
     <layout>
       <window_info id="Bookmarks" side_tool="true" />
       <window_info id="Merge Requests" />
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29389313" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1653651" />
       <window_info id="Commit" order="1" weight="0.23565014" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="File Transfer" />
-      <window_info active="true" anchor="bottom" id="Run" order="0" visible="true" weight="0.4003517" />
+      <window_info active="true" anchor="bottom" id="Run" order="0" visible="true" weight="0.23725772" />
       <window_info anchor="bottom" id="Version Control" order="1" weight="0.32940447" />
       <window_info anchor="bottom" id="Problems" order="2" />
       <window_info anchor="bottom" id="Problems View" order="3" weight="0.4003517" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32940447" />
-      <window_info anchor="bottom" id="Build" order="5" weight="0.4003517" />
+      <window_info anchor="bottom" id="Build" order="5" weight="0.23725772" />
       <window_info anchor="bottom" id="Debug" order="6" weight="0.4003517" />
       <window_info anchor="bottom" id="Services" order="8" weight="0.32940447" />
       <window_info anchor="bottom" id="TODO" order="9" weight="0.3298636" />
@@ -168,27 +174,10 @@
       <window_info anchor="right" id="RustCargo" order="6" weight="0.2" />
     </layout>
   </component>
-  <component name="RunManager" selected="Cargo.Test 13::tests">
+  <component name="RunManager" selected="Cargo.Test tests::test_divide_by_two">
     <configuration name="Run advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package advent_of_code --bin advent_of_code" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs />
-      <option name="emulateTerminal" value="true" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test 12::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 12 tests" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -238,8 +227,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_example1_part_two" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 12 tests::test_example1_part_two -- --exact" />
+    <configuration name="Test tests::test_divide_by_two" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 13 tests::test_divide_by_two -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -255,8 +244,25 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_example2_part_two" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 12 tests::test_example2_part_two -- --exact" />
+    <configuration name="Test tests::test_example1_part_two (1)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 13 tests::test_example1_part_two -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test tests::test_factor_100000" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 13 tests::test_factor_100000 -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -291,11 +297,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Test tests::test_divide_by_two" />
+        <item itemvalue="Cargo.Test tests::test_factor_100000" />
         <item itemvalue="Cargo.Test 13::tests" />
+        <item itemvalue="Cargo.Test tests::test_example1_part_two (1)" />
         <item itemvalue="Cargo.Test tests::test_parse_solver" />
-        <item itemvalue="Cargo.Test 12::tests" />
-        <item itemvalue="Cargo.Test tests::test_example2_part_two" />
-        <item itemvalue="Cargo.Test tests::test_example1_part_two" />
       </list>
     </recent_temporary>
   </component>
@@ -316,7 +322,7 @@
       <workItem from="1740331233910" duration="6328000" />
       <workItem from="1740445810516" duration="5928000" />
       <workItem from="1740530555410" duration="2640000" />
-      <workItem from="1740713412374" duration="128104000" />
+      <workItem from="1740713412374" duration="135637000" />
     </task>
     <task id="LOCAL-00001" summary="Cleanups for day 2 code">
       <option name="closed" value="true" />
@@ -451,13 +457,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/bin/13.rs</url>
-          <line>121</line>
+          <line>145</line>
           <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/bin/13.rs</url>
-          <line>85</line>
-          <option name="timeStamp" value="35" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
