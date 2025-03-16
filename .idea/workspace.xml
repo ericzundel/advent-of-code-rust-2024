@@ -9,11 +9,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="8.1 in progress">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/5.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/6.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/7.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/8.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/9.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bin/13.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/13.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -55,6 +50,7 @@
     "Cargo.Build `Test tests::test_equation_mult_sum`.executor": "Run",
     "Cargo.Build `Test tests::test_example1_part_two (1)`.executor": "Run",
     "Cargo.Build `Test tests::test_example1`.executor": "Run",
+    "Cargo.Build `Test tests::test_example4_part_two`.executor": "Run",
     "Cargo.Build `Test tests::test_horiz_str`.executor": "Run",
     "Cargo.Build `Test tests::test_is_column`.executor": "Run",
     "Cargo.Build `Test tests::test_lab_map_print`.executor": "Run",
@@ -94,6 +90,7 @@
     "Cargo.Test tests::test_equation_mult_sum.executor": "Run",
     "Cargo.Test tests::test_example1 (1).executor": "Run",
     "Cargo.Test tests::test_example1.executor": "Run",
+    "Cargo.Test tests::test_example1_part_one.executor": "Run",
     "Cargo.Test tests::test_example1_part_two (1).executor": "Run",
     "Cargo.Test tests::test_example1_part_two.executor": "Run",
     "Cargo.Test tests::test_example2 (1).executor": "Run",
@@ -101,6 +98,7 @@
     "Cargo.Test tests::test_example2_25.executor": "Run",
     "Cargo.Test tests::test_example2_part_two.executor": "Run",
     "Cargo.Test tests::test_example3_part_two.executor": "Run",
+    "Cargo.Test tests::test_example4_part_two.executor": "Run",
     "Cargo.Test tests::test_factor_100000.executor": "Run",
     "Cargo.Test tests::test_has_antinode.executor": "Debug",
     "Cargo.Test tests::test_horiz_str.executor": "Run",
@@ -165,7 +163,7 @@
       <window_info anchor="bottom" id="Problems View" order="3" weight="0.4003517" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32940447" />
       <window_info anchor="bottom" id="Build" order="5" weight="0.2408471" />
-      <window_info anchor="bottom" id="Debug" order="6" weight="0.3298636" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.2408471" />
       <window_info anchor="bottom" id="Services" order="7" weight="0.32940447" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.3298636" />
       <window_info anchor="bottom" id="Messages" order="9" weight="0.35228604" />
@@ -239,6 +237,23 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Test tests::test_example1_part_one" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 13 tests::test_example1_part_one -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Test tests::test_example1_part_two" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="test --package advent_of_code --bin 13 tests::test_example1_part_two -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -273,25 +288,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_parse_solver" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 13 tests::test_parse_solver -- --exact" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs />
-      <option name="emulateTerminal" value="true" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test tests::test_part_one" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 13 tests::test_part_one -- --exact" />
+    <configuration name="Test tests::test_example4_part_two" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 13 tests::test_example4_part_two -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -310,10 +308,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Cargo.Test 13::tests" />
+        <item itemvalue="Cargo.Test tests::test_example4_part_two" />
+        <item itemvalue="Cargo.Test tests::test_example1_part_one" />
         <item itemvalue="Cargo.Test tests::test_example1_part_two" />
         <item itemvalue="Cargo.Test tests::test_example3_part_two" />
-        <item itemvalue="Cargo.Test tests::test_part_one" />
-        <item itemvalue="Cargo.Test tests::test_parse_solver" />
       </list>
     </recent_temporary>
   </component>

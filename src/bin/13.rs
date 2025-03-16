@@ -62,10 +62,10 @@ impl Machine {
     }
 
     pub fn solve(&self) -> Option<u64> {
-        let max_a: u64 = cmp::min(self.prize.x / self.a.x, self.prize.y / self.a.y);
-        let max_b: u64 = cmp::min(self.prize.x / self.b.x, self.prize.y / self.b.y);
-        //let max_a= 100;
-        //let max_b = 100;
+        let max_a: u64 = cmp::min(self.prize.x / self.a.x, self.prize.y / self.a.y) + 1;
+        let max_b: u64 = cmp::min(self.prize.x / self.b.x, self.prize.y / self.b.y) + 1;
+        // let max_a= 100;
+        // let max_b = 100;
         let mut min_solution: Option<u64> = None;
         for a_presses in 0..max_a {
             for b_presses in 0..max_b {
@@ -94,7 +94,7 @@ impl Machine {
             && self.prize.y == self.a.y * a_presses + self.b.y * b_presses
         {
             println!(
-                "1: Prize: {:?} Got a_presses: {a_presses} b_presses: {b_presses}",
+                "1: {:?} Got a_presses: {a_presses} b_presses: {b_presses}",
                 self.prize
             );
             return Some(a_presses * 3 + b_presses);
@@ -117,6 +117,7 @@ impl Machine {
 
     fn binary_search_b(&self, low_b_guess: u64, high_b_guess: u64) -> Option<(u64, u64)> {
         // Try to lower the range of low and high until we are within shooting distance
+        //dbg!(low_b_guess, high_b_guess);
         assert!(low_b_guess <= high_b_guess);
         if low_b_guess == high_b_guess {
             let b_guess = low_b_guess;
@@ -137,11 +138,13 @@ impl Machine {
 
         let fudge_factor = std::cmp::max(self.b.y, self.b.y);
 
-        let y_diff = (low_b_guess * self.b.y).abs_diff(high_b_guess * self.b.y);
-        if y_diff < fudge_factor {
+        let y_diff = 3*(low_b_guess * self.b.y).abs_diff(high_b_guess * self.b.y);
+        if y_diff < 100 * (self.a.y +  self.b.y) {
+            /*
             println!(
                 "Y diff is {y_diff} between {low_b_guess} and {high_b_guess}. Trying Brute Force"
             );
+             */
             return self.brute_force_solve(low_b_guess, high_b_guess);
         }
         let mid_b_guess = Self::midpoint(low_b_guess, high_b_guess);
@@ -149,8 +152,11 @@ impl Machine {
 
         // Hmm, our outer guesses weren't even close. Let's try narrowing in a bit
         let mid_y = self.a.y * mid_a_guess + self.b.y * mid_b_guess;
+        if self.prize.y.abs_diff(mid_y) < 50 * (self.a.y +  self.b.y) {
+            return self.brute_force_solve(low_b_guess.saturating_sub(50), high_b_guess.saturating_add(50));
+        }
 
-        if mid_y + fudge_factor > self.prize.y {
+        if mid_y > self.prize.y {
             return self.binary_search_b(low_b_guess, Self::midpoint(low_b_guess, high_b_guess));
         } else {
             return self.binary_search_b(Self::midpoint(low_b_guess, high_b_guess), high_b_guess);
@@ -158,6 +164,7 @@ impl Machine {
     }
     fn binary_search_a(&self, low_a_guess: u64, high_a_guess: u64) -> Option<(u64, u64)> {
         // Try to lower the range of low and high until we are within shooting distance
+        //dbg!(low_a_guess, high_a_guess);
         assert!(low_a_guess <= high_a_guess);
         if low_a_guess == high_a_guess {
             let a_guess = low_a_guess;
@@ -176,22 +183,28 @@ impl Machine {
             return result;
         }
 
-        let fudge_factor = std::cmp::max(self.a.y, self.b.y);
 
         let y_diff = (low_a_guess * self.a.y).abs_diff(high_a_guess * self.a.y);
-        if y_diff < fudge_factor {
+        if y_diff < 100 * (self.a.y +  self.b.y) {
+            /*
             println!(
                 "Y diff is {y_diff} between {low_a_guess} and {high_a_guess}. Trying Brute Force"
             );
+
+             */
             return self.brute_force_solve(low_a_guess, high_a_guess);
         }
         let mid_a_guess = Self::midpoint(low_a_guess, high_a_guess);
         let mid_b_guess = self.compute_b_guesses(mid_a_guess);
 
+
         // Hmm, our outer guesses weren't even close. Let's try narrowing in a bit
         let mid_y = self.a.y * mid_a_guess + self.b.y * mid_b_guess;
+        if self.prize.y.abs_diff(mid_y) < 50 * (self.a.y +  self.b.y) {
+            return self.brute_force_solve(low_a_guess.saturating_sub(50), high_a_guess.saturating_add(50));
+        }
 
-        if mid_y + fudge_factor > self.prize.y {
+        if mid_y > self.prize.y {
             return self.binary_search_a(low_a_guess, Self::midpoint(low_a_guess, high_a_guess));
         } else {
             return self.binary_search_a(Self::midpoint(low_a_guess, high_a_guess), high_a_guess);
@@ -228,14 +241,16 @@ impl Machine {
         if result.is_none() {
             let b_guess = self.prize.x / self.b.x;
             result = self.binary_search_b(0, b_guess);
-            println!("Tried Binary Search B");
+            if result.is_some() {
+                println!("A failed, suceeded with b")
+            }
         }
         if result.is_some() {
             let unwrapped_result = result.unwrap();
             let a_guesses = unwrapped_result.0;
             let b_guesses = unwrapped_result.1;
             println!(
-                "2: prize{:?} Got a_guesses: {a_guesses}, b_guesses: {b_guesses}",
+                "2: {:?} Got a_guesses: {a_guesses}, b_guesses: {b_guesses}",
                 self.prize
             );
             return Some(a_guesses * 3 + b_guesses);
@@ -294,19 +309,20 @@ pub fn part_one(input: &str) -> Option<u64> {
     let solver = Solver::new(input);
     let cost1 = solver.solve_part_one();
     let cost2 = solver.solve_part_two();
-    assert_eq!(cost1, cost1);
+    assert_eq!(cost1, cost2);
     // Solution with AOC data is 31761
     Some(cost1)
 }
 
 pub fn part_two(input: &str) -> Option<u64> {
-    //todo!();
     let solver = Solver::new_part_two(input);
     let cost = solver.solve_part_two();
     // Solution with AOC data is higher than 875318608908
     //                                       875318608908
     // This solution isn't right either      82041245827082
     // Still wrong:                          79678581085762
+    // And still wrong:                      47638619110835
+    // Not this either: 48120546821769 ?
     Some(cost)
 }
 
@@ -346,6 +362,11 @@ mod tests {
     static EXAMPLE_MACHINE3: &str = "Button A: X+59, Y+62
             Button B: X+11, Y+57
             Prize: X=4193, Y=6860\n\
+            \n";
+
+    static EXAMPLE_MACHINE4: &str = "Button A: X+56, Y+22
+            Button B: X+59, Y+99\n\
+            Prize: X=7907, Y=10461\n\
             \n";
 
     #[test]
@@ -392,7 +413,7 @@ mod tests {
         print!("{:?}", &solver);
         io::stdout().flush().unwrap();
         let cost = solver.solve_part_two();
-        assert_eq!(cost, 0);
+        assert_eq!(cost, 459236326669);
     }
 
     #[test]
@@ -404,6 +425,16 @@ mod tests {
         assert_eq!(cost, 61 * 3 + 54);
         let cost = solver.solve_part_two();
         assert_eq!(cost, 61 * 3 + 54);
+    }
+
+    #[test]
+    fn test_example4_part_two() {
+        let solver = Solver::new(EXAMPLE_MACHINE4);
+        print!("{:?}", &solver);
+        io::stdout().flush().unwrap();
+        let cost1 = solver.solve_part_one();
+        let cost2 = solver.solve_part_two();
+        assert_eq!(cost1, cost2);
     }
 
     #[test]
