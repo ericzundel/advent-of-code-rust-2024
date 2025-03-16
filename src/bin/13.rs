@@ -61,7 +61,7 @@ impl Machine {
         Machine { a, b, prize }
     }
 
-    pub fn solve(&self) -> Option<u64> {
+    pub fn solve_naive(&self) -> Option<u64> {
         let max_a: u64 = cmp::min(self.prize.x / self.a.x, self.prize.y / self.a.y) + 1;
         let max_b: u64 = cmp::min(self.prize.x / self.b.x, self.prize.y / self.b.y) + 1;
         // let max_a= 100;
@@ -156,7 +156,7 @@ impl Machine {
                 "Y diff is {y_diff} between {low_b_guess} and {high_b_guess}. Trying Brute Force"
             );
              */
-            return self.brute_force_solve(low_b_guess, high_b_guess);
+            return self.brute_force_solve_b(low_b_guess, high_b_guess);
         }
         let mid_b_guess = Self::midpoint(low_b_guess, high_b_guess);
         let mid_a_guess = self.compute_a_guesses(mid_b_guess);
@@ -208,7 +208,7 @@ impl Machine {
             );
             */
 
-            return self.brute_force_solve(low_a_guess, high_a_guess);
+            return self.brute_force_solve_a(low_a_guess, high_a_guess);
 
 
         }
@@ -233,7 +233,7 @@ impl Machine {
         }
     }
 
-    fn brute_force_solve(&self, low_a_guess: u64, high_a_guess: u64) -> Option<(u64, u64)> {
+    fn brute_force_solve_a(&self, low_a_guess: u64, high_a_guess: u64) -> Option<(u64, u64)> {
         let fudge_factor: u64 =
             std::cmp::max(self.a.y.abs_diff(self.b.y), self.a.x.abs_diff(self.b.x));
 
@@ -241,6 +241,29 @@ impl Machine {
             low_a_guess.saturating_sub(fudge_factor)..high_a_guess.saturating_add(fudge_factor)
         {
             let b_presses = self.compute_b_guesses(a_presses);
+            let result = self.try_solve(a_presses, b_presses);
+            if result.is_some() {
+                /*
+                println!(
+                    "BRUTE FORCE Guessed a:{} b{} prize.x:{} prize.y:{}",
+                    a_guess, b_guess, x, y
+                );
+
+                 */
+                return Some((a_presses, b_presses));
+            }
+        }
+        None
+    }
+
+    fn brute_force_solve_b(&self, low_b_guess: u64, high_b_guess: u64) -> Option<(u64, u64)> {
+        let fudge_factor: u64 =
+            std::cmp::max(self.a.y.abs_diff(self.b.y), self.a.x.abs_diff(self.b.x));
+
+        for b_presses in
+            low_b_guess.saturating_sub(fudge_factor)..high_b_guess.saturating_add(fudge_factor)
+        {
+            let a_presses = self.compute_a_guesses(b_presses);
             let result = self.try_solve(a_presses, b_presses);
             if result.is_some() {
                 /*
@@ -291,7 +314,7 @@ impl Solver {
     pub(crate) fn solve_part_one(&self) -> u64 {
         let mut result: u64 = 0;
         for machine in self.machines.iter() {
-            let machine_result = machine.solve();
+            let machine_result = machine.solve_naive();
             if machine_result.is_some() {
                 result += machine_result.unwrap();
             }
@@ -346,6 +369,7 @@ pub fn part_two(input: &str) -> Option<u64> {
     // And still wrong:                      47638619110835
     // Not this either: 48120546821769 ?
     // It ain't                              82076474516082
+    // THE ANSWER!!!! 90798500745591
     Some(cost)
 }
 
