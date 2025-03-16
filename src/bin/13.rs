@@ -1,3 +1,15 @@
+//!
+//! Advent of code 2024 day 13
+//! https://adventofcode.com/2024/day/13
+//!
+//! This problem gave me fits
+//! The correct way to solve this problem is to find out where two lines intersect.  I couldn't
+//! get that to work, so I tried using binary search. But that was very tricky as well.  I did have
+//! a solution that used brute force to cycle through possibilities, so I used binary search
+//! to narrow the range and then brute force to find the right one in the range.
+//!
+//! There are so many band aids in this code, it's embarrassing, but I did finally get the right answer.
+//!
 use regex::Regex;
 use std::cmp;
 
@@ -61,6 +73,7 @@ impl Machine {
         Machine { a, b, prize }
     }
 
+    // A brute force solution to go through all possibilities for a and b.
     pub fn solve_naive(&self) -> Option<u64> {
         let max_a: u64 = cmp::min(self.prize.x / self.a.x, self.prize.y / self.a.y) + 1;
         let max_b: u64 = cmp::min(self.prize.x / self.b.x, self.prize.y / self.b.y) + 1;
@@ -84,7 +97,7 @@ impl Machine {
             }
         }
         if min_solution.is_none() {
-            println!("1: Prize: {:?} No solution found", self.prize);
+            // println!("1: Prize: {:?} No solution found", self.prize);
         }
         min_solution
     }
@@ -93,10 +106,12 @@ impl Machine {
         if self.prize.x == self.a.x * a_presses + self.b.x * b_presses
             && self.prize.y == self.a.y * a_presses + self.b.y * b_presses
         {
+            /*
             println!(
                 "1: {:?} Got a_presses: {a_presses} b_presses: {b_presses}",
                 self.prize
             );
+             */
             return Some(a_presses * 3 + b_presses);
         }
 
@@ -124,6 +139,7 @@ impl Machine {
         }
         result
     }
+
     fn midpoint(a: u64, b: u64) -> u64 {
         (a / 2) + (b / 2) + (a & b & 1)
     }
@@ -150,6 +166,8 @@ impl Machine {
             return result;
         }
 
+        // band aid - when the high and low guesses are close enough, give up on binary search
+        // and go for the brute force solution
         if high_b_guess.abs_diff(low_b_guess) < 5 {
             /*
             println!(
@@ -201,6 +219,8 @@ impl Machine {
             return result;
         }
 
+        // band aid - when the high and low guesses are close enough, give up on binary search
+        // and go for the brute force solution
         if high_a_guess.abs_diff(low_a_guess) < 5 {
             /*
             println!(
@@ -233,7 +253,10 @@ impl Machine {
         }
     }
 
+    // This shouldn't be necessary, but I must have an error in the binary search
     fn brute_force_solve_a(&self, low_a_guess: u64, high_a_guess: u64) -> Option<(u64, u64)> {
+        // Band aid: There is something else wrong in the binary search,
+        // so this fudge factor just broadens the search
         let fudge_factor: u64 =
             std::cmp::max(self.a.y.abs_diff(self.b.y), self.a.x.abs_diff(self.b.x));
 
@@ -256,7 +279,10 @@ impl Machine {
         None
     }
 
+    // This shouldn't be necessary, but I must have an error in the binary search
     fn brute_force_solve_b(&self, low_b_guess: u64, high_b_guess: u64) -> Option<(u64, u64)> {
+        // Band aid: There is something else wrong in the binary search,
+        // so this fudge factor just broadens the search
         let fudge_factor: u64 =
             std::cmp::max(self.a.y.abs_diff(self.b.y), self.a.x.abs_diff(self.b.x));
 
@@ -285,22 +311,26 @@ impl Machine {
         let mut result = self.binary_search_a(0, a_guess);
         if result.is_none() {
             let b_guess = self.prize.x / self.b.x;
+            // TODO(): This shouldn't be necessary, there is a bug in search_a() that this patches up
             result = self.binary_search_b(0, b_guess);
             if result.is_some() {
-                println!("A failed, suceeded with b")
+                // println!("A failed, succeeded with b")
             }
         }
         if result.is_some() {
             let unwrapped_result = result.unwrap();
             let a_guesses = unwrapped_result.0;
             let b_guesses = unwrapped_result.1;
+            /*
             println!(
                 "2: {:?} Got a_guesses: {a_guesses}, b_guesses: {b_guesses}",
                 self.prize
             );
+
+             */
             return Some(a_guesses * 3 + b_guesses);
         }
-        println!("2: {:?} No solution found", self.prize);
+        // println!("2: {:?} No solution found", self.prize);
         None
     }
 }
@@ -353,6 +383,7 @@ impl Solver {
 pub fn part_one(input: &str) -> Option<u64> {
     let solver = Solver::new(input);
     let cost1 = solver.solve_part_one();
+    // Build in a test so we compare the two solvers with the part 1 criteria
     let cost2 = solver.solve_part_two();
     assert_eq!(cost1, cost2);
     // Solution with AOC data is 31761
@@ -369,7 +400,7 @@ pub fn part_two(input: &str) -> Option<u64> {
     // And still wrong:                      47638619110835
     // Not this either: 48120546821769 ?
     // It ain't                              82076474516082
-    // THE ANSWER!!!! 90798500745591
+    // THE ANSWER!!!!                        90798500745591
     Some(cost)
 }
 
