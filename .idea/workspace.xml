@@ -99,6 +99,7 @@
     "Cargo.Test tests::test_example2_part_two.executor": "Run",
     "Cargo.Test tests::test_example3_part_two.executor": "Run",
     "Cargo.Test tests::test_example4_part_two.executor": "Run",
+    "Cargo.Test tests::test_example5_part_two.executor": "Run",
     "Cargo.Test tests::test_factor_100000.executor": "Run",
     "Cargo.Test tests::test_has_antinode.executor": "Debug",
     "Cargo.Test tests::test_horiz_str.executor": "Run",
@@ -151,19 +152,19 @@
       <window_info id="Welcome to GitHub Copilot" />
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.50051546" visible="true" weight="0.110698946" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.500641" visible="true" weight="0.110698946" />
       <window_info id="Commit" order="1" weight="0.23565014" />
-      <window_info active="true" id="Structure" order="2" sideWeight="0.49948454" side_tool="true" visible="true" weight="0.110698946" />
+      <window_info active="true" id="Structure" order="2" sideWeight="0.49935895" side_tool="true" visible="true" weight="0.110698946" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="File Transfer" />
-      <window_info active="true" anchor="bottom" id="Run" order="0" visible="true" weight="0.2408471" />
+      <window_info anchor="bottom" id="Run" order="0" weight="0.37724337" />
       <window_info anchor="bottom" id="Version Control" order="1" weight="0.32940447" />
       <window_info anchor="bottom" id="Problems" order="2" />
       <window_info anchor="bottom" id="Problems View" order="3" weight="0.4003517" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32940447" />
-      <window_info anchor="bottom" id="Build" order="5" weight="0.2408471" />
-      <window_info anchor="bottom" id="Debug" order="6" weight="0.2408471" />
+      <window_info active="true" anchor="bottom" id="Build" order="5" visible="true" weight="0.37724337" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.37724337" />
       <window_info anchor="bottom" id="Services" order="7" weight="0.32940447" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.3298636" />
       <window_info anchor="bottom" id="Messages" order="9" weight="0.35228604" />
@@ -271,8 +272,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_example3_part_two" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 13 tests::test_example3_part_two -- --exact" />
+    <configuration name="Test tests::test_example4_part_two" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 13 tests::test_example4_part_two -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -288,8 +289,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_example4_part_two" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 13 tests::test_example4_part_two -- --exact" />
+    <configuration name="Test tests::test_example5_part_two" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 13 tests::test_example5_part_two -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -308,10 +309,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Cargo.Test 13::tests" />
+        <item itemvalue="Cargo.Test tests::test_example5_part_two" />
         <item itemvalue="Cargo.Test tests::test_example4_part_two" />
         <item itemvalue="Cargo.Test tests::test_example1_part_one" />
         <item itemvalue="Cargo.Test tests::test_example1_part_two" />
-        <item itemvalue="Cargo.Test tests::test_example3_part_two" />
       </list>
     </recent_temporary>
   </component>
@@ -464,6 +465,18 @@
     <MESSAGE value="6.1 in progress" />
     <MESSAGE value="8.1 in progress" />
     <option name="LAST_COMMIT_MESSAGE" value="8.1 in progress" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <condition expression="low_a_guess == 0 &amp;&amp; high_a_guess == 99" language="Rust" />
+          <url>file://$PROJECT_DIR$/src/bin/13.rs</url>
+          <line>214</line>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
