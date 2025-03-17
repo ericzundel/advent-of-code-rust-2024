@@ -224,7 +224,7 @@ impl Simulation {
                         break; // go to the next line
                     }
                 }
-            }git 
+            }
         }
         false
     }

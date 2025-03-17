@@ -8,7 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="8.1 in progress">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/examples/15.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/15.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bin/14.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/14.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bin/15.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/15.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +82,7 @@
     "Cargo.Test 12::tests.executor": "Run",
     "Cargo.Test 13::tests.executor": "Run",
     "Cargo.Test 14::tests.executor": "Run",
+    "Cargo.Test 15::tests.executor": "Run",
     "Cargo.Test simulation_tests.executor": "Debug",
     "Cargo.Test simulation_tests::test_detect_cycle.executor": "Run",
     "Cargo.Test simulation_tests::test_simulation1.executor": "Run",
@@ -141,6 +145,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
     "org.rust.first.attach.projects": "true",
     "settings.editor.selected.configurable": "language.rust.cargo.check",
     "vue.rearranger.settings.migration": "true"
@@ -153,19 +158,19 @@
       <window_info id="Welcome to GitHub Copilot" />
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.110698946" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.50062656" visible="true" weight="0.110698946" />
       <window_info id="Commit" order="1" weight="0.23565014" />
-      <window_info active="true" id="Structure" order="2" side_tool="true" visible="true" weight="0.110698946" />
+      <window_info active="true" id="Structure" order="2" sideWeight="0.49937344" side_tool="true" visible="true" weight="0.110698946" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="File Transfer" />
-      <window_info anchor="bottom" id="Run" order="0" weight="0.37724337" />
+      <window_info active="true" anchor="bottom" id="Run" order="0" visible="true" weight="0.3765255" />
       <window_info anchor="bottom" id="Version Control" order="1" weight="0.32940447" />
       <window_info anchor="bottom" id="Problems" order="2" />
       <window_info anchor="bottom" id="Problems View" order="3" weight="0.4003517" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32940447" />
-      <window_info active="true" anchor="bottom" id="Build" order="5" visible="true" weight="0.37724337" />
-      <window_info anchor="bottom" id="Debug" order="6" weight="0.37724337" />
+      <window_info anchor="bottom" id="Build" order="5" weight="0.3765255" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.3765255" />
       <window_info anchor="bottom" id="Services" order="7" weight="0.32940447" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.3298636" />
       <window_info anchor="bottom" id="Messages" order="9" weight="0.35228604" />
@@ -186,7 +191,7 @@
   <component name="RsExternalLinterProjectSettings">
     <option name="tool" value="Clippy" />
   </component>
-  <component name="RunManager" selected="Cargo.Test tests::test_part_one">
+  <component name="RunManager" selected="Cargo.Test tests::test_part_one (1)">
     <configuration name="Run advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package advent_of_code --bin advent_of_code" />
@@ -239,6 +244,23 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Test 15::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 15 tests" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Test advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="test --workspace" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -256,25 +278,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test tests::test_example4_part_two" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 13 tests::test_example4_part_two -- --exact" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs />
-      <option name="emulateTerminal" value="true" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test tests::test_example5_part_two" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 13 tests::test_example5_part_two -- --exact" />
+    <configuration name="Test tests::test_part_one (1)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 15 tests::test_part_one -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -309,11 +314,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Test tests::test_part_one (1)" />
+        <item itemvalue="Cargo.Test 15::tests" />
         <item itemvalue="Cargo.Test tests::test_part_one" />
         <item itemvalue="Cargo.Test 14::tests" />
         <item itemvalue="Cargo.Test 13::tests" />
-        <item itemvalue="Cargo.Test tests::test_example5_part_two" />
-        <item itemvalue="Cargo.Test tests::test_example4_part_two" />
       </list>
     </recent_temporary>
   </component>
@@ -477,8 +482,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/bin/14.rs</url>
-          <line>338</line>
+          <line>274</line>
           <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/bin/15.rs</url>
+          <line>50</line>
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
