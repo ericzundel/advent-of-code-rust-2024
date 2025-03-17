@@ -2,13 +2,13 @@ use std::fmt::{Debug, Display, Formatter};
 
 advent_of_code::solution!(15);
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 struct Position {
     x: usize,
     y: usize,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 enum Tile {
     WALL,
     EMPTY,
@@ -39,7 +39,7 @@ impl Warehouse {
                     '.' => row.push(Tile::EMPTY),
                     '@' => {
                         row.push(Tile::EMPTY);
-                        robot_position = Position { x: x, y: y };
+                        robot_position = Position { x, y: y };
                     }
                     _ => {}
                 }
@@ -54,6 +54,39 @@ impl Warehouse {
             tiles,
             robot_position,
         }
+    }
+
+    fn get_position(&self, pos: &Position, direction: &Move) -> Position {
+        match direction {
+            Move::UP => Position {
+                x: pos.x,
+                y: pos.y - 1,
+            },
+            Move::DOWN => Position {
+                x: pos.x,
+                y: pos.y + 1,
+            },
+            Move::LEFT => Position {
+                x: pos.x - 1,
+                y: pos.y,
+            },
+            Move::RIGHT => Position {
+                x: pos.x + 1,
+                y: pos.y,
+            },
+        }
+    }
+
+    pub(crate) fn try_move_box(&mut self, box_position: &Position, direction: &Move) -> Position {
+        let curr_tile = &self.tiles[box_position.y][box_position.x];
+        assert_eq!(curr_tile, &Tile::BOX);
+        match direction {
+            Move::UP => {}
+            Move::DOWN => {}
+            Move::LEFT => {}
+            Move::RIGHT => {}
+        }
+        todo!()
     }
 }
 
@@ -71,7 +104,7 @@ impl Display for Warehouse {
                     }
                 }
             }
-            writeln!(f);
+            writeln!(f)?;
         }
         Ok(())
     }
@@ -109,7 +142,27 @@ impl Simulation {
             moves,
         }
     }
+
+    pub fn run(&mut self) {
+        for mv in self.moves.iter() {
+            let robot_position = self.warehouse.robot_position.clone();
+
+            let target_position = self.warehouse.get_position(&robot_position, &mv);
+            let tile = &self.warehouse.tiles[target_position.y][target_position.x];
+            match tile {
+                Tile::WALL => break,
+                Tile::EMPTY => {
+                    self.warehouse.robot_position = target_position;
+                }
+                Tile::BOX => {
+                    self.warehouse.robot_position =
+                        self.warehouse.try_move_box(&target_position, mv)
+                }
+            }
+        }
+    }
 }
+
 
 pub fn part_one(input: &str) -> Option<u64> {
     let simulation = Simulation::new(input);
@@ -124,6 +177,23 @@ pub fn part_two(input: &str) -> Option<u64> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    static SMALL_INPUT: &str = "########\n\
+                                #..O.O.#\n\
+                                ##@.O..#\n\
+                                #...O..#\n\
+                                #.#.O..#\n\
+                                #...O..#\n\
+                                #......#\n\
+                                ########\n\
+                                \n\
+                                <^^>>>vv<v>>v<<\n";
+
+    #[test]
+    fn test_small() {
+        let mut simulation = Simulation::new(SMALL_INPUT);
+        simulation.run();
+    }
 
     #[test]
     fn test_part_one() {

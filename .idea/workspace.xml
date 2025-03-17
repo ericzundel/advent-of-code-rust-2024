@@ -9,8 +9,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="8.1 in progress">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/15.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/15.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bin/14.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/14.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bin/15.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/15.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,6 +63,7 @@
     "Cargo.Build `Test tests::test_part_one`.executor": "Run",
     "Cargo.Build `Test tests::test_repair_update`.executor": "Run",
     "Cargo.Build `Test tests::test_simulation1`.executor": "Run",
+    "Cargo.Build `Test tests::test_small`.executor": "Run",
     "Cargo.Build `Test tests::test_valid_rule`.executor": "Run",
     "Cargo.Build `Test tests::test_xmas_in_vec`.executor": "Run",
     "Cargo.Run advent_of_code.executor": "Debug",
@@ -127,6 +126,7 @@
     "Cargo.Test tests::test_repair_update.executor": "Run",
     "Cargo.Test tests::test_rows_to_columns.executor": "Run",
     "Cargo.Test tests::test_simulation1.executor": "Debug",
+    "Cargo.Test tests::test_small.executor": "Run",
     "Cargo.Test tests::test_tokenizer.executor": "Debug",
     "Cargo.Test tests::test_tokenizer_seq1.executor": "Debug",
     "Cargo.Test tests::test_trailhead2.executor": "Run",
@@ -191,27 +191,10 @@
   <component name="RsExternalLinterProjectSettings">
     <option name="tool" value="Clippy" />
   </component>
-  <component name="RunManager" selected="Cargo.Test tests::test_part_one (1)">
+  <component name="RunManager" selected="Cargo.Test 15::tests">
     <configuration name="Run advent_of_code" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package advent_of_code --bin advent_of_code" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs />
-      <option name="emulateTerminal" value="true" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test 13::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package advent_of_code --bin 13 tests" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -312,13 +295,30 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Test tests::test_small" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package advent_of_code --bin 15 tests::test_small -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Test tests::test_part_one (1)" />
         <item itemvalue="Cargo.Test 15::tests" />
+        <item itemvalue="Cargo.Test tests::test_small" />
+        <item itemvalue="Cargo.Test tests::test_part_one (1)" />
         <item itemvalue="Cargo.Test tests::test_part_one" />
         <item itemvalue="Cargo.Test 14::tests" />
-        <item itemvalue="Cargo.Test 13::tests" />
       </list>
     </recent_temporary>
   </component>
@@ -484,11 +484,6 @@
           <url>file://$PROJECT_DIR$/src/bin/14.rs</url>
           <line>274</line>
           <option name="timeStamp" value="45" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/bin/15.rs</url>
-          <line>50</line>
-          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
