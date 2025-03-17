@@ -9,6 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="8.1 in progress">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bin/14.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/14.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,12 +160,12 @@
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="File Transfer" />
-      <window_info active="true" anchor="bottom" id="Run" order="0" visible="true" weight="0.37724337" />
+      <window_info anchor="bottom" id="Run" order="0" weight="0.37724337" />
       <window_info anchor="bottom" id="Version Control" order="1" weight="0.32940447" />
       <window_info anchor="bottom" id="Problems" order="2" />
       <window_info anchor="bottom" id="Problems View" order="3" weight="0.4003517" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32940447" />
-      <window_info anchor="bottom" id="Build" order="5" weight="0.37724337" />
+      <window_info active="true" anchor="bottom" id="Build" order="5" visible="true" weight="0.37724337" />
       <window_info anchor="bottom" id="Debug" order="6" weight="0.37724337" />
       <window_info anchor="bottom" id="Services" order="7" weight="0.32940447" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.3298636" />
@@ -466,6 +467,22 @@
     <MESSAGE value="6.1 in progress" />
     <MESSAGE value="8.1 in progress" />
     <option name="LAST_COMMIT_MESSAGE" value="8.1 in progress" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/bin/14.rs</url>
+          <line>115</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/bin/14.rs</url>
+          <line>337</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
