@@ -8,7 +8,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0fb6d3a9-d084-42c4-85e8-c8f92e75d88f" name="Changes" comment="8.1 in progress">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bin/14.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/14.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -154,9 +153,9 @@
       <window_info id="Welcome to GitHub Copilot" />
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.500641" visible="true" weight="0.110698946" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.110698946" />
       <window_info id="Commit" order="1" weight="0.23565014" />
-      <window_info active="true" id="Structure" order="2" sideWeight="0.49935895" side_tool="true" visible="true" weight="0.110698946" />
+      <window_info active="true" id="Structure" order="2" side_tool="true" visible="true" weight="0.110698946" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="File Transfer" />
@@ -478,7 +477,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/bin/14.rs</url>
-          <line>337</line>
+          <line>338</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
       </breakpoints>

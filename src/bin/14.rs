@@ -205,69 +205,6 @@ impl Simulation {
         }
     }
 
-    pub fn check_christmas_tree_1(&self) -> bool {
-        let map = self.get_robot_tiles();
-        // is every row populated?
-        for row in map.iter() {
-            if row.iter().sum::<i32>() == 0 {
-                return false;
-            }
-        }
-        // is every column populated?
-        for x in 0..self.floor.width {
-            let mut result: i32 = 0;
-            for y in 0..self.floor.height {
-                result += map[y][x];
-            }
-            if result == 0 {
-                return false;
-            }
-        }
-        true
-    }
-
-    pub fn check_christmas_tree_2(&self) -> bool {
-        let nw = self.get_quadrant_robots(Quadrant::NORTHWEST);
-        let ne = self.get_quadrant_robots(Quadrant::NORTHEAST);
-        let sw = self.get_quadrant_robots(Quadrant::SOUTHWEST);
-        let se = self.get_quadrant_robots(Quadrant::SOUTHEAST);
-        return nw.len() == ne.len() && sw.len() == se.len();
-    }
-
-    pub fn check_column(&self, map: &Vec<Vec<i32>>, x: usize) -> i32 {
-        let mut result: i32 = 0;
-        for y in 0..self.floor.height {
-            result += map[y][x];
-        }
-        result
-    }
-    pub fn check_christmas_tree_3(&self) -> bool {
-        let map = self.get_robot_tiles();
-
-        if self.check_column(&map, 0) == 0 && self.check_column(&map, self.floor.width - 1) == 0 {
-            return true;
-        }
-        false
-    }
-
-    pub fn check_christmas_tree_4(&self) -> bool {
-        let result1 = self.get_robots(Position { x: 0, y: 0 }, Position { x: 10, y: 20 });
-        if result1.len() == 0 {
-            return false;
-        }
-        let result2 = self.get_robots(
-            Position {
-                x: self.floor.width - 10,
-                y: 0,
-            },
-            Position {
-                x: self.floor.width,
-                y: 20,
-            },
-        );
-        return result1.len() == 0 && result2.len() == 0;
-    }
-
     pub fn check_christmas_tree_5(&self) -> bool {
         let map = self.get_robot_tiles();
         for y in 13..self.floor.height {
@@ -284,11 +221,10 @@ impl Simulation {
                             return true;
                         }
                     } else {
-                        found = false;
                         break; // go to the next line
                     }
                 }
-            }
+            }git 
         }
         false
     }
@@ -317,7 +253,7 @@ pub fn part_two(input: &str) -> Option<u64> {
         if simulation.check_christmas_tree_5() {
             simulation.print_robots();
             println!("{} seconds elapsed.", count);
-            break;
+            return Some(count)
         }
         if count % 10000 == 0 {
             println!("{}", count);
